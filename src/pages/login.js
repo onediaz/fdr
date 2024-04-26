@@ -85,7 +85,11 @@ const checkAccountExists = (callback) => {
           window.alert('Wrong email or password')
         }
       })
-  }
+      .catch((error) => {
+        console.error('Login error:', error);
+        window.alert('An error occurred during login');
+      });
+  };
 
   return (
     <div className={'mainContainer'}>
