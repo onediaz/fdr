@@ -6,9 +6,10 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import Home from "./pages/index";
+import Home from "./pages";
 import About from "./pages/about";
-import Login from './pages/login';
+import Account from './pages/account';
+import Login from './pages/login'
 import { useEffect, useState } from 'react'
 
 function App() {
@@ -46,7 +47,8 @@ function App() {
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/about" element={<About />} />
                 <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-                <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+                <Route path="/account" element={<Account email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setEmail={setEmail}/>} />
+                <Route path="/login" element={<Login email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
             </Routes>
         </Router>
     </div>

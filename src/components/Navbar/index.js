@@ -4,45 +4,36 @@ import "./navbar.css";
 
 const Navbar = () => {
     return (
-        // <>
-        //     <Nav>
-        //         <Bars />
-
-        //         <NavMenu>
-        //             <NavLink to="/" >
-        //                     Home
-        //             </NavLink>
-        //             <NavLink to="/about" >
-        //                 About
-        //             </NavLink>
-
-        //         </NavMenu>
-        //     </Nav>
-        // </>
-        <header className="header">
-            <nav className="nav container">
-                <NavLink to="/" className="nav__logo">
-                    Navigation Bar
+            <div className="nav_container">
+                <NavLink to="/" className="nav_logo">
+                    WEBSITE
                 </NavLink>
 
-                <ul className="nav__list">
-                    <li className="nav__item">
-                        <NavLink to="/" className="nav__link">
+                <ul className="nav_list">
+                    <li className="nav_item">
+                        <NavLink to="/" className="nav_link">
                         Home
                         </NavLink>
                     </li>
-                    <li className="nav__item">
+                    <li className="nav_item">
                         <NavLink
                         to="/about"
-                        className="nav__link"
+                        className="nav_link"
                         >
-                        About Us
+                        About
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                        to="/account"
+                        className="nav_link"
+                        >
+                        Account
                         </NavLink>
                     </li>
                 </ul>
 
-            </nav>
-        </header>
+            </div>
     );
 };
 
