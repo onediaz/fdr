@@ -19,7 +19,10 @@ const Account = (props) => {
     
     return (
         <div> 
-            {loggedIn ? <div className='titleContainer'> Welcome </div> : <Login/> }
+            {loggedIn
+                ? <div className='titleContainer'> Welcome </div>
+                : <Login email={props.email} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} setEmail={props.setEmail} />
+            }
 
                 {loggedIn ? 
                     <div className='buttonContainer'>
