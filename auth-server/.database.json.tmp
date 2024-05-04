@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "email": "juand4535@gmail.com",
+      "password": "$2b$10$oyvduPenb4kk1x/8kSZ/EeX7pD8B97X/L2fRTKBjtx.3oRSXsJRuG",
+      "admin": "true"
+    },
+    {
+      "email": "lesalc12@gmail.com",
+      "password": "$2b$10$UoPo/4xF0a20HZR47OPZ9eKGMSXEYMaOAxV.fmgb/dVyD3E1k0XPW"
+    }
+  ]
+}
