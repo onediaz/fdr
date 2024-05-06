@@ -9,7 +9,10 @@ const require = createRequire(import.meta.url);
 const defaultData = { users: [] }
 const db = await JSONFilePreset('database.json', defaultData)
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import User from './model/User.js';
+
 mongoose.connect('mongodb://localhost:27017/fdr-db', {
     dbName: 'fdr-db',
     useNewUrlParser: true,
@@ -19,18 +22,6 @@ mongoose.connect('mongodb://localhost:27017/fdr-db', {
 }).catch(error => {
    console.log(error);
  });
-// Schema for users of app
-const userSchema = new mongoose.Schema({
-  email: {
-      type: String,
-      required: true,
-  },
-  password: {
-      type: String,
-      required: true,
-  },
-});
-const users = mongoose.model('user', userSchema);
 
 // Initialize Express app
 const app = express();
@@ -53,7 +44,7 @@ app.post('/auth', async function(req, res) {
     const { email, password } = req.body;
   
     // Look up the user entry in the database
-    const user = await users.findOne({'email': email}, 'password email');
+    const user = await User.findOne({'email': email}, 'password email isAdmin');
   
     // If found, compare the hashed passwords and generate the JWT token for the user
     if (user != undefined) {
@@ -63,17 +54,18 @@ app.post('/auth', async function(req, res) {
         } else {
           let loginData = {
             email,
+            isAdmin: user.isAdmin,
             signInTime: Date.now(),
           }
 
           const token = jwt.sign(loginData, jwtSecretKey)
-          res.status(200).json({ message: 'success', token })
+          res.status(200).json({ message: 'success', token , isAdmin: user.isAdmin})
         }
       });
     // If no user is found, hash the given password and create a new entry in the auth db with the email and hashed password
     } else if (user === undefined) {
       bcrypt.hash(password, 10, function (_err, hash) {
-        const newUser = new users({email: req.body.email, password: hash});
+        const newUser = new User({email: req.body.email, password: hash});
         newUser.save();
 
         let loginData = {
@@ -108,7 +100,7 @@ app.post('/verify', (req, res) => {
   // An endpoint to see if there's an existing account for a given email address
 app.post('/check-account', async function(req, res) {
     const { email } = req.body;
-    const user = await users.findOne({'email': email}, 'password email');
+    const user = await User.findOne({'email': email}, 'password email');
     res.status(200).json({
       status: user != undefined ? 'User exists' : 'User does not exist',
       userExists: user != undefined,

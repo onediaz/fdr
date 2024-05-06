@@ -11,10 +11,12 @@ import About from "./pages/about";
 import Account from './pages/account';
 import Login from './pages/login'
 import { useEffect, useState } from 'react'
+import Admin from './pages/admin';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
+  const [isAdmin, setAdmin] = useState(false)
   
   useEffect(() => {
       // Fetch the user email and token from local storage
@@ -42,13 +44,14 @@ function App() {
   return (
     <div className="App">
       <Router>
-            <Navbar />
+            <Navbar loggedIn={loggedIn} isAdmin={isAdmin} />
             <Routes>
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/about" element={<About />} />
-                <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-                <Route path="/account" element={<Account email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setEmail={setEmail}/>} />
-                <Route path="/login" element={<Login email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+                <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
+                <Route path="/account" element={<Account email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setEmail={setEmail} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
+                <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
+                <Route path="/admin" element={<Admin email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
             </Routes>
         </Router>
     </div>

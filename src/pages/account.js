@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import Login from './login'
 
 const Account = (props) => {
-    const { loggedIn, email } = props
+    const { loggedIn, email, isAdmin} = props
     const navigate = useNavigate()
-    console.log("Are we logged in: ", loggedIn)
     const onButtonClick = () => {
         if (loggedIn) {
         localStorage.removeItem('user')
         props.setLoggedIn(false)
+        props.setAdmin(false)
         } else {
         navigate('/login')
         }
@@ -19,17 +19,18 @@ const Account = (props) => {
     
     return (
         <div> 
-            {loggedIn
+            <div className='titleContainer'> Welcome </div>
+            {/* {loggedIn
                 ? <div className='titleContainer'> Welcome </div>
-                : <Login email={props.email} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} setEmail={props.setEmail} />
-            }
+                : <Login email={props.email} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} setEmail={props.setEmail} isAdmin={props.isAdmin} setAdmin={props.setAdmin}/>
+            } */}
 
-                {loggedIn ? 
-                    <div className='buttonContainer'>
-                        {email}
-                        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log out'} />
-                    </div>
-                    : <div />}
+            {loggedIn ? 
+                <div className='buttonContainer'>
+                    {email}
+                    <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log out'} />
+                </div>
+                : <div />}
         </div>
     );
 };

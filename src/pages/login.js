@@ -8,6 +8,9 @@ const Login = (props) => {
   const [passwordError, setPasswordError] = useState('')
 
   const navigate = useNavigate()
+  console.log("Checking status")
+  console.log(typeof props.setAdmin)
+  console.log('Admin: ' + props.isAdmin)
 
   const onButtonClick = () => {
     // Set initial error values to empty
@@ -19,22 +22,18 @@ const Login = (props) => {
       setEmailError('Please enter your email')
       return
     }
-  
     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setEmailError('Please enter a valid email')
       return
     }
-  
     if ('' === password) {
       setPasswordError('Please enter a password')
       return
     }
-  
     if (password.length < 7) {
       setPasswordError('The password must be 8 characters or longer')
       return
     }
-  
     // Authentication calls will be made here...
     checkAccountExists((accountExists) => {
         // If yes, log in
@@ -51,7 +50,7 @@ const Login = (props) => {
   }
 
   // Call the server API to check if the given email ID already exists
-const checkAccountExists = (callback) => {
+  const checkAccountExists = (callback) => {
     fetch('http://localhost:3080/check-account', {
       method: 'POST',
       headers: {
@@ -76,10 +75,12 @@ const checkAccountExists = (callback) => {
     })
       .then((r) => r.json())
       .then((r) => {
-        if ('success' === r.message) {
-          localStorage.setItem('user', JSON.stringify({ email, token: r.token }))
+        if (r.message === 'success') {
+          window.alert(r.isAdmin)
+          localStorage.setItem('user', JSON.stringify({ email, token: r.token}))
           props.setLoggedIn(true)
           props.setEmail(email)
+          props.setAdmin(r.isAdmin)
           navigate('/')
         } else {
           window.alert('Wrong email or password')
@@ -109,6 +110,7 @@ const checkAccountExists = (callback) => {
       <br />
       <div className={'inputContainer'}>
         <input
+          type='password'
           value={password}
           placeholder="Enter your password here"
           onChange={(ev) => setPassword(ev.target.value)}
