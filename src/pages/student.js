@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Student = (props) => {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [nameError, setNameError] = useState('')
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
@@ -11,11 +13,16 @@ const Student = (props) => {
 
   const onButtonClick = () => {
     // Set initial error values to empty
-    setEmailError('')
-    setPasswordError('')
+    setEmailError('');
+    setPasswordError('');
+    setNameError('');
   
     // Check if the user has entered both fields correctly
-    if ('' === email) {
+    if (name === '') {
+      setNameError('Please enter your name')
+      return
+    }
+    if (email === '') {
       setEmailError('Please enter your email')
       return
     }
@@ -23,7 +30,7 @@ const Student = (props) => {
       setEmailError('Please enter a valid email')
       return
     }
-    if ('' === password) {
+    if (password === '') {
       setPasswordError('Please enter a password')
       return
     }
@@ -34,8 +41,12 @@ const Student = (props) => {
     // Authentication calls will be made here...
     checkAccountExists((accountExists) => {
         // If yes, log in
-        if (accountExists) logIn()
-      })
+        if (!accountExists){ 
+          createAccount()
+        } else {
+          window.alert('Email already exists')
+        }
+    });
   }
 
   // Call the server API to check if the given email ID already exists
@@ -54,23 +65,19 @@ const Student = (props) => {
   }
   
   // Log in a user using email and password
-  const logIn = () => {
-    fetch('http://localhost:3080/auth', {
+  const createAccount = () => {
+    fetch('http://localhost:3080/create-account', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password , name}),
     })
       .then((r) => r.json())
       .then((r) => {
         if (r.message === 'success') {
-          window.alert(r.isAdmin)
-          localStorage.setItem('user', JSON.stringify({ email, token: r.token}))
-          props.setLoggedIn(true)
-          props.setEmail(email)
-          props.setAdmin(r.isAdmin)
-          navigate('/')
+          window.alert('Student successfully created')
+          navigate('/admin')
         } else {
           window.alert('Wrong email or password')
         }
@@ -87,6 +94,16 @@ const Student = (props) => {
             <div>Add Student</div>
         </div>
         <div className='accountContainer'>
+          <div>Name</div>
+            <div className={'inputContainer'}>
+                <input
+                value={name}
+                placeholder="Enter your name here"
+                onChange={(ev) => setName(ev.target.value)}
+                className={'inputBox'}
+                />
+                <label className="errorLabel">{nameError}</label>
+          </div>
             <div>Email</div>
             <div className={'inputContainer'}>
                 <input

@@ -8,9 +8,6 @@ const Login = (props) => {
   const [passwordError, setPasswordError] = useState('')
 
   const navigate = useNavigate()
-  console.log("Checking status")
-  console.log(typeof props.setAdmin)
-  console.log('Admin: ' + props.isAdmin)
 
   const onButtonClick = () => {
     // Set initial error values to empty
@@ -37,7 +34,11 @@ const Login = (props) => {
     // Authentication calls will be made here...
     checkAccountExists((accountExists) => {
         // If yes, log in
-        if (accountExists) logIn()
+        if (accountExists) {
+          logIn()
+        } else {
+          window.alert('Wrong email or password')
+        }
       })
   }
 
