@@ -8,8 +8,7 @@ const Home = (props) => {
     return (
       <div className="mainContainer">
       <div className='titleContainer'> Home Page</div>
-          {loggedIn ? <div>Your email address is {email}</div> : <div />}
-          {isAdmin ? <div>Admin: true</div> : <div>Admin: false</div>}
+          {loggedIn ? <div className='textContainer'>Your email address is {email}</div> : ''}
       </div>
     );
 };

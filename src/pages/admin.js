@@ -1,15 +1,16 @@
 // pages/about.js
 
 import React from "react";
+import AdminNavbar from "../components/Navbar/admin";
+// import Student from './student';
 
 const Admin = () => {
     return (
-        <div className="mainContainer">
+        <div className="">
             <div className={'titleContainer'}>
-                <div>Admin</div>
+                Admin
             </div>
-            <div>Edit classes or students.</div>
-            
+            <AdminNavbar />
         </div>
     );
 };

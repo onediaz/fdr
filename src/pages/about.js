@@ -8,7 +8,7 @@ const About = () => {
             <div className={'titleContainer'}>
                 <div>About Us!</div>
             </div>
-            <div>This is the about page.</div>
+            <div className="textContainer">This is the about page.</div>
             
         </div>
     );
