@@ -1,27 +1,46 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useState, useEffect } from 'react'; 
 import "./navbar.css";
 
 const AdminNavbar = () => {
+    const [students, setStudents] = useState([]);
+
+    useEffect(() => { 
+        fetch('http://localhost:3080/get-students') 
+        .then(response => response.json()) 
+        .then(data => setStudents(data)) 
+        .catch(err => console.error("Error fetching data: ", err)); 
+    }, []); 
+
     return (
-            <div className="admin_nav_container">
-                <ul className="admin_nav_list">
-                    <li className="nav_item">
-                        <NavLink to="/class" className="nav_link">
-                        Classes
-                        </NavLink>
-                    </li>
+        <div className="admin_nav_container">
+            <ul className="admin_nav_list">
+                <li className="nav_item">
+                    <NavLink to="/class" className="nav_link">
+                    Classes
+                    </NavLink>
+                </li>
+                <div className="admin_nav_item_container">
                     <li className="nav_item">
                         <NavLink
                         to="/student"
                         className="nav_link"
                         >
-                        Student
+                        Students
                         </NavLink>
                     </li>
-                </ul>
+                    <ul> 
+                        {students.map(student => ( 
+                            <li className="students-display" key={student._id}>
+                                {student.name}: {student.email}
+                            </li> 
+                        ))}
+                    </ul> 
+                </div>
+            </ul>
 
-            </div>
+        </div>
     );
 };
 

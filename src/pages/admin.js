@@ -5,9 +5,6 @@ import AdminNavbar from "../components/Navbar/admin";
 // import Student from './student';
 
 const Admin = () => {
-    const getStudents = () => {
-        return
-    }
     return (
         <div className="">
             <div className={'titleContainer'}>

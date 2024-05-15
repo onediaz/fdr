@@ -24,6 +24,7 @@ const Navbar = ({loggedIn, isAdmin}) => {
                         </NavLink>
                     </li>
                     {loggedIn ? <li> <NavLink to="/account" className="nav_link"> Account </NavLink> </li> : ''}
+                    {loggedIn ? <li> <NavLink to="/dashboard" className="nav_link"> Dashboard </NavLink> </li> : ''}
                     {loggedIn ?  '': <li><NavLink to="/login" className="nav_link">Log In</NavLink></li>}
                     {isAdmin ?  <li><NavLink to="/admin" className="nav_link">Admin</NavLink></li> : ''}
                 </ul>

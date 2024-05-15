@@ -13,6 +13,7 @@ import Login from './pages/login'
 import { useEffect, useState } from 'react'
 import Admin from './pages/admin';
 import Student from './pages/student';
+import Dashboard from './pages/dashboard';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -54,6 +55,7 @@ function App() {
                 <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
                 <Route path="/admin" element={<Admin email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
                 <Route path="/student" element={<Student email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
+                <Route path="/dashboard" element={<Dashboard email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
             </Routes>
         </Router>
     </div>

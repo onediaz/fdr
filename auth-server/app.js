@@ -43,6 +43,12 @@ app.get('/get-students', async function(_req, res) {
   res.send(students)
 });
 
+app.get('/get-dashboard', async function(req, res) {
+  const email = req.query.email;
+  const student = await User.findOne({'email': email});
+  res.send({email: student.email, balance: student.balance});
+});
+
 
 // The auth endpoint that creates a new user record or logs a user based on an existing record
 app.post('/auth', async function(req, res) {
