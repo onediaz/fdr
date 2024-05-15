@@ -33,7 +33,10 @@ const AdminNavbar = () => {
                     <ul> 
                         {students.map(student => ( 
                             <li className="students-display" key={student._id}>
-                                {student.name}: {student.email}
+                                <NavLink to={`/dashboard/${student.email}`} state={{email: student.email}}>
+                                    {student.name}
+                                </NavLink>
+                                : {student.email}
                             </li> 
                         ))}
                     </ul> 

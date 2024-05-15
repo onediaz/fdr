@@ -46,7 +46,7 @@ app.get('/get-students', async function(_req, res) {
 app.get('/get-dashboard', async function(req, res) {
   const email = req.query.email;
   const student = await User.findOne({'email': email});
-  res.send({email: student.email, balance: student.balance});
+  res.send({email: student.email, balance: student.balance, name: student.name});
 });
 
 
@@ -85,7 +85,7 @@ app.post('/create-account', async function(req, res) {
   if (user === null) {
     console.log('creating new user' + req.body.name)
     bcrypt.hash(password, 10, function (_err, hash) {
-      const newUser = new User({email: req.body.email, password: hash, name: req.body.name, isAdmin: false});
+      const newUser = new User({email: req.body.email, password: hash, name: req.body.name, isAdmin: false, balance: 100});
       newUser.save();
       let loginData = {
         email,

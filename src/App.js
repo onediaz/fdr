@@ -46,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-            <Navbar loggedIn={loggedIn} isAdmin={isAdmin} />
+            <Navbar loggedIn={loggedIn} isAdmin={isAdmin} email={email}/>
             <Routes>
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/about" element={<About />} />
@@ -55,7 +55,7 @@ function App() {
                 <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
                 <Route path="/admin" element={<Admin email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
                 <Route path="/student" element={<Student email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
-                <Route path="/dashboard" element={<Dashboard email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
+                <Route path="/dashboard/:email" element={<Dashboard/>} />
             </Routes>
         </Router>
     </div>
