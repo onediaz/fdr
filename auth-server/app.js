@@ -125,4 +125,33 @@ app.post('/check-account', async function(req, res) {
   });
 });
 
+//UPDATES
+app.patch('/transfer-balance', async function (req, res) {
+  console.log(req.body);
+  const {email, propEmail, balance} = req.body;
+  console.log('Trying to update balances, ' + email);
+  try {
+    // Find the receiver and update their balance
+    const receiver = await User.findOneAndUpdate(
+      { 'email': email },
+      { $inc: { balance: balance } },
+      { new: true }
+    );
+    console.log(receiver.balance);
+
+    // Find the sender and update their balance
+    const sender = await User.findOneAndUpdate(
+      { 'email': propEmail },
+      { $inc: { balance: -balance } },
+      { new: true }
+    );
+
+    // Return the updated balances
+    res.status(200).json({ receiverBalance: receiver.balance, senderBalance: sender.balance, message: 'success'});
+  } catch (err) {
+    console.error("Error transferring balance: ", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.listen(3080);

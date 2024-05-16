@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./navbar.css";
 
 const Navbar = ({loggedIn, isAdmin, email}) => {
-    console.log("Here is navbar EMAIL: " + email);
+    const viewEmail = email;
     return (
             <div className="nav_container">
                 <NavLink to="/" className="nav_logo">
@@ -25,7 +25,7 @@ const Navbar = ({loggedIn, isAdmin, email}) => {
                         </NavLink>
                     </li>
                     {loggedIn ? <li> <NavLink to="/account" className="nav_link"> Account </NavLink> </li> : ''}
-                    {loggedIn && email ? <li><NavLink to={`/dashboard/${email}`} className="nav_link"> Dashboard </NavLink> </li> : ''}
+                    {loggedIn && viewEmail ? <li><NavLink to={`/dashboard/${viewEmail}`} className="nav_link"> Dashboard </NavLink> </li> : ''}
                     {loggedIn ?  '': <li><NavLink to="/login" className="nav_link">Log In</NavLink></li>}
                     {isAdmin ?  <li><NavLink to="/admin" className="nav_link">Admin</NavLink></li> : ''}
                 </ul>

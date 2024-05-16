@@ -4,17 +4,66 @@ import React from "react";
 import { useState, useEffect } from 'react'; 
 import { useParams } from "react-router-dom";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+    const propEmail = props.email;
     const { email} = useParams();
-    console.log(email);
+    const [balance, setBalance] = useState('');
+    const [studentBalance, setStudentBalance] = useState('');
+    const [propStudentBalance, setpropStudentBalance] = useState('');
+    const [balanceError, setBalanceError] = useState('');
     const [student, setStudent] = useState([]);
-
+    const [propStudent, setPropStudent] = useState([]);
     useEffect(() => { 
         fetch(`http://localhost:3080/get-dashboard?email=${email}`) 
         .then(response => response.json()) 
-        .then(data => setStudent(data)) 
+        .then(data => {
+            setStudent(data);
+            setStudentBalance(data.balance)
+        }) 
         .catch(err => console.error("Error fetching data: ", err)); 
-    }, []); 
+        
+        fetch(`http://localhost:3080/get-dashboard?email=${propEmail}`) 
+        .then(response => response.json()) 
+        .then(data => {
+            setPropStudent(data);
+            setpropStudentBalance(data.balance)
+        }) 
+        .catch(err => console.error("Error fetching data: ", err)); 
+        console.log('Student balance: ' + student.balance);
+        console.log('Prop Student balance: ' + propStudent.balance);
+    }, []);
+
+    const onButtonClick = () => {
+        if (email !== propEmail){
+            if(balance > propStudent.balance){
+                console.log('Available Funds: ' + propStudent.balance);
+                console.log('Send Money: ' + balance);
+                setBalanceError('Not enough funds available');
+            }
+            else if(window.confirm("Do you want to send " + balance + " to " + student.name + "?", )){
+                console.log('Sending ' + + balance + ' to ' + student.name);
+                fetch('http://localhost:3080/transfer-balance', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, propEmail, balance}),
+                })
+                .then((r) => r.json())
+                .then((r) => {
+                    if (r.message === 'success') {
+                        console.log('Updated balance');
+                        setStudentBalance(r.receiverBalance);
+                        setpropStudentBalance(r.senderBalance);
+                    } else {
+                        window.alert('Balance could not update')
+                    }
+                });
+            }
+            
+        }
+        return;
+    };
 
     return (
         <div className="mainContainer">
@@ -24,11 +73,27 @@ const Dashboard = () => {
             <div className="textContainer">
                 User: {student.email}
                 <br/>
-                Balance: {student.balance}
-            </div>
-            <div className="buttonContainer">
+                {student.name} Balance: {studentBalance}
+                <br/>
 
+                Current Balance: {propStudentBalance}
             </div>
+            {email !== propEmail ?
+                <div className="buttonContainer">
+                    <div className={'balanceContainer'}>
+                        <input
+                        type = "number"
+                        value={balance}
+                        placeholder="Enter Balance"
+                        onChange={(ev) => setBalance(ev.target.value)}
+                        className={'balanceBox'}
+                        />
+                        <label className="errorLabel">{balanceError}</label>
+                    </div>
+                    <input type="button" onClick={onButtonClick} value={'Send Money'}/> 
+                        
+                </div>
+                : ''}
         </div>
     );
 };
