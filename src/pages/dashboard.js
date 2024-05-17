@@ -1,4 +1,5 @@
 // pages/dashboard.js
+import './dashboard.css';
 
 import React from "react";
 import { useState, useEffect } from 'react'; 
@@ -55,6 +56,7 @@ const Dashboard = (props) => {
                         console.log('Updated balance');
                         setStudentBalance(r.receiverBalance);
                         setpropStudentBalance(r.senderBalance);
+                        setBalanceError('');
                     } else {
                         window.alert('Balance could not update')
                     }
@@ -66,34 +68,41 @@ const Dashboard = (props) => {
     };
 
     return (
-        <div className="mainContainer">
-            <div className={'titleContainer'}>
-                {student.name}
-            </div>
-            <div className="textContainer">
-                User: {student.email}
-                <br/>
-                {student.name} Balance: {studentBalance}
-                <br/>
-
-                Current Balance: {propStudentBalance}
+        <div className="dashboardContainer">
+            <div className='propContainer'>
+                <div className={'dashboardTitle'}>
+                    Personal
+                </div>
+                <div className="textContainer">
+                    {propStudent.email}
+                </div>
+                <div className='balanceContainer'>
+                    <div className='balanceText'>Total Balance</div>
+                    <div className='balanceAmount'>${propStudentBalance}</div>
+                </div>
             </div>
             {email !== propEmail ?
-                <div className="buttonContainer">
-                    <div className={'balanceContainer'}>
-                        <input
-                        type = "number"
-                        value={balance}
-                        placeholder="Enter Balance"
-                        onChange={(ev) => setBalance(ev.target.value)}
-                        className={'balanceBox'}
-                        />
-                        <label className="errorLabel">{balanceError}</label>
-                    </div>
-                    <input type="button" onClick={onButtonClick} value={'Send Money'}/> 
-                        
+            <div className='studentContainer'>
+                <div className='dashboardTitle'> Viewing {student.name}</div>
+                <div className="textContainer">
+                   {student.email}
                 </div>
-                : ''}
+                <div className='balanceContainer'>
+                    <div className='balanceText'>Total Balance</div>
+                    <div className='balanceAmount'> ${studentBalance} </div>
+                </div>
+                <input
+                    type = "number"
+                    value={balance}
+                    placeholder="Enter Balance"
+                    onChange={(ev) => setBalance(ev.target.value)}
+                    className={'balanceBox'}
+                />
+                <label className="errorLabel">{balanceError}</label>
+                <input type="button" onClick={onButtonClick} value={'Send Money'}/> 
+                        
+            </div>
+            : ''}
         </div>
     );
 };

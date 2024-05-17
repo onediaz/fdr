@@ -3,6 +3,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import Login from './login'
+import '../App.css';
 
 const Account = (props) => {
     const { loggedIn, email, isAdmin} = props
@@ -18,7 +19,7 @@ const Account = (props) => {
     }
     
     return (
-        <div> 
+        <div className='mainContainer'> 
             <div className='titleContainer'> Welcome {} </div>
             {loggedIn ? 
                 <div className='buttonContainer'>

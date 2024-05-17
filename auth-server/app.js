@@ -12,8 +12,10 @@ const db = await JSONFilePreset('database.json', defaultData)
 // const mongoose = require('mongoose');
 import mongoose from 'mongoose';
 import User from './model/User.js';
+const uri = "mongodb+srv://onediaz:UQKBn07aPvwew0va@fdr.fhjb1qe.mongodb.net/?retryWrites=true&w=majority&appName=fdr";
 
-mongoose.connect('mongodb://localhost:27017/fdr-db', {
+// mongoose.connect('mongodb://localhost:27017/fdr-db', {
+  mongoose.connect(uri, {
     dbName: 'fdr-db',
     useNewUrlParser: true,
     useUnifiedTopology: true
