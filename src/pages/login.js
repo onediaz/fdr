@@ -63,18 +63,35 @@ const Login = (props) => {
   //     return r.userExists;
   //   })
   // };
-  const checkAccountExists = (callback) => {
-    fetch(`${REACT_APP_API_URL}/check-account`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        callback(r?.userExists)
+  const checkAccountExists = async (callback) => {
+    try{
+      const response = fetch(`${REACT_APP_API_URL}/check-account`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       })
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new TypeError("Expected JSON response but got something else");
+      }
+      const data = await response.json();
+      console.log('Data:', data);
+    }
+    catch(error) {
+      console.error('Fetch error', error)
+    }
+    // fetch(`${REACT_APP_API_URL}/check-account`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ email }),
+    // })
+    //   .then((r) => r.json())
+    //   .then((r) => {
+    //     callback(r?.userExists)
+    //   })
   };
   
   // Log in a user using email and password
