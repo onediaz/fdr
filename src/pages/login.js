@@ -59,6 +59,7 @@ const Login = (props) => {
     })
     .then((r) => r.json())
     .then((r) => {
+      console.log(r.userExists);
       return r.userExists;
     })
   };
