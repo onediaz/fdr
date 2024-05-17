@@ -33,18 +33,23 @@ const Login = (props) => {
       return
     }
     // Authentication calls will be made here...
-    checkAccountExists((accountExists) => {
-        // If yes, log in
-        if (accountExists) {
-          logIn()
-        } else {
-          window.alert('Wrong email or password')
-        }
-      })
+    if (checkAccountExists()){
+      logIn();
+    } else{
+      window.alert('Wrong email or password');
+    }
+    // checkAccountExists((accountExists) => {
+    //     // If yes, log in
+    //     if (accountExists) {
+    //       logIn()
+    //     } else {
+    //       window.alert('Wrong email or password')
+    //     }
+    //   })
   }
 
   // Call the server API to check if the given email ID already exists
-  const checkAccountExists = (callback) => {
+  const checkAccountExists = () => {
     fetch(`${REACT_APP_API_URL}/check-account`, {
       method: 'POST',
       headers: {
@@ -52,11 +57,24 @@ const Login = (props) => {
       },
       body: JSON.stringify({ email }),
     })
-      .then((r) => r.json())
-      .then((r) => {
-        callback(r?.userExists)
-      })
-  }
+    .then((r) => r.json())
+    .then((r) => {
+      return r.userExists;
+    })
+  };
+  // const checkAccountExists = (callback) => {
+  //   fetch(`${REACT_APP_API_URL}/check-account`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ email }),
+  //   })
+  //     .then((r) => r.json())
+  //     .then((r) => {
+  //       callback(r?.userExists)
+  //     })
+  // }
   
   // Log in a user using email and password
   const logIn = () => {
