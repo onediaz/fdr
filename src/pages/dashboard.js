@@ -4,6 +4,7 @@ import './dashboard.css';
 import React from "react";
 import { useState, useEffect } from 'react'; 
 import { useParams } from "react-router-dom";
+import { REACT_APP_API_URL } from '../App';
 
 const Dashboard = (props) => {
     const propEmail = props.email;
@@ -15,7 +16,7 @@ const Dashboard = (props) => {
     const [student, setStudent] = useState([]);
     const [propStudent, setPropStudent] = useState([]);
     useEffect(() => { 
-        fetch(`http://localhost:3080/get-dashboard?email=${email}`) 
+        fetch(`${REACT_APP_API_URL}/get-dashboard?email=${email}`) 
         .then(response => response.json()) 
         .then(data => {
             setStudent(data);
@@ -23,7 +24,7 @@ const Dashboard = (props) => {
         }) 
         .catch(err => console.error("Error fetching data: ", err)); 
         
-        fetch(`http://localhost:3080/get-dashboard?email=${propEmail}`) 
+        fetch(`${REACT_APP_API_URL}/get-dashboard?email=${propEmail}`) 
         .then(response => response.json()) 
         .then(data => {
             setPropStudent(data);
@@ -42,7 +43,7 @@ const Dashboard = (props) => {
             }
             else if(window.confirm("Do you want to send " + balance + " to " + student.name + "?", )){
                 console.log('Sending ' + + balance + ' to ' + student.name);
-                fetch('http://localhost:3080/transfer-balance', {
+                fetch(`${REACT_APP_API_URL}/transfer-balance`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'

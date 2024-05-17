@@ -1,6 +1,7 @@
 /* eslint-disable */
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { REACT_APP_API_URL } from '../App';
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -44,7 +45,7 @@ const Login = (props) => {
 
   // Call the server API to check if the given email ID already exists
   const checkAccountExists = (callback) => {
-    fetch('http://localhost:3080/check-account', {
+    fetch(`${REACT_APP_API_URL}/check-account`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ const Login = (props) => {
   
   // Log in a user using email and password
   const logIn = () => {
-    fetch('http://localhost:3080/auth', {
+    fetch(`${REACT_APP_API_URL}/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

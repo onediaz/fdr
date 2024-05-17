@@ -2,12 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from 'react'; 
 import "./navbar.css";
+import { REACT_APP_API_URL } from "../../App";
 
 const AdminNavbar = () => {
     const [students, setStudents] = useState([]);
 
     useEffect(() => { 
-        fetch('http://localhost:3080/get-students') 
+        fetch(`${REACT_APP_API_URL}/get-students`)
         .then(response => response.json()) 
         .then(data => setStudents(data)) 
         .catch(err => console.error("Error fetching data: ", err)); 

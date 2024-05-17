@@ -1,6 +1,7 @@
 /* eslint-disable */
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {REACT_APP_API_URL} from '../App';
 
 const Student = (props) => {
   const [name, setName] = useState('')
@@ -52,7 +53,7 @@ const Student = (props) => {
 
   // Call the server API to check if the given email ID already exists
   const checkAccountExists = (callback) => {
-    fetch('http://localhost:3080/check-account', {
+    fetch(`${REACT_APP_API_URL}/check-account`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ const Student = (props) => {
   
   // Log in a user using email and password
   const createAccount = () => {
-    fetch('http://localhost:3080/create-account', {
+    fetch(`${REACT_APP_API_URL}/create-account`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
