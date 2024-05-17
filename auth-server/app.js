@@ -114,7 +114,9 @@ app.post('/verify', (req, res) => {
   // An endpoint to see if there's an existing account for a given email address
 app.post('/check-account', async function(req, res) {
   const { email } = req.body;
+  console.log('Here is email: ' + email);
   const user = await User.findOne({'email': email}, 'password email');
+  console.log('Found email: ' + user !== undefined);
   res.status(200).json({
     status: user != undefined ? 'User exists' : 'User does not exist',
     userExists: user != undefined,
