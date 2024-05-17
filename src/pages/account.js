@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
-import Login from './login'
 import '../App.css';
 
 const Account = (props) => {
-    const { loggedIn, email, isAdmin} = props
+    const { loggedIn, email} = props
     const navigate = useNavigate()
     const onButtonClick = () => {
         if (loggedIn) {

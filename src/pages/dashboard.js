@@ -30,8 +30,7 @@ const Dashboard = (props) => {
             setpropStudentBalance(data.balance)
         }) 
         .catch(err => console.error("Error fetching data: ", err)); 
-        console.log('Student balance: ' + student.balance);
-        console.log('Prop Student balance: ' + propStudent.balance);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onButtonClick = () => {

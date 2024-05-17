@@ -2,12 +2,6 @@ import express from 'express'
 import bcrypt from 'bcrypt'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
-import { JSONFilePreset } from 'lowdb/node'
-
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const defaultData = { users: [] }
-const db = await JSONFilePreset('database.json', defaultData)
 
 // const mongoose = require('mongoose');
 import mongoose from 'mongoose';
