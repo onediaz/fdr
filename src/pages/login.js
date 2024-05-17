@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { REACT_APP_API_URL } from '../App';
+import { Authenticator } from '@aws-amplify/ui-react'
+import '@aws-amplify/ui-react/styles.css'
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -32,12 +34,6 @@ const Login = (props) => {
       setPasswordError('The password must be 8 characters or longer')
       return
     }
-    // Authentication calls will be made here...
-    // if (checkAccountExists()){
-    //   logIn();
-    // } else{
-    //   window.alert('Wrong email or password');
-    // }
     checkAccountExists((accountExists) => {
         // If yes, log in
         if (accountExists) {
@@ -49,20 +45,6 @@ const Login = (props) => {
   }
 
   // Call the server API to check if the given email ID already exists
-  // const checkAccountExists = () => {
-  //   fetch(`${REACT_APP_API_URL}/check-account`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ email }),
-  //   })
-  //   .then((r) => r.json())
-  //   .then((r) => {
-  //     console.log('USER EXISTS: '+ r.userExists);
-  //     return r.userExists;
-  //   })
-  // };
   const checkAccountExists = async (callback) => {
     try{
       const response = fetch(`${REACT_APP_API_URL}/check-account`, {
@@ -152,6 +134,12 @@ const Login = (props) => {
       <div className={'inputContainer'}>
         <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
       </div>
+          
+      <Authenticator>
+        {({ signOut, user }) => (
+            <button onClick={signOut}>Sign out</button>
+        )}
+      </Authenticator>
     </div>
   )
 }

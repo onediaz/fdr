@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^6.1.11",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "aws-amplify": "^6.3.2",
     "bcrypt": "^5.1.1",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
@@ -38,5 +40,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.0.2",
+    "@aws-amplify/backend-cli": "^1.0.3",
+    "aws-cdk": "^2.142.1",
+    "aws-cdk-lib": "^2.142.1",
+    "constructs": "^10.3.0",
+    "esbuild": "^0.21.3",
+    "tsx": "^4.10.4",
+    "typescript": "^5.4.5"
   }
 }
