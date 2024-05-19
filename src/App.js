@@ -15,7 +15,7 @@ import Student from './pages/student';
 import Dashboard from './pages/dashboard';
 import { Amplify } from 'aws-amplify';
 
-const amplifyconfig = JSON.parse(process.env.fdr-amplify-config);
+const amplifyconfig = JSON.parse(process.env.FDR_AMPLIFY_CONFIG);
 Amplify.configure(amplifyconfig);
 
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
