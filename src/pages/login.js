@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { REACT_APP_API_URL } from '../App';
 import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
+import { get } from 'aws-amplify/api';
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
