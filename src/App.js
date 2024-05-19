@@ -13,6 +13,10 @@ import { useEffect, useState } from 'react'
 import Admin from './pages/admin';
 import Student from './pages/student';
 import Dashboard from './pages/dashboard';
+import { Amplify } from 'aws-amplify';
+import amplifyconfig from './amplifyconfiguration.json';
+
+Amplify.configure(amplifyconfig);
 
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';

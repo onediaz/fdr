@@ -12,6 +12,28 @@ const Login = (props) => {
   const [passwordError, setPasswordError] = useState('')
 
   const navigate = useNavigate()
+  
+  const onButtonClick2 = async () => {
+    try {
+      const restOperation = get({
+        apiName: 'studentsAPI',
+        path: '/get-students',
+        options: {
+          body: {
+            message: 'Mow the lawn'
+          }
+        }
+      });
+  
+      const { body } = await restOperation.response;
+      const response = await body.json();
+  
+      console.log('POST call succeeded');
+      console.log(response);
+    } catch (e) {
+      console.log('POST call failed: ', JSON.parse(e.response.body));
+    }
+  }
 
   const onButtonClick = () => {
     // Set initial error values to empty
@@ -132,7 +154,7 @@ const Login = (props) => {
       </div>
       <br />
       <div className={'inputContainer'}>
-        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
+        <input className={'inputButton'} type="button" onClick={onButtonClick2} value={'Log in'} />
       </div>
           
       <Authenticator>
