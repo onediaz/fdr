@@ -13,9 +13,10 @@ const Login = (props) => {
 
   const navigate = useNavigate()
 
-  async function signIn({ email, password }) {
+  async function signIn({ username, password }) {
     try {
-      const { isSignedIn, nextStep } = await signIn({ email, password });
+      const isSignedIn  = await signIn({ username, password });
+      console.log('success: ' , isSignedIn);
     } catch (error) {
       console.log('error signing in', error);
     }
