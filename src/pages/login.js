@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { REACT_APP_API_URL } from '../App';
 import { get, post } from 'aws-amplify/api';
+import { signIn } from 'aws-amplify/auth';
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -11,7 +12,15 @@ const Login = (props) => {
   const [passwordError, setPasswordError] = useState('')
 
   const navigate = useNavigate()
-  
+
+  async function signIn({ email, password }) {
+    try {
+      const { isSignedIn, nextStep } = await signIn({ email, password });
+    } catch (error) {
+      console.log('error signing in', error);
+    }
+  }
+
   const onButtonClick2 = async () => {
     try {
       const restOperation = get({
@@ -153,7 +162,7 @@ const Login = (props) => {
       </div>
       <br />
       <div className={'inputContainer'}>
-        <input className={'inputButton'} type="button" onClick={onButtonClick2} value={'Log in'} />
+        <input className={'inputButton'} type="button" onClick={signIn(email, password)} value={'Log in'} />
       </div>
           
     </div>

@@ -37,7 +37,7 @@ if (!amplifyConfig) {
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
 
-function App({ signOut, user }) {
+function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
   const [isAdmin, setAdmin] = useState(false)
@@ -80,8 +80,6 @@ function App({ signOut, user }) {
                 <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} />} />
             </Routes>
         </Router>
-        <h1>Hello {user.username}</h1>
-        <button onClick={signOut}>Sign out</button>
     </div>
     
   );
