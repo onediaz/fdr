@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { REACT_APP_API_URL } from '../App';
 import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
-import { get } from 'aws-amplify/api';
+import { get, post } from 'aws-amplify/api';
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -32,7 +32,7 @@ const Login = (props) => {
       console.log('POST call succeeded');
       console.log(response);
     } catch (e) {
-      console.log('POST call failed: ', JSON.parse(e.response.body));
+      console.log('POST call failed: ');
     }
   }
 

@@ -15,7 +15,10 @@ import Student from './pages/student';
 import Dashboard from './pages/dashboard';
 import { Amplify } from 'aws-amplify';
 
-const amplifyConfig = process.env.FDR_AMPLIFY_CONFIG;
+// import amplifyconfig from './amplifyconfiguration.json';
+// console.log('FDR_AMPLIFY_CONFIG:', amplifyconfig);
+// Amplify.configure(amplifyconfig);
+const amplifyConfig = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
 console.log('FDR_AMPLIFY_CONFIG:', amplifyConfig);
 
 if (!amplifyConfig) {
