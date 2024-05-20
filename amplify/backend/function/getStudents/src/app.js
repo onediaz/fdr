@@ -25,20 +25,20 @@ app.use(function(req, res, next) {
   next()
 });
 
-import mongoose from 'mongoose';
-import User from '../../../../../auth-server/model/User';
-const uri = "mongodb+srv://onediaz:UQKBn07aPvwew0va@fdr.fhjb1qe.mongodb.net/?retryWrites=true&w=majority&appName=fdr";
+// import mongoose from 'mongoose';
+// import User from '../../../../../auth-server/model/User';
+// const uri = "mongodb+srv://onediaz:UQKBn07aPvwew0va@fdr.fhjb1qe.mongodb.net/?retryWrites=true&w=majority&appName=fdr";
 
-// mongoose.connect('mongodb://localhost:27017/fdr-db', {
-  mongoose.connect(uri, {
-    dbName: 'fdr-db',
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-},).then((res) => {
-  console.log("Database connected");
-}).catch(error => {
-   console.log(error);
- });
+// // mongoose.connect('mongodb://localhost:27017/fdr-db', {
+//   mongoose.connect(uri, {
+//     dbName: 'fdr-db',
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// },).then((res) => {
+//   console.log("Database connected");
+// }).catch(error => {
+//    console.log(error);
+//  });
 
 
 /**********************
@@ -47,8 +47,8 @@ const uri = "mongodb+srv://onediaz:UQKBn07aPvwew0va@fdr.fhjb1qe.mongodb.net/?ret
 
 app.get('/get-students', async function(req, res) {
   // Add your code here
-  const students = await User.find({'isAdmin': false});
-  res.json({success: 'get call1 succeed!', url: req.url, body: students});
+  // const students = await User.find({'isAdmin': false});
+  res.json({success: 'get call1 succeed!', url: req.url, body: 'students'});
 });
 
 app.get('/get-students/*', function(req, res) {

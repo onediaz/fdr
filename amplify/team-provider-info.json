@@ -28,7 +28,7 @@
       "function": {
         "getStudents": {
           "deploymentBucketName": "amplify-fdramplified-fdr-bae6c-deployment",
-          "s3Key": "amplify-builds/getStudents-412f3650706e41585948-build.zip"
+          "s3Key": "amplify-builds/getStudents-55444858484e47647748-build.zip"
         }
       },
       "api": {
