@@ -14,8 +14,6 @@ import Admin from './pages/admin';
 import Student from './pages/student';
 import Dashboard from './pages/dashboard';
 import { Amplify } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
 
 // import amplifyconfig from './amplifyconfiguration.json';
 // console.log('FDR_AMPLIFY_CONFIG:', amplifyconfig);
@@ -84,4 +82,4 @@ function App() {
     
   );
 }
-export default withAuthenticator(App);
+export default App;
