@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { REACT_APP_API_URL } from '../App';
-import { Authenticator } from '@aws-amplify/ui-react'
-import '@aws-amplify/ui-react/styles.css'
 import { get, post } from 'aws-amplify/api';
 
 const Login = (props) => {
@@ -158,11 +156,6 @@ const Login = (props) => {
         <input className={'inputButton'} type="button" onClick={onButtonClick2} value={'Log in'} />
       </div>
           
-      <Authenticator>
-        {({ signOut, user }) => (
-            <button onClick={signOut}>Sign out</button>
-        )}
-      </Authenticator>
     </div>
   )
 }

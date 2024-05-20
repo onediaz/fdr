@@ -48,12 +48,12 @@ const uri = "mongodb+srv://onediaz:UQKBn07aPvwew0va@fdr.fhjb1qe.mongodb.net/?ret
 app.get('/get-students', async function(req, res) {
   // Add your code here
   const students = await User.find({'isAdmin': false});
-  res.json({success: 'get call succeed!', url: req.url, body: students});
+  res.json({success: 'get call1 succeed!', url: req.url, body: students});
 });
 
 app.get('/get-students/*', function(req, res) {
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  res.json({success: 'get call2 succeed!', url: req.url});
 });
 
 /****************************
