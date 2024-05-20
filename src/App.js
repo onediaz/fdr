@@ -80,8 +80,10 @@ function App({ signOut, user }) {
                 <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} />} />
             </Routes>
         </Router>
+        <h1>Hello {user.username}</h1>
+        <button onClick={signOut}>Sign out</button>
     </div>
     
   );
 }
-export default App;
+export default withAuthenticator(App);
