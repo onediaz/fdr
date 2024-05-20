@@ -14,6 +14,8 @@ import Admin from './pages/admin';
 import Student from './pages/student';
 import Dashboard from './pages/dashboard';
 import { Amplify } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
 // import amplifyconfig from './amplifyconfiguration.json';
 // console.log('FDR_AMPLIFY_CONFIG:', amplifyconfig);
@@ -35,7 +37,7 @@ if (!amplifyConfig) {
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
 
-function App() {
+function App({ signOut, user }) {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
   const [isAdmin, setAdmin] = useState(false)

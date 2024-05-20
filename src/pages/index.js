@@ -9,7 +9,10 @@ const Home = (props) => {
       <div className="mainContainer">
         <div className='titleContainer'> Home Page</div>
         {loggedIn ? <div className='textContainer'>Your email address is {email}</div> : ''}
+        <h1>Hello {user.email}</h1>
+        <button onClick={signOut}>Sign out</button>
       </div>
+      
     );
 };
 export default Home;

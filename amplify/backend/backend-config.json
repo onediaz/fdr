@@ -15,6 +15,34 @@
       "service": "API Gateway"
     }
   },
+  "auth": {
+    "fdramplified4facb73e": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
   "function": {
     "getStudents": {
       "build": true,

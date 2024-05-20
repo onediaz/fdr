@@ -28,11 +28,14 @@
       "function": {
         "getStudents": {
           "deploymentBucketName": "amplify-fdramplified-fdr-bae6c-deployment",
-          "s3Key": "amplify-builds/getStudents-55444858484e47647748-build.zip"
+          "s3Key": "amplify-builds/getStudents-6966535365593152592f-build.zip"
         }
       },
       "api": {
         "studentsAPI": {}
+      },
+      "auth": {
+        "fdramplified4facb73e": {}
       }
     }
   }
