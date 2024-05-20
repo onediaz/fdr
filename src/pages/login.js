@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { REACT_APP_API_URL } from '../App';
-import { get, post, auth } from 'aws-amplify/api';
+import { get, post } from 'aws-amplify/api';
 import { signIn } from 'aws-amplify/auth';
 
 const Login = (props) => {
@@ -15,7 +15,7 @@ const Login = (props) => {
 
   async function signIn({ email, password }) {
     try {
-      const isSignedIn  = await auth.signIn(email, password);
+      const isSignedIn  = await signIn(email, password);
       console.log('success: ' , isSignedIn);
     } catch (error) {
       console.log('error signing in', error);
