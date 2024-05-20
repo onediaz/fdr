@@ -13,7 +13,7 @@ const Login = (props) => {
 
   const navigate = useNavigate()
 
-  async function signIn({ email, password }) {
+  const signIn = async (email, password) => {
     try {
       const isSignedIn  = await signIn(email, password);
       console.log('success: ' , isSignedIn);
