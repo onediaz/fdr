@@ -17,16 +17,11 @@ const Navbar = ({loggedIn, isAdmin, email}) => {
                         </NavLink>
                     </li>
                     <li className="nav_item">
-                        <NavLink
-                        to="/about"
-                        className="nav_link"
-                        >
-                        About
-                        </NavLink>
+                        <NavLink to="/about" className="nav_link"> About </NavLink>
                     </li>
-                    {loggedIn ? <li> <NavLink to="/account" className="nav_link"> Account </NavLink> </li> : ''}
+                    <li> <NavLink to="/account" className="nav_link"> Account </NavLink> </li>
+                    {/* <li><NavLink to="/login" className="nav_link">Log In</NavLink></li> */}
                     {loggedIn && viewEmail ? <li><NavLink to={`/dashboard/${viewEmail}`} className="nav_link"> Dashboard </NavLink> </li> : ''}
-                    {loggedIn ?  '': <li><NavLink to="/login" className="nav_link">Log In</NavLink></li>}
                     {isAdmin ?  <li><NavLink to="/admin" className="nav_link">Admin</NavLink></li> : ''}
                 </ul>
 

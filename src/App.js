@@ -16,23 +16,6 @@ import Dashboard from './pages/dashboard';
 import { Amplify } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
 
-// import amplifyconfig from './amplifyconfiguration.json';
-// console.log('FDR_AMPLIFY_CONFIG:', amplifyconfig);
-// Amplify.configure(amplifyconfig);
-const amplifyConfig = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
-console.log('FDR_AMPLIFY_CONFIG:', amplifyConfig);
-
-if (!amplifyConfig) {
-  console.error('FDR_AMPLIFY_CONFIG is not set.');
-} else {
-  try {
-    const parsedConfig = JSON.parse(amplifyConfig);
-    Amplify.configure(parsedConfig);
-  } catch (error) {
-    console.error('Error parsing FDR_AMPLIFY_CONFIG:', error);
-  }
-}
-
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
 
