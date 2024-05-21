@@ -3,8 +3,7 @@
 import React from 'react';
 
 const Home = (props) => {
-    const { loggedIn, email, isAdmin} = props
-    console.log("Is Admin: ", isAdmin)
+    const { loggedIn, email} = props
     return (
       <div className="mainContainer">
         <div className='titleContainer'> Home Page</div>
