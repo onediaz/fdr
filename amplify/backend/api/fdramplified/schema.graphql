@@ -1,0 +1,16 @@
+type Transactions @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  sender: String
+  amount: String
+  receiver: String
+  students: [Student] @manyToMany(relationName: "StudentTransactions")
+}
+
+type Student @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  email: String!
+  name: String!
+  balance: Int!
+  isAdmin: Boolean
+  Transactions: [Transactions] @manyToMany(relationName: "StudentTransactions")
+} 

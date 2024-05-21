@@ -1,0 +1,11 @@
+{
+  "resourceName": "s3fdrstorage",
+  "bucketName": "fdr-storage",
+  "policyUUID": "e3de1349",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ]
+}

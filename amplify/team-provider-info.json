@@ -36,6 +36,9 @@
       },
       "auth": {
         "fdramplified4facb73e": {}
+      },
+      "storage": {
+        "s3fdrstorage": {}
       }
     }
   }

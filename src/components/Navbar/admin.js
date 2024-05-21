@@ -1,19 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from 'react'; 
 import "./navbar.css";
-import { REACT_APP_API_URL } from "../../App";
 
-const AdminNavbar = () => {
-    const [students, setStudents] = useState([]);
-
-    useEffect(() => { 
-        fetch(`${REACT_APP_API_URL}/get-students`)
-        .then(response => response.json()) 
-        .then(data => setStudents(data)) 
-        .catch(err => console.error("Error fetching data: ", err)); 
-    }, []); 
-
+const AdminNavbar =  () => {
     return (
         <div className="admin_nav_container">
             <ul className="admin_nav_list">
@@ -31,16 +20,6 @@ const AdminNavbar = () => {
                         Students
                         </NavLink>
                     </li>
-                    <ul> 
-                        {students.map(student => ( 
-                            <li className="students-display" key={student._id}>
-                                <NavLink to={`/dashboard/${student.email}`} state={{email: student.email}}>
-                                    {student.name}
-                                </NavLink>
-                                : {student.email}
-                            </li> 
-                        ))}
-                    </ul> 
                 </div>
             </ul>
 

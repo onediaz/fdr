@@ -2,6 +2,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {REACT_APP_API_URL} from '../App';
+import { generateClient } from "aws-amplify/api";
+// import { createStudent } from './graphql/mutations.js';
+import { createStudent } from '../graphql/mutations';
+import { listStudents } from '../graphql/queries';
+import { gql } from 'aws-amplify';
+
+const client = generateClient();
 
 const Student = (props) => {
   const [name, setName] = useState('')
@@ -13,7 +20,7 @@ const Student = (props) => {
 
   const navigate = useNavigate()
 
-  const onButtonClick = () => {
+  const onButtonClick = async () => {
     // Set initial error values to empty
     setEmailError('');
     setPasswordError('');
@@ -41,53 +48,58 @@ const Student = (props) => {
       return
     }
     // Authentication calls will be made here...
-    checkAccountExists((accountExists) => {
-        // If yes, log in
-        if (!accountExists){ 
-          createAccount()
-        } else {
-          window.alert('Email already exists')
-        }
+    // List all items
+    console.log('Finding students');
+    const allStudents = await client.graphql({
+      query: listStudents,
+      variables: {
+          filter: {
+              isAdmin: {
+                  eq: true
+              }
+          }
+      }
     });
-  }
+    console.log(allStudents);
 
-  // Call the server API to check if the given email ID already exists
-  const checkAccountExists = (callback) => {
-    fetch(`${REACT_APP_API_URL}/check-account`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        callback(r?.userExists)
-      })
+    // if (!oneStudent) {
+    //   createAccount()
+    // }
+    // else {
+    //   window.alert('Email already exists')
+    // }
   }
   
-  // Log in a user using email and password
-  const createAccount = () => {
-    fetch(`${REACT_APP_API_URL}/create-account`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password , name}),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        if (r.message === 'success') {
-          window.alert('Student successfully created')
-          navigate('/admin')
-        } else {
-          window.alert('Wrong email or password')
-        }
-      })
-      .catch((error) => {
-        console.error('Login error:', error);
-        window.alert('An error occurred during login');
+  const fetchStudentByEmail = async (email) => {
+    try {
+      const studentData = await client.graphql(listStudents, {
+        filter: { email: { eq: email } }
       });
+      return studentData.data.listStudents.items;
+    } catch (error) {
+      console.error("Error fetching student by email:", error);
+      return null;
+    }
+  };
+
+  const createAccount = async () => {
+    try {
+      console.log(`creating new student ${email} with name ${name}`);
+      const newStudent = await client.graphql({
+        query: createStudent,
+        variables: {
+          input: {
+            email: email,
+            name: name,
+            balance: 1000,
+            isAdmin: false
+          }
+        }
+      });
+      console.log('NEW STUDENT: ' + newStudent);
+    } catch (error) {
+      console.error('Error creating student:', error);
+    }
   };
 
   return (

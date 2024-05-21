@@ -13,7 +13,6 @@ import { useState } from 'react'
 import Admin from './pages/admin';
 import Student from './pages/student';
 import Dashboard from './pages/dashboard';
-import { Amplify } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
 
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
