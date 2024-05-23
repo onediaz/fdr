@@ -34,6 +34,10 @@ const Dashboard = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const onButtonClick2 = () => {
+        console.log('In Progress');
+    }
+
     const onButtonClick = () => {
         if (email !== propEmail){
             if(balance > propStudent.balance){
@@ -99,7 +103,7 @@ const Dashboard = (props) => {
                     className={'balanceBox'}
                 />
                 <label className="errorLabel">{balanceError}</label>
-                <input type="button" onClick={onButtonClick} value={'Send Money'}/> 
+                <input type="button" onClick={onButtonClick2} value={'Send Money'}/> 
                         
             </div>
             : ''}
