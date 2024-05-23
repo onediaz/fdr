@@ -16,6 +16,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
+const API = process.env.REACT_APP_FDR_AMPLIFY_CONFIG.API;
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -33,27 +35,33 @@ app.use(function(req, res, next) {
  **********************/
 
 app.get('/get-students', async function(req, res) {
-  // Add your code here
-  // console.log('Finding students');
-  // const allStudents = await client.graphql({
-  //   query: listStudents,
-  //   variables: {
-  //       filter: {
-  //           email: {
-  //               eq: email
-  //           }
-  //       }
-  //     }
-  //   });
-  // const student = allStudents.data.listStudents.items;
   res.json({success: 'get call1 succeed!', url: req.url, body: student});
 });
 
-app.get('/get-students/*', function(req, res) {
+app.get('/get-students/*', async function(req, res) {
   // Add your code here
   const {email} = req.query;
   console.log(email);
-  res.json({success: `get-students/${email} success`, url: req.url});
+  const dashboardStudent = await client.graphql({
+    query: getStudent,
+    variables: {
+        // id: email,
+        filter: {
+            email: {
+                eq: email
+            }
+        }
+    }
+  });
+  if (dashboardStudent.data.listStudents.items.length > 0) {
+    console.log(dashboardStudent.data.listStudents.items[0]); // Access the first student
+    res.json({success: `get-students/${email} success`, url: req.url});
+  } else {
+    console.log("No student found with that email.");
+    res.json({success: `did not find student`, url: req.url});
+  }
+
+  // res.json({success: `get-students/${email} success`, url: req.url});
 });
 
 /****************************

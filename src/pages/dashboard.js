@@ -5,6 +5,10 @@ import React from "react";
 import { useState, useEffect } from 'react'; 
 import { useParams } from "react-router-dom";
 import { REACT_APP_API_URL } from '../App';
+import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
+import { getStudent, listStudents } from '../graphql/queries';
+import { generateClient } from "aws-amplify/api";
+const client = generateClient();
 
 const Dashboard = (props) => {
     const propEmail = props.email;
@@ -15,31 +19,44 @@ const Dashboard = (props) => {
     const [balanceError, setBalanceError] = useState('');
     const [student, setStudent] = useState([]);
     const [propStudent, setPropStudent] = useState([]);
-    useEffect(() => { 
-        fetch(`${REACT_APP_API_URL}/get-dashboard?email=${email}`) 
-        .then(response => response.json()) 
-        .then(data => {
-            setStudent(data);
-            setStudentBalance(data.balance)
-        }) 
-        .catch(err => console.error("Error fetching data: ", err)); 
-        
-        fetch(`${REACT_APP_API_URL}/get-dashboard?email=${propEmail}`) 
-        .then(response => response.json()) 
-        .then(data => {
-            setPropStudent(data);
-            setpropStudentBalance(data.balance)
-        }) 
-        .catch(err => console.error("Error fetching data: ", err)); 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+        try {
+            // const currentUser = await Auth.currentAuthenticatedUser();
+            const currentUser = await fetchUserAttributes();
+            setUser(currentUser);
+            const dashboardStudent = await client.graphql({
+                query: getStudent,
+                variables: {
+                    // id: email,
+                    filter: {
+                        email: {
+                            eq: email
+                        }
+                    }
+                }
+              });
+              if (dashboardStudent.data.listStudents.items.length > 0) {
+                console.log(dashboardStudent.data.listStudents.items[0]); // Access the first student
+              } else {
+                console.log("No student found with that email.");
+              }
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
+        };
+        fetchUser();
     }, []);
 
     const onButtonClick2 = () => {
-        console.log('In Progress');
+        console.log('User Email: ' + user.email);
+        console.log('Dashboard Email: ' + email);
     }
 
     const onButtonClick = () => {
-        if (email !== propEmail){
+        if (user.email !== email){
             if(balance > propStudent.balance){
                 console.log('Available Funds: ' + propStudent.balance);
                 console.log('Send Money: ' + balance);
@@ -87,7 +104,7 @@ const Dashboard = (props) => {
             </div>
             {email !== propEmail ?
             <div className='studentContainer'>
-                <div className='dashboardTitle'> Viewing {student.name}</div>
+                <div className='dashboardTitle'> Viewing Ha{student.name}</div>
                 <div className="textContainer">
                    {student.email}
                 </div>
