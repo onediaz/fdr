@@ -8,6 +8,9 @@ See the License for the specific language governing permissions and limitations 
 
 
 
+// import { generateClient } from "aws-amplify/api";
+// import { listStudents } from '../../../../../src/graphql/queries';
+// const client = generateClient();
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -25,35 +28,32 @@ app.use(function(req, res, next) {
   next()
 });
 
-// import mongoose from 'mongoose';
-// import User from '../../../../../auth-server/model/User';
-// const uri = "mongodb+srv://onediaz:UQKBn07aPvwew0va@fdr.fhjb1qe.mongodb.net/?retryWrites=true&w=majority&appName=fdr";
-
-// // mongoose.connect('mongodb://localhost:27017/fdr-db', {
-//   mongoose.connect(uri, {
-//     dbName: 'fdr-db',
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// },).then((res) => {
-//   console.log("Database connected");
-// }).catch(error => {
-//    console.log(error);
-//  });
-
-
 /**********************
  * Example get method *
  **********************/
 
 app.get('/get-students', async function(req, res) {
   // Add your code here
-  // const students = await User.find({'isAdmin': false});
-  res.json({success: 'get call1 succeed!', url: req.url, body: 'students'});
+  // console.log('Finding students');
+  // const allStudents = await client.graphql({
+  //   query: listStudents,
+  //   variables: {
+  //       filter: {
+  //           email: {
+  //               eq: email
+  //           }
+  //       }
+  //     }
+  //   });
+  // const student = allStudents.data.listStudents.items;
+  res.json({success: 'get call1 succeed!', url: req.url, body: student});
 });
 
 app.get('/get-students/*', function(req, res) {
   // Add your code here
-  res.json({success: 'get call2 succeed!', url: req.url});
+  const {email} = req.query;
+  console.log(email);
+  res.json({success: `get-students/${email} success`, url: req.url});
 });
 
 /****************************

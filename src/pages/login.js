@@ -1,7 +1,5 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { REACT_APP_API_URL } from '../App';
 import { get, post } from 'aws-amplify/api';
 import { Authenticator} from '@aws-amplify/ui-react';
 

@@ -2,13 +2,15 @@
 
 import React from "react";
 
-const About = () => {
+const About = (props) => {
+    console.log(props);
+    const {user} = props;
     return (
         <div className="mainContainer">
             <div className={'titleContainer'}>
                 <div>About Us!</div>
             </div>
-            <div className="textContainer">This is the about page.</div>
+            <div className="textContainer">This is the about page.  </div>
             
         </div>
     );

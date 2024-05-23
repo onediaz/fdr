@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./navbar.css";
+import { listStudents } from '../../graphql/queries';
+import { generateClient } from "aws-amplify/api";
+import { get } from 'aws-amplify/api';
+const client = generateClient();
 
-const AdminNavbar =  () => {
+const AdminNavbar = () => {
+    const [students, setStudents] = useState([]);
+
+    useEffect(() => {
+        const getStudents = async () => {
+        const studentsList = await fetchStudents();
+        setStudents(studentsList);
+        };
+
+        getStudents();
+    }, []);
+
+
+    const fetchStudents = async () => {
+        try {
+            const allStudents = await client.graphql({
+                query: listStudents
+            });
+            return allStudents.data.listStudents.items;
+        } catch (error) {
+            console.error('Error fetching students:', error);
+            return [];
+        }};
+    
     return (
         <div className="admin_nav_container">
             <ul className="admin_nav_list">
@@ -20,9 +47,15 @@ const AdminNavbar =  () => {
                         Students
                         </NavLink>
                     </li>
+                    <ul> 
+                        {students.map(student => ( 
+                            <li className="students-display" key={student._id}>
+                                {student.name}: {student.email}
+                            </li> 
+                        ))}
+                    </ul> 
                 </div>
             </ul>
-
         </div>
     );
 };

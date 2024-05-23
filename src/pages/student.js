@@ -54,33 +54,21 @@ const Student = (props) => {
       query: listStudents,
       variables: {
           filter: {
-              isAdmin: {
-                  eq: true
+              email: {
+                  eq: email
               }
           }
       }
     });
-    console.log(allStudents);
-
-    // if (!oneStudent) {
-    //   createAccount()
-    // }
-    // else {
-    //   window.alert('Email already exists')
-    // }
-  }
-  
-  const fetchStudentByEmail = async (email) => {
-    try {
-      const studentData = await client.graphql(listStudents, {
-        filter: { email: { eq: email } }
-      });
-      return studentData.data.listStudents.items;
-    } catch (error) {
-      console.error("Error fetching student by email:", error);
-      return null;
+    const student = allStudents.data.listStudents.items;
+    const studentExists = student.length === 0 ? false : true;
+    if (!studentExists){
+      createAccount();
     }
-  };
+    else {
+      window.alert('Email already exists');
+    }
+  }
 
   const createAccount = async () => {
     try {
@@ -110,33 +98,17 @@ const Student = (props) => {
         <div className='accountContainer'>
           <div>Name</div>
             <div className={'inputContainer'}>
-                <input
-                value={name}
-                placeholder="Enter your name here"
-                onChange={(ev) => setName(ev.target.value)}
-                className={'inputBox'}
-                />
+                <input value={name} placeholder="Enter your name here" onChange={(ev) => setName(ev.target.value)} className={'inputBox'} />
                 <label className="errorLabel">{nameError}</label>
           </div>
             <div>Email</div>
             <div className={'inputContainer'}>
-                <input
-                value={email}
-                placeholder="Enter your email here"
-                onChange={(ev) => setEmail(ev.target.value)}
-                className={'inputBox'}
-                />
+                <input value={email} placeholder="Enter your email here" onChange={(ev) => setEmail(ev.target.value)} className={'inputBox'} />
                 <label className="errorLabel">{emailError}</label>
             </div>
             <div>Password</div>
             <div className={'inputContainer'}>
-                <input
-                type='password'
-                value={password}
-                placeholder="Enter your password here"
-                onChange={(ev) => setPassword(ev.target.value)}
-                className={'inputBox'}
-                />
+                <input type='password' value={password} placeholder="Enter your password here" onChange={(ev) => setPassword(ev.target.value)} className={'inputBox'}/>
                 <label className="errorLabel">{passwordError}</label>
             </div>
         </div>
