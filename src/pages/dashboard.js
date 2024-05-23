@@ -28,9 +28,8 @@ const Dashboard = (props) => {
             const currentUser = await fetchUserAttributes();
             setUser(currentUser);
             const dashboardStudent = await client.graphql({
-                query: getStudent,
+                query: listStudents,
                 variables: {
-                    // id: email,
                     filter: {
                         email: {
                             eq: email

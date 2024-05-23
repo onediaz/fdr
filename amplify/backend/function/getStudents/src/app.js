@@ -16,7 +16,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
-const API = process.env.REACT_APP_FDR_AMPLIFY_CONFIG.API;
+// Import the Amplify libraries (assuming you have them installed)
+// const Amplify = require('aws-amplify');
+// const { API } = require('@aws-amplify/api'); // For interacting with Amplify APIs
+// Configure Amplify with the parsed configuration
+const API = process.env.REACT_APP_FDR_AMPLIFY_CONFI;
+// Parse the string into a JavaScript object
+// const amplifyConfig = JSON.parse(envVars);
+// Amplify.configure(amplifyConfig);
 
 // declare a new express app
 const app = express()
@@ -35,15 +42,32 @@ app.use(function(req, res, next) {
  **********************/
 
 app.get('/get-students', async function(req, res) {
-  res.json({success: 'get call1 succeed!', url: req.url, body: student});
+  const dashboardStudent = await API.API.graphql({
+    query: listStudents,
+    variables: {
+        // id: email,
+        filter: {
+            email: {
+                eq: email
+            }
+        }
+    }
+  });
+  if (dashboardStudent.data.listStudents.items.length > 0) {
+    console.log(dashboardStudent.data.listStudents.items[0]); // Access the first student
+    res.json({success: `get-students/${email} success`, url: req.url});
+  } else {
+    console.log("No student found with that email.");
+    res.json({success: `did not find student`, url: req.url});
+  }
 });
 
 app.get('/get-students/*', async function(req, res) {
   // Add your code here
   const {email} = req.query;
   console.log(email);
-  const dashboardStudent = await client.graphql({
-    query: getStudent,
+  const dashboardStudent = await API.API.graphql({
+    query: listStudents,
     variables: {
         // id: email,
         filter: {

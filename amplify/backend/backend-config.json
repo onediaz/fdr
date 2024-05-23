@@ -71,24 +71,6 @@
       "service": "Lambda"
     }
   },
-  "parameters": {
-    "AMPLIFY_function_getStudents_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "getStudents"
-        }
-      ]
-    },
-    "AMPLIFY_function_getStudents_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "getStudents"
-        }
-      ]
-    }
-  },
   "storage": {
     "s3fdrstorage": {
       "dependsOn": [],
