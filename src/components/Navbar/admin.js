@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import { listStudents } from '../../graphql/queries';
 import { generateClient } from "aws-amplify/api";
-import { get } from 'aws-amplify/api';
 const client = generateClient();
 
 const AdminNavbar = () => {
@@ -50,7 +49,8 @@ const AdminNavbar = () => {
                     <ul> 
                         {students.map(student => ( 
                             <li className="students-display" key={student._id}>
-                                {student.name}: {student.email}
+                                <NavLink to={`/dashboard/${student.email}`} className="nav_link"> {student.name} </NavLink>
+                                : {student.email}
                             </li> 
                         ))}
                     </ul> 

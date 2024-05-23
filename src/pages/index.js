@@ -7,7 +7,7 @@ const Home = (props) => {
     return (
       <div className="mainContainer">
         <div className='titleContainer'> Home Page</div>
-        {loggedIn ? <div className='textContainer'>Your email address is {email}</div> : ''}
+        <div className='textContainer'>Hi Welcome to FDR. This is a personal project, to advance student learning on income, savings and much much more. </div>
       </div>
       
     );
