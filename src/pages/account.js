@@ -44,7 +44,6 @@ const Account = (props) => {
               Welcome {email}
               </div>
               <input type='button' className='inputButton' onClick={signOut} value={'Sign out'}/>
-              <input type='button' className='inputButton' onClick={onButtonClick2} value={'GET Request'}/>
             </div>
             
           )}

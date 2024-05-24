@@ -12,36 +12,35 @@ const client = generateClient();
 
 const Dashboard = (props) => {
     const propEmail = props.email;
-    const { email} = useParams();
+    const { dashboardEmail} = useParams();
     const [balance, setBalance] = useState('');
     const [studentBalance, setStudentBalance] = useState('');
     const [propStudentBalance, setpropStudentBalance] = useState('');
     const [balanceError, setBalanceError] = useState('');
     const [student, setStudent] = useState([]);
     const [propStudent, setPropStudent] = useState([]);
-    const [user, setUser] = useState(null);
+    const [currentStudent, setCurrentStudent] = useState(null);
+    const [dashboardStudent, setDashboardStudent] = useState(null);
 
     useEffect(() => {
         const fetchUser = async () => {
         try {
             // const currentUser = await Auth.currentAuthenticatedUser();
-            const currentUser = await fetchUserAttributes();
-            setUser(currentUser);
-            const dashboardStudent = await client.graphql({
-                query: listStudents,
-                variables: {
-                    filter: {
-                        email: {
-                            eq: email
-                        }
-                    }
-                }
-              });
-              if (dashboardStudent.data.listStudents.items.length > 0) {
-                console.log(dashboardStudent.data.listStudents.items[0]); // Access the first student
-              } else {
+            const currentUser = findStudent((await fetchUserAttributes()).email);
+            const dashboardUser = findStudent(dashboardEmail);
+
+            if (currentUser.data.listStudents.items.length > 0) {
+                setCurrentStudent(currentUser.data.listStudents.items[0]);
+                console.log(currentStudent); // Access the first student
+            } else {
                 console.log("No student found with that email.");
-              }
+            }
+            if (dashboardUser.data.listStudents.items.length > 0) {
+                setDashboardStudent(dashboardUser.data.listStudents.items[0]);
+                console.log(dashboardStudent); // Access the first student
+            } else {
+                console.log("No student found with that email.");
+            }
         } catch (error) {
             console.error('Error fetching user:', error);
         }
@@ -50,8 +49,22 @@ const Dashboard = (props) => {
     }, []);
 
     const onButtonClick2 = () => {
-        console.log('User Email: ' + user.email);
-        console.log('Dashboard Email: ' + email);
+        console.log('Current Student Email: ' + currentStudent.email);
+        console.log('Dashboard Student Email: ' + dashboardStudent.email);
+    }
+
+    const findStudent = async (email) => {
+        const student = await client.graphql({
+            query: listStudents,
+            variables: {
+                filter: {
+                    email: {
+                        eq: email
+                    }
+                }
+            }
+          });
+        return student;
     }
 
     const onButtonClick = () => {
@@ -94,22 +107,22 @@ const Dashboard = (props) => {
                     Personal
                 </div>
                 <div className="textContainer">
-                    {propStudent.email}
+                    {currentStudent.email}
                 </div>
                 <div className='balanceContainer'>
                     <div className='balanceText'>Total Balance</div>
-                    <div className='balanceAmount'>${propStudentBalance}</div>
+                    <div className='balanceAmount'>${currentStudent.balance}</div>
                 </div>
             </div>
-            {email !== propEmail ?
+            {currentStudent.email !== dashboardStudent.email ?
             <div className='studentContainer'>
-                <div className='dashboardTitle'> Viewing Ha{student.name}</div>
+                <div className='dashboardTitle'> Viewing {dashboardStudent.name}</div>
                 <div className="textContainer">
-                   {student.email}
+                   {dashboardStudent.email}
                 </div>
                 <div className='balanceContainer'>
                     <div className='balanceText'>Total Balance</div>
-                    <div className='balanceAmount'> ${studentBalance} </div>
+                    <div className='balanceAmount'> ${dashboardStudent.balance} </div>
                 </div>
                 <input
                     type = "number"

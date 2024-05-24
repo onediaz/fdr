@@ -16,6 +16,15 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
+// // Import the Amplify libraries (assuming you have them installed)
+// const Amplify = require('aws-amplify');
+// const { API } = require('@aws-amplify/api'); // For interacting with Amplify APIs
+// // Configure Amplify with the parsed configuration
+// const envVars = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
+// // Parse the string into a JavaScript object
+// const amplifyConfig = JSON.parse(envVars);
+// Amplify.configure(amplifyConfig);
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -28,12 +37,6 @@ app.use(function(req, res, next) {
   next()
 });
 
-const AWS = require('aws-sdk');
-
-// Configure DynamoDB client
-AWS.config.update({ region: 'us-east-2' }); // Replace with your region
-const docClient = new AWS.DynamoDB.DocumentClient();
-
 /**********************
  * Example get method *
  **********************/
@@ -42,26 +45,23 @@ app.get('/get-students', async function(req, res) {
   console.log('------------ Here is the API ----------');
   console.log(API);
   const email = 'juand4535@gmail.com';
-  const params = {
-    TableName: 'YourTableName',
-    FilterExpression: 'email = :email',
-    ExpressionAttributeValues: {
-      ':email': email
+  const dashboardStudent = await API.API.graphql({
+    query: listStudents,
+    variables: {
+        // id: email,
+        filter: {
+            email: {
+                eq: email
+            }
+        }
     }
-  };
-
-  try {
-    const data = await docClient.scan(params).promise();
-    if (data.Items.length > 0) {
-      console.log(data.Items[0]); // Access the first student
-      res.json({ success: `get-students/${email} success`, url: req.url });
-    } else {
-      console.log("No student found with that email.");
-      res.json({ success: `did not find student`, url: req.url });
-    }
-  } catch (error) {
-    console.error('Error fetching student:', error);
-    res.status(500).json({ error: 'Failed to retrieve student' });
+  });
+  if (dashboardStudent.data.listStudents.items.length > 0) {
+    console.log(dashboardStudent.data.listStudents.items[0]); // Access the first student
+    res.json({success: `get-students/${email} success`, url: req.url});
+  } else {
+    console.log("No student found with that email.");
+    res.json({success: `did not find student`, url: req.url});
   }
 });
 
