@@ -67,38 +67,38 @@ const Dashboard = (props) => {
         return student;
     }
 
-    const onButtonClick = () => {
-        if (user.email !== email){
-            if(balance > propStudent.balance){
-                console.log('Available Funds: ' + propStudent.balance);
-                console.log('Send Money: ' + balance);
-                setBalanceError('Not enough funds available');
-            }
-            else if(window.confirm("Do you want to send " + balance + " to " + student.name + "?", )){
-                console.log('Sending ' + + balance + ' to ' + student.name);
-                fetch(`${REACT_APP_API_URL}/transfer-balance`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, propEmail, balance}),
-                })
-                .then((r) => r.json())
-                .then((r) => {
-                    if (r.message === 'success') {
-                        console.log('Updated balance');
-                        setStudentBalance(r.receiverBalance);
-                        setpropStudentBalance(r.senderBalance);
-                        setBalanceError('');
-                    } else {
-                        window.alert('Balance could not update')
-                    }
-                });
-            }
+    // const onButtonClick = () => {
+    //     if (user.email !== email){
+    //         if(balance > propStudent.balance){
+    //             console.log('Available Funds: ' + propStudent.balance);
+    //             console.log('Send Money: ' + balance);
+    //             setBalanceError('Not enough funds available');
+    //         }
+    //         else if(window.confirm("Do you want to send " + balance + " to " + student.name + "?", )){
+    //             console.log('Sending ' + + balance + ' to ' + student.name);
+    //             fetch(`${REACT_APP_API_URL}/transfer-balance`, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({ email, propEmail, balance}),
+    //             })
+    //             .then((r) => r.json())
+    //             .then((r) => {
+    //                 if (r.message === 'success') {
+    //                     console.log('Updated balance');
+    //                     setStudentBalance(r.receiverBalance);
+    //                     setpropStudentBalance(r.senderBalance);
+    //                     setBalanceError('');
+    //                 } else {
+    //                     window.alert('Balance could not update')
+    //                 }
+    //             });
+    //         }
             
-        }
-        return;
-    };
+    //     }
+    //     return;
+    // };
 
     return (
         <div className="dashboardContainer">
