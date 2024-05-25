@@ -16,14 +16,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
-// // Import the Amplify libraries (assuming you have them installed)
-// const Amplify = require('aws-amplify');
-// const { API } = require('@aws-amplify/api'); // For interacting with Amplify APIs
-// // Configure Amplify with the parsed configuration
-// const envVars = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
-// // Parse the string into a JavaScript object
-// const amplifyConfig = JSON.parse(envVars);
-// Amplify.configure(amplifyConfig);
+// Import the Amplify libraries (assuming you have them installed)
+const Amplify = require('aws-amplify');
+const { API } = require('@aws-amplify/api'); // For interacting with Amplify APIs
+// Configure Amplify with the parsed configuration
+const envVars = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
+// Parse the string into a JavaScript object
+const amplifyConfig = JSON.parse(envVars);
+Amplify.configure(amplifyConfig);
 
 // declare a new express app
 const app = express()

@@ -36,7 +36,8 @@
         "fdramplified": {}
       },
       "auth": {
-        "fdramplified4facb73e": {}
+        "fdramplified4facb73e": {},
+        "fdramplified": {}
       },
       "storage": {
         "s3fdrstorage": {}

@@ -26,7 +26,7 @@ const Login = (props) => {
     } catch (e) {
       console.log('POST call failed: ');
     }
-  }
+  };
 
   return (
     <div className={'mainContainer'}>
@@ -36,6 +36,7 @@ const Login = (props) => {
       <Authenticator>
         {({ signOut, user }) => {
           setEmail(user.signInDetails.loginId);
+          createAccount();
           return (
             <div className='mainContainer'>
               <div className='textContainer'>

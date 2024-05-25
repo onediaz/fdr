@@ -37,7 +37,7 @@
     }
   },
   "auth": {
-    "fdramplified4facb73e": {
+    "fdramplified": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -50,7 +50,9 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL"
+          "EMAIL",
+          "NAME",
+          "NICKNAME"
         ],
         "socialProviders": [],
         "usernameAttributes": [
