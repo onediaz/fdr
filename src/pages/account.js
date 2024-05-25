@@ -2,17 +2,16 @@
 
 import React, { useState } from 'react';
 import '../App.css';
-import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
-import { Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
-import { createStudent } from '../graphql/mutations';
-import { listStudents } from '../graphql/queries';
-import { generateClient } from "aws-amplify/api";
-const client = generateClient();
+// import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
+import { Authenticator} from '@aws-amplify/ui-react';
+// import { createStudent } from '../graphql/mutations';
+// import { listStudents } from '../graphql/queries';
+// import { generateClient } from "aws-amplify/api";
+// const client = generateClient();
 
 const Account = (props) => {
     const [email, setEmail] = useState('');
-    const [name, setStudentName] = useState('');
-    const { authStatus } = useAuthenticator(context => [context.authStatus]);
+    // const [name, setStudentName] = useState('');
     const formFields = {
         signUp: {
           email: {
