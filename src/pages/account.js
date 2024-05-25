@@ -33,67 +33,58 @@ const Account = (props) => {
         },
        };
 
-       const checkAccount = async () => {
-        console.log('Checking Account');
-        const tempUser = await fetchUserAttributes();
-        // setStudentName(tempUser.name);
-        console.log(tempUser);
-        const allStudents = await client.graphql({
-            query: listStudents,
-            variables: {
-                filter: {
-                    email: {
-                        eq: tempUser.email
-                    }
-                }
-            }
-          });
-          const student = allStudents.data.listStudents.items;
-          const studentExists = student.length === 0 ? false : true;
-          if (!studentExists){
-            createAccount();
-          }
-          else {
-            window.alert('Email already exists');
-          }
-      };
+    //    const checkAccount = async () => {
+    //     console.log('Checking Account');
+    //     const tempUser = await fetchUserAttributes();
+    //     // setStudentName(tempUser.name);
+    //     console.log(tempUser);
+    //     const allStudents = await client.graphql({
+    //         query: listStudents,
+    //         variables: {
+    //             filter: {
+    //                 email: {
+    //                     eq: tempUser.email
+    //                 }
+    //             }
+    //         }
+    //       });
+    //       const student = allStudents.data.listStudents.items;
+    //       const studentExists = student.length === 0 ? false : true;
+    //       if (!studentExists){
+    //         createAccount();
+    //       }
+    //       else {
+    //         window.alert('Email already exists');
+    //       }
+    //   };
 
-      const createAccount = async () => {
-        console.log('Creating New Account');
-        try {
-            console.log(`creating new student ${email} with name ${name}`);
-            const newStudent = await client.graphql({
-              query: createStudent,
-              variables: {
-                input: {
-                  email: email,
-                  name: name,
-                  balance: 1000,
-                  isAdmin: false
-                }
-              }
-            });
-            console.log('NEW STUDENT: ' + newStudent);
-          } catch (error) {
-            console.error('Error creating student:', error);
-          }
-      }
+    //   const createAccount = async () => {
+    //     console.log('Creating New Account');
+    //     try {
+    //         console.log(`creating new student ${email} with name ${name}`);
+    //         const newStudent = await client.graphql({
+    //           query: createStudent,
+    //           variables: {
+    //             input: {
+    //               email: email,
+    //               name: name,
+    //               balance: 1000,
+    //               isAdmin: false
+    //             }
+    //           }
+    //         });
+    //         console.log('NEW STUDENT: ' + newStudent);
+    //       } catch (error) {
+    //         console.error('Error creating student:', error);
+    //       }
+    //   }
 
   return (
     <div className={'mainContainer'}>
         <div className={'titleContainer'}>
             <div>Account</div>
         </div>
-        <Authenticator
-            formFields={formFields}
-            onStateChange={(authState, authData) => {
-                console.log(authState);
-                if (authState === 'signedUp' || authState === 'signedIn') {
-                // checkAccount();
-                    console.log('checking state');
-                }
-            }}
-        >
+        <Authenticator formFields={formFields} >
             {({ signOut, user, authState }) => {
             setEmail(user.signInDetails.loginId);
             console.log('Authenticator Rendered');
