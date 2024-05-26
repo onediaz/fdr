@@ -83,8 +83,7 @@ const Account = (props) => {
         <div className={'titleContainer'}>
             <div>Account</div>
         </div>
-        <Authenticator formFields={formFields} onStateChange={authState}>
-            console.log(authState);
+        <Authenticator formFields={formFields} >
             {({ signOut, user }) => {
             setEmail(user.signInDetails.loginId);
             console.log('Authenticator Rendered');
