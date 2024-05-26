@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./navbar.css";
+import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
 
-const Navbar = ({loggedIn, isAdmin, email}) => {
-    const viewEmail = email;
+const Navbar = () => {
+    
+    const [email, setEmail] = useState('');
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
+    const fetchUser = async () => {
+        
+        const tempUser = await fetchUserAttributes();
+        setEmail(tempUser.email);
+        console.log('tempUser from navbar: ', tempUser);
+    }
+
     return (
             <div className="nav_container">
                 <NavLink to="/" className="nav_logo">
@@ -19,11 +33,9 @@ const Navbar = ({loggedIn, isAdmin, email}) => {
                     <li className="nav_item">
                         <NavLink to="/about" className="nav_link"> About </NavLink>
                     </li>
+                    <li><NavLink to="/admin" className="nav_link">Students</NavLink></li> 
+                    <li><NavLink to={`/dashboard/${email}`} className="nav_link"> Dashboard </NavLink> </li>
                     <li> <NavLink to="/account" className="nav_link"> Account </NavLink> </li>
-                    {/* <li><NavLink to="/login" className="nav_link">Log In</NavLink></li> */}
-                    {loggedIn && viewEmail ? <li><NavLink to={`/dashboard/${viewEmail}`} className="nav_link"> Dashboard </NavLink> </li> : ''}
-                    <li><NavLink to="/admin" className="nav_link">Admin</NavLink></li> 
-                    {/* {isAdmin ?  <li><NavLink to="/admin" className="nav_link">Admin</NavLink></li> : ''} */}
                 </ul>
 
             </div>

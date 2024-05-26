@@ -26,6 +26,7 @@ const Dashboard = (props) => {
     const fetchUser = async () => {
         try {
             const tempUser = await fetchUserAttributes();
+            console.log(tempUser);
             if(tempUser){
                 const currentUser = await client.graphql({
                     query: listStudents,

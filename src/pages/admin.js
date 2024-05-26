@@ -8,7 +8,7 @@ const Admin = () => {
     return (
         <div className="">
             <div className={'titleContainer'}>
-                Admin
+                Students
             </div>
             <AdminNavbar />
         </div>
