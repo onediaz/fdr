@@ -85,6 +85,10 @@ const Student = (props) => {
         }
       });
       console.log('NEW STUDENT: ' + newStudent);
+      window.alert('Successfully created student');
+      setName('');
+      setEmail('');
+
     } catch (error) {
       console.error('Error creating student:', error);
     }
@@ -105,11 +109,6 @@ const Student = (props) => {
             <div className={'inputContainer'}>
                 <input value={email} placeholder="Enter your email here" onChange={(ev) => setEmail(ev.target.value)} className={'inputBox'} />
                 <label className="errorLabel">{emailError}</label>
-            </div>
-            <div>Password</div>
-            <div className={'inputContainer'}>
-                <input type='password' value={password} placeholder="Enter your password here" onChange={(ev) => setPassword(ev.target.value)} className={'inputBox'}/>
-                <label className="errorLabel">{passwordError}</label>
             </div>
         </div>
         <div className={'inputContainer'}>

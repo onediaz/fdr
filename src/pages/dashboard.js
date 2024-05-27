@@ -85,7 +85,7 @@ const Dashboard = (props) => {
         console.log('Dashboard Student:', dashboardStudent);
     
         try {
-            if (currentStudentBalance > balance && window.confirm(`Do you want to send ${currentStudent.name} $${balance}?`)) {
+            if (currentStudentBalance > balance && window.confirm(`Do you want to send ${dashboardStudent.name} $${balance}?`)) {
                 // Update current student's balance
                 const updatedCurrentBalance = Number(currentStudentBalance) - Number(balance);
                 const currentStudentResult = await client.graphql({

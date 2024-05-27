@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
+import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
 import { Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
 import { createStudent } from '../graphql/mutations';
 import { listStudents } from '../graphql/queries';
@@ -68,13 +68,35 @@ const Account = (props) => {
           }
     };
 
+    const setAdmin = async () => {
+        const adminUser = await fetchAuthSession();
+        try {
+            const adminExists = adminUser.tokens.accessToken.payload['cognito:groups'];
+            if (adminExists === undefined){
+                props.setAdmin(false);
+            }
+            else if(adminExists.includes('admin')) {
+                props.setAdmin(true);
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         if (authStatus === 'authenticated') {
           checkAccount();
+          setAdmin();
+        }
+        else {
+            setEmail('');
+            props.setEmail('');
+            props.setAdmin(false);
         }
       }, [authStatus]);
 
-  return (
+    return (
     <div className={'mainContainer'}>
         <div className={'titleContainer'}>
             <div>Account</div>
@@ -82,6 +104,7 @@ const Account = (props) => {
         <Authenticator formFields={formFields}>
             {({ signOut, user }) => {
             setEmail(user.signInDetails.loginId);
+            props.setEmail(user.signInDetails.loginId);
             return (
                 <div className='mainContainer'>
                     <div className='textContainer'>

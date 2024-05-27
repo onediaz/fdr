@@ -1,26 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./navbar.css";
-import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
+import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
 
-const Navbar = () => {
-    
-    const [email, setEmail] = useState('');
-
-    useEffect(() => {
-        fetchUser();
-    }, []);
-
-    const fetchUser = async () => {
-        try {
-            const tempUser = await fetchUserAttributes();
-            setEmail(tempUser.email);
-            console.log('tempUser from navbar: ', tempUser);
-        }
-        catch(error) {
-            console.log(error);
-        }
-    }
+const Navbar = ({email, setEmail, isAdmin}) => {
 
     return (
             <div className="nav_container">
@@ -38,7 +21,8 @@ const Navbar = () => {
                         <NavLink to="/about" className="nav_link"> About </NavLink>
                     </li>
                     <li><NavLink to="/admin" className="nav_link">Students</NavLink></li> 
-                    <li><NavLink to={`/dashboard/${email}`} className="nav_link"> Dashboard </NavLink> </li>
+                    {email ? <li><NavLink to={`/dashboard/${email}`} className="nav_link"> Dashboard </NavLink> </li> : ''}
+                    {isAdmin ? <li><NavLink to={`/create-student`} className="nav_link"> Admin </NavLink> </li> : ''}
                     <li> <NavLink to="/account" className="nav_link"> Account </NavLink> </li>
                 </ul>
 

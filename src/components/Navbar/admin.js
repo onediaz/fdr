@@ -62,7 +62,7 @@ const AdminNavbar = () => {
                 items={[
                 { label: 'Class 1', value: 'Class 1', 
                     content: <div className="admin_nav_item_container">
-                    Students
+                    If you are logged in, you can click on a student name to view their balance.
                     <Table highlightOnHover={true} variation="striped">
                         <TableHead>
                             <TableRow>
