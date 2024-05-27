@@ -12,10 +12,14 @@ const Navbar = () => {
     }, []);
 
     const fetchUser = async () => {
-        
-        const tempUser = await fetchUserAttributes();
-        setEmail(tempUser.email);
-        console.log('tempUser from navbar: ', tempUser);
+        try {
+            const tempUser = await fetchUserAttributes();
+            setEmail(tempUser.email);
+            console.log('tempUser from navbar: ', tempUser);
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 
     return (

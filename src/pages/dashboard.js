@@ -26,7 +26,6 @@ const Dashboard = (props) => {
     const fetchUser = async () => {
         try {
             const tempUser = await fetchUserAttributes();
-            console.log(tempUser);
             if(tempUser){
                 const currentUser = await client.graphql({
                     query: listStudents,
@@ -86,7 +85,7 @@ const Dashboard = (props) => {
         console.log('Dashboard Student:', dashboardStudent);
     
         try {
-            if (currentStudentBalance > balance) {
+            if (currentStudentBalance > balance && window.confirm(`Do you want to send ${currentStudent.name} $${balance}?`)) {
                 // Update current student's balance
                 const updatedCurrentBalance = Number(currentStudentBalance) - Number(balance);
                 const currentStudentResult = await client.graphql({
@@ -111,17 +110,13 @@ const Dashboard = (props) => {
                         }
                     }
                 });
-                console.log('Updated Dashboard Student Balance:', dashboardStudentResult);
     
                 // Update local state
                 setCurrentStudentBalance(updatedCurrentBalance);
                 setDashboardStudentBalance(updatedDashboardBalance);
-    
-                console.log('Updated Balances:');
-                console.log('Current Student Balance:', updatedCurrentBalance);
-                console.log('Dashboard Student Balance:', dashboardStudentBalance);
             }
             console.log('Success');
+            setBalance('');
         } catch (error) {
             console.log('Catching Balance Error:');
             console.log(error);
@@ -135,9 +130,7 @@ const Dashboard = (props) => {
                     <div className={'dashboardTitle'}>
                         Personal
                     </div>
-                    <div className="textContainer">
                         {currentStudentEmail}
-                    </div>
                     <div className='balanceContainer'>
                         <div className='balanceText'>Total Balance</div>
                         <div className='balanceAmount'>${currentStudentBalance}</div>
@@ -146,9 +139,7 @@ const Dashboard = (props) => {
             {dashboardStudent && currentStudentEmail !== dashboardStudentEmail &&
             <div className='studentContainer'>
                 <div className='dashboardTitle'> Viewing {dashboardStudent.name}</div>
-                <div className="textContainer">
                    {dashboardStudent.email}
-                </div>
                 <div className='balanceContainer'>
                     <div className='balanceText'>Total Balance</div>
                     <div className='balanceAmount'> ${dashboardStudentBalance} </div>
