@@ -3,11 +3,13 @@ import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import { listStudents } from '../../graphql/queries';
 import { generateClient } from "aws-amplify/api";
-import { Tabs, Table, TableBody, TableCell, TableHead, TableRow } from '@aws-amplify/ui-react';
+import { Tabs, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@aws-amplify/ui-react';
 const client = generateClient();
 
 const AdminNavbar = () => {
     const [students, setStudents] = useState([]);
+    const [sortOrder, setSortOrder] = useState(true);
+    const [sortIcon, setSortIcon] = useState('▼');
 
     useEffect(() => {
         const getStudents = async () => {
@@ -30,6 +32,29 @@ const AdminNavbar = () => {
             return [];
         }};
     
+    const sortStudents = async () => {
+        try {
+            if (sortOrder){
+                const studentList =  await fetchStudents();
+                studentList.sort((a,b) =>  b.name.localeCompare(a.name));
+                setStudents(studentList);
+                setSortOrder(false);
+                setSortIcon('▲');
+            }
+            else {
+                const studentList =  await fetchStudents();
+                studentList.sort((a,b) =>  a.name.localeCompare(b.name));
+                setStudents(studentList);
+                setSortOrder(true);
+                setSortIcon('▼');
+            }
+            
+        }
+        catch {
+            console.log('Sorting Error')
+        }
+    };
+    
     return (
         <div className="admin_nav_container">
             <Tabs
@@ -41,13 +66,13 @@ const AdminNavbar = () => {
                     <Table highlightOnHover={true} variation="striped">
                         <TableHead>
                             <TableRow>
-                                <TableCell as="th"> Name </TableCell>
+                                <TableCell as="th"> Name <Button ariaLabel="Arrow Down" size="small" onClick={sortStudents}> {sortIcon} </Button></TableCell>
                                 <TableCell as="th"> Email </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {students.map(student => ( 
-                                <TableRow className="students-display" key={student._id}>
+                                <TableRow className="students-display" key={student.id}>
                                     <TableCell> <NavLink to={`/dashboard/${student.email}`} className="nav_link"> {student.name} </NavLink> </TableCell>
                                     <TableCell> {student.email}</TableCell>
                                 </TableRow> 
