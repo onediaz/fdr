@@ -50,7 +50,7 @@ const AdminNavbar = () => {
             }
             
         }
-        catch {
+        catch(error) {
             console.log('Sorting Error')
         }
     };

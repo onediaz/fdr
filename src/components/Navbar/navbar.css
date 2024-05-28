@@ -2,12 +2,7 @@
 .nav_container {
    flex-direction: column;
    display: flex;
-   /* align-items: center; */
-   /* height: 100vh; */
-   padding-left: 20%;
-   padding-right: 20%;
-   padding-top: 2%;
-   font-weight: bolder;
+   align-items: center;
 }
 
 .admin_nav_container {
@@ -19,16 +14,18 @@
 .nav_logo {
    color: var(--first-color);
    transition: color 0.4s;
-   font-size: var(--h2-font-size);
+   /* font-size: var(--h2-font-size); */
+   font-size: 25px;
    font-family: var(--second-font);
    text-align: center;
+   padding-left: 25%;
 }
 
 .nav_list {
-   display: flex;
-   flex-wrap: wrap;
+   /* display: flex;
+   flex-wrap: wrap; */
    list-style-type: none;
-   justify-content: space-around;
+   /* justify-content: space-around; */
    /* align-items: center; */
    border-radius: 1px;
    border-color: black;
@@ -49,4 +46,44 @@
 .nav_link:hover {
    color: var(--first-color);
    text-decoration: underline;
+}
+
+.nav-tabs {
+   display: flex;
+   flex-direction: row;
+}
+
+.custom-tabs-item {
+   position: relative;
+   background-color: var(--amplify-components-tabs-item-background-color);
+   box-sizing: border-box;
+   color: var(--amplify-components-tabs-item-color);
+   font-size: var(--amplify-components-tabs-item-font-size);
+   font-weight: var(--amplify-components-tabs-item-font-weight);
+   padding: var(--amplify-components-tabs-item-padding-vertical) var(--amplify-components-tabs-item-padding-horizontal);
+   text-align: var(--amplify-components-tabs-item-text-align);
+   transition: all var(--amplify-components-tabs-item-transition-duration);
+   border-color: var(--amplify-components-tabs-item-border-color);
+   flex: var(--internal-item-flex);
+   margin-block-start: var(--internal-item-margin-start);
+   margin-block-end: var(--internal-item-margin-end);
+   text-decoration: none;
+}
+
+.custom-tabs-item:hover {
+   color: var(--amplify-components-tabs-item-hover-color);
+   cursor: pointer;
+}
+
+.custom-tabs-item--active {
+   color: var(--amplify-components-tabs-item-active-color);
+   border-color: var(--amplify-components-tabs-item-active-border-color);
+   background-color: var(--amplify-components-tabs-item-active-background-color);
+   transition-property: none;
+}
+.custom-tab-item[aria-selected='true']{
+   color: var(--amplify-components-tabs-item-active-color);
+   border-color: var(--amplify-components-tabs-item-active-border-color);
+   background-color: var(--amplify-components-tabs-item-active-background-color);
+   transition-property: none;
 }
