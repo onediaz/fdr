@@ -13,17 +13,14 @@ const client = generateClient();
 const Student = (props) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [nameError, setNameError] = useState('')
   const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
 
   const navigate = useNavigate()
 
   const onButtonClick = async () => {
     // Set initial error values to empty
     setEmailError('');
-    setPasswordError('');
     setNameError('');
   
     // Check if the user has entered both fields correctly
@@ -37,14 +34,6 @@ const Student = (props) => {
     }
     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setEmailError('Please enter a valid email')
-      return
-    }
-    if (password === '') {
-      setPasswordError('Please enter a password')
-      return
-    }
-    if (password.length < 7) {
-      setPasswordError('The password must be 8 characters or longer')
       return
     }
     // Authentication calls will be made here...
