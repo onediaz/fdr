@@ -14,14 +14,36 @@ import Admin from './pages/admin';
 import Student from './pages/student';
 import Dashboard from './pages/dashboard';
 import '@aws-amplify/ui-react/styles.css';
+import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
+import { Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
 
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
 
 function App({user}) {
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [email, setEmail] = useState('')
-  const [isAdmin, setAdmin] = useState(false)
+  const { authStatus } = useAuthenticator(context => [context.authStatus]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isAdmin, setAdmin] = useState(false);
+
+  const resetEmail = async () => {
+    try {    
+        const tempUser = await fetchUserAttributes();
+        setEmail(tempUser.email);
+    } catch (error){
+      console.log('Failed to create: ', error);
+    }
+  }
+
+  useEffect(() => {
+    if (authStatus === 'authenticated') {
+      resetEmail();
+      // setAdmin();
+    }
+    else {
+        setEmail('');
+    }
+  }, [authStatus]);
   
   return (
     <div className="App">

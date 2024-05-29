@@ -26,20 +26,20 @@ export default function TransactionsUpdateForm(props) {
   } = props;
   const initialValues = {
     sender: "",
-    amount: "",
     receiver: "",
+    amount: "",
   };
   const [sender, setSender] = React.useState(initialValues.sender);
-  const [amount, setAmount] = React.useState(initialValues.amount);
   const [receiver, setReceiver] = React.useState(initialValues.receiver);
+  const [amount, setAmount] = React.useState(initialValues.amount);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = transactionsRecord
       ? { ...initialValues, ...transactionsRecord }
       : initialValues;
     setSender(cleanValues.sender);
-    setAmount(cleanValues.amount);
     setReceiver(cleanValues.receiver);
+    setAmount(cleanValues.amount);
     setErrors({});
   };
   const [transactionsRecord, setTransactionsRecord] = React.useState(
@@ -62,8 +62,8 @@ export default function TransactionsUpdateForm(props) {
   React.useEffect(resetStateValues, [transactionsRecord]);
   const validations = {
     sender: [],
-    amount: [],
     receiver: [],
+    amount: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -92,8 +92,8 @@ export default function TransactionsUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           sender: sender ?? null,
-          amount: amount ?? null,
           receiver: receiver ?? null,
+          amount: amount ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -155,8 +155,8 @@ export default function TransactionsUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               sender: value,
-              amount,
               receiver,
+              amount,
             };
             const result = onChange(modelFields);
             value = result?.sender ?? value;
@@ -172,32 +172,6 @@ export default function TransactionsUpdateForm(props) {
         {...getOverrideProps(overrides, "sender")}
       ></TextField>
       <TextField
-        label="Amount"
-        isRequired={false}
-        isReadOnly={false}
-        value={amount}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              sender,
-              amount: value,
-              receiver,
-            };
-            const result = onChange(modelFields);
-            value = result?.amount ?? value;
-          }
-          if (errors.amount?.hasError) {
-            runValidationTasks("amount", value);
-          }
-          setAmount(value);
-        }}
-        onBlur={() => runValidationTasks("amount", amount)}
-        errorMessage={errors.amount?.errorMessage}
-        hasError={errors.amount?.hasError}
-        {...getOverrideProps(overrides, "amount")}
-      ></TextField>
-      <TextField
         label="Receiver"
         isRequired={false}
         isReadOnly={false}
@@ -207,8 +181,8 @@ export default function TransactionsUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               sender,
-              amount,
               receiver: value,
+              amount,
             };
             const result = onChange(modelFields);
             value = result?.receiver ?? value;
@@ -222,6 +196,36 @@ export default function TransactionsUpdateForm(props) {
         errorMessage={errors.receiver?.errorMessage}
         hasError={errors.receiver?.hasError}
         {...getOverrideProps(overrides, "receiver")}
+      ></TextField>
+      <TextField
+        label="Amount"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={amount}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              sender,
+              receiver,
+              amount: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.amount ?? value;
+          }
+          if (errors.amount?.hasError) {
+            runValidationTasks("amount", value);
+          }
+          setAmount(value);
+        }}
+        onBlur={() => runValidationTasks("amount", amount)}
+        errorMessage={errors.amount?.errorMessage}
+        hasError={errors.amount?.hasError}
+        {...getOverrideProps(overrides, "amount")}
       ></TextField>
       <Flex
         justifyContent="space-between"

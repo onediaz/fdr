@@ -8,9 +8,9 @@ export const onCreateTransactions = /* GraphQL */ `
     onCreateTransactions(filter: $filter) {
       id
       sender
-      amount
       receiver
-      students {
+      amount
+      Students {
         nextToken
         __typename
       }
@@ -27,9 +27,9 @@ export const onUpdateTransactions = /* GraphQL */ `
     onUpdateTransactions(filter: $filter) {
       id
       sender
-      amount
       receiver
-      students {
+      amount
+      Students {
         nextToken
         __typename
       }
@@ -46,9 +46,9 @@ export const onDeleteTransactions = /* GraphQL */ `
     onDeleteTransactions(filter: $filter) {
       id
       sender
-      amount
       receiver
-      students {
+      amount
+      Students {
         nextToken
         __typename
       }
@@ -66,7 +66,7 @@ export const onCreateStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      Transactions {
+      transactionss {
         nextToken
         __typename
       }
@@ -84,7 +84,7 @@ export const onUpdateStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      Transactions {
+      transactionss {
         nextToken
         __typename
       }
@@ -102,7 +102,7 @@ export const onDeleteStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      Transactions {
+      transactionss {
         nextToken
         __typename
       }
@@ -112,19 +112,19 @@ export const onDeleteStudent = /* GraphQL */ `
     }
   }
 `;
-export const onCreateStudentTransactions = /* GraphQL */ `
-  subscription OnCreateStudentTransactions(
-    $filter: ModelSubscriptionStudentTransactionsFilterInput
+export const onCreateTransactionsStudent = /* GraphQL */ `
+  subscription OnCreateTransactionsStudent(
+    $filter: ModelSubscriptionTransactionsStudentFilterInput
   ) {
-    onCreateStudentTransactions(filter: $filter) {
+    onCreateTransactionsStudent(filter: $filter) {
       id
       transactionsId
       studentId
       transactions {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename
@@ -145,19 +145,19 @@ export const onCreateStudentTransactions = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateStudentTransactions = /* GraphQL */ `
-  subscription OnUpdateStudentTransactions(
-    $filter: ModelSubscriptionStudentTransactionsFilterInput
+export const onUpdateTransactionsStudent = /* GraphQL */ `
+  subscription OnUpdateTransactionsStudent(
+    $filter: ModelSubscriptionTransactionsStudentFilterInput
   ) {
-    onUpdateStudentTransactions(filter: $filter) {
+    onUpdateTransactionsStudent(filter: $filter) {
       id
       transactionsId
       studentId
       transactions {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename
@@ -178,19 +178,19 @@ export const onUpdateStudentTransactions = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteStudentTransactions = /* GraphQL */ `
-  subscription OnDeleteStudentTransactions(
-    $filter: ModelSubscriptionStudentTransactionsFilterInput
+export const onDeleteTransactionsStudent = /* GraphQL */ `
+  subscription OnDeleteTransactionsStudent(
+    $filter: ModelSubscriptionTransactionsStudentFilterInput
   ) {
-    onDeleteStudentTransactions(filter: $filter) {
+    onDeleteTransactionsStudent(filter: $filter) {
       id
       transactionsId
       studentId
       transactions {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename

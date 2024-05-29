@@ -6,9 +6,9 @@ export const getTransactions = /* GraphQL */ `
     getTransactions(id: $id) {
       id
       sender
-      amount
       receiver
-      students {
+      amount
+      Students {
         nextToken
         __typename
       }
@@ -28,8 +28,8 @@ export const listTransactions = /* GraphQL */ `
       items {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename
@@ -47,7 +47,7 @@ export const getStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      Transactions {
+      transactionss {
         nextToken
         __typename
       }
@@ -79,17 +79,17 @@ export const listStudents = /* GraphQL */ `
     }
   }
 `;
-export const getStudentTransactions = /* GraphQL */ `
-  query GetStudentTransactions($id: ID!) {
-    getStudentTransactions(id: $id) {
+export const getTransactionsStudent = /* GraphQL */ `
+  query GetTransactionsStudent($id: ID!) {
+    getTransactionsStudent(id: $id) {
       id
       transactionsId
       studentId
       transactions {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename
@@ -110,13 +110,13 @@ export const getStudentTransactions = /* GraphQL */ `
     }
   }
 `;
-export const listStudentTransactions = /* GraphQL */ `
-  query ListStudentTransactions(
-    $filter: ModelStudentTransactionsFilterInput
+export const listTransactionsStudents = /* GraphQL */ `
+  query ListTransactionsStudents(
+    $filter: ModelTransactionsStudentFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listStudentTransactions(
+    listTransactionsStudents(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -134,15 +134,15 @@ export const listStudentTransactions = /* GraphQL */ `
     }
   }
 `;
-export const studentTransactionsByTransactionsId = /* GraphQL */ `
-  query StudentTransactionsByTransactionsId(
+export const transactionsStudentsByTransactionsId = /* GraphQL */ `
+  query TransactionsStudentsByTransactionsId(
     $transactionsId: ID!
     $sortDirection: ModelSortDirection
-    $filter: ModelStudentTransactionsFilterInput
+    $filter: ModelTransactionsStudentFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    studentTransactionsByTransactionsId(
+    transactionsStudentsByTransactionsId(
       transactionsId: $transactionsId
       sortDirection: $sortDirection
       filter: $filter
@@ -162,15 +162,15 @@ export const studentTransactionsByTransactionsId = /* GraphQL */ `
     }
   }
 `;
-export const studentTransactionsByStudentId = /* GraphQL */ `
-  query StudentTransactionsByStudentId(
+export const transactionsStudentsByStudentId = /* GraphQL */ `
+  query TransactionsStudentsByStudentId(
     $studentId: ID!
     $sortDirection: ModelSortDirection
-    $filter: ModelStudentTransactionsFilterInput
+    $filter: ModelTransactionsStudentFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    studentTransactionsByStudentId(
+    transactionsStudentsByStudentId(
       studentId: $studentId
       sortDirection: $sortDirection
       filter: $filter

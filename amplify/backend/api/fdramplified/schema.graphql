@@ -1,9 +1,9 @@
 type Transactions @model @auth(rules: [{allow: public}]) {
   id: ID!
   sender: String
-  amount: String
   receiver: String
-  students: [Student] @manyToMany(relationName: "StudentTransactions")
+  amount: Int
+  Students: [Student] @manyToMany(relationName: "TransactionsStudent")
 }
 
 type Student @model @auth(rules: [{allow: public}]) {
@@ -12,5 +12,6 @@ type Student @model @auth(rules: [{allow: public}]) {
   name: String!
   balance: Int!
   isAdmin: Boolean
-  Transactions: [Transactions] @manyToMany(relationName: "StudentTransactions")
-} 
+  transactionss: [Transactions] @manyToMany(relationName: "TransactionsStudent")
+}
+ 

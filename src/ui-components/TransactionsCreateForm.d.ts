@@ -23,20 +23,20 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type TransactionsCreateFormInputValues = {
     sender?: string;
-    amount?: string;
     receiver?: string;
+    amount?: number;
 };
 export declare type TransactionsCreateFormValidationValues = {
     sender?: ValidationFunction<string>;
-    amount?: ValidationFunction<string>;
     receiver?: ValidationFunction<string>;
+    amount?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TransactionsCreateFormOverridesProps = {
     TransactionsCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     sender?: PrimitiveOverrideProps<TextFieldProps>;
-    amount?: PrimitiveOverrideProps<TextFieldProps>;
     receiver?: PrimitiveOverrideProps<TextFieldProps>;
+    amount?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TransactionsCreateFormProps = React.PropsWithChildren<{
     overrides?: TransactionsCreateFormOverridesProps | undefined | null;

@@ -1,11 +1,13 @@
 // pages/dashboard.js
-import './dashboard.css';
+import './styling/dashboard.css';
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
 import { listStudents } from '../graphql/queries';
 import { updateStudent } from '../graphql/mutations';
 import { generateClient } from "aws-amplify/api";
+import { createTransaction } from '../functions/create-transaction';
+import Transactions from './transactions';
 const client = generateClient();
 
 const Dashboard = (props) => {
@@ -21,6 +23,7 @@ const Dashboard = (props) => {
 
     useEffect(() => {
         fetchUser();
+        // setDashboard();
     }, [dashboardEmail]);
 
     const fetchUser = async () => {
@@ -39,6 +42,8 @@ const Dashboard = (props) => {
                 });
                 if (currentUser.data.listStudents.items.length > 0) {
                     setCurrentStudent(currentUser.data.listStudents.items[0]);
+                    setCurrentStudentBalance(currentUser.data.listStudents.items[0].balance);
+                    setCurrentStudentEmail(currentUser.data.listStudents.items[0].email);
                 } else {
                     console.log("No student found with that email.");
                 }
@@ -56,6 +61,8 @@ const Dashboard = (props) => {
                 });
                 if (dashboardUser.data.listStudents.items.length > 0) {
                     setDashboardStudent(dashboardUser.data.listStudents.items[0]);
+                    setDashboardStudentBalance(dashboardUser.data.listStudents.items[0].balance);
+                    setDashboardStudentEmail(dashboardUser.data.listStudents.items[0].email);
                 } else {
                     console.log("No student found with that email.");
                 }
@@ -65,20 +72,20 @@ const Dashboard = (props) => {
         }
     };
 
-    useEffect(() => {
-        setDashboard();
-    }, [currentStudent, dashboardStudent]);
+    // useEffect(() => {
+    //     setDashboard();
+    // }, [currentStudent, dashboardStudent]);
 
-    const setDashboard = () => {
-        if (dashboardStudent){
-            setDashboardStudentBalance(dashboardStudent.balance);
-            setDashboardStudentEmail(dashboardStudent.email);
-        }
-        if (currentStudent){
-            setCurrentStudentBalance(currentStudent.balance);
-            setCurrentStudentEmail(currentStudent.email);
-        }
-    };
+    // const setDashboard = () => {
+    //     if (dashboardStudent){
+    //         setDashboardStudentBalance(dashboardStudent.balance);
+    //         setDashboardStudentEmail(dashboardStudent.email);
+    //     }
+    //     if (currentStudent){
+    //         setCurrentStudentBalance(currentStudent.balance);
+    //         setCurrentStudentEmail(currentStudent.email);
+    //     }
+    // };
 
     const onButtonClick2 = async() => {
         console.log('Current Student:', currentStudent);
@@ -87,6 +94,7 @@ const Dashboard = (props) => {
         try {
             if (currentStudentBalance > balance && window.confirm(`Do you want to send ${dashboardStudent.name} $${balance}?`)) {
                 // Update current student's balance
+                console.log('Updating Balance');
                 const updatedCurrentBalance = Number(currentStudentBalance) - Number(balance);
                 const currentStudentResult = await client.graphql({
                     query: updateStudent,
@@ -116,6 +124,9 @@ const Dashboard = (props) => {
                 setDashboardStudentBalance(updatedDashboardBalance);
             }
             console.log('Success');
+            // CALL CREATE TRANSACTION FUNCTION
+            console.log(currentStudent);
+            await createTransaction(currentStudent, dashboardStudent, balance);
             setBalance('');
         } catch (error) {
             console.log('Catching Balance Error:');
@@ -124,11 +135,12 @@ const Dashboard = (props) => {
     };    
 
     return (
+        <div>
         <div className="dashboardContainer">
             {currentStudent &&
                 <div className='propContainer'>
                     <div className={'dashboardTitle'}>
-                        Personal
+                        Overview
                     </div>
                         {currentStudentEmail}
                     <div className='balanceContainer'>
@@ -154,6 +166,9 @@ const Dashboard = (props) => {
                 <label className="errorLabel">{balanceError}</label>
                 <input type="button" onClick={onButtonClick2} value={'Send Money'}/> 
             </div>}
+        </div>
+
+        {currentStudent && currentStudent.id && <Transactions id={currentStudent.id} name={currentStudent.name}/>}
         </div>
     );
 };

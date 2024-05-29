@@ -9,9 +9,9 @@ export const createTransactions = /* GraphQL */ `
     createTransactions(input: $input, condition: $condition) {
       id
       sender
-      amount
       receiver
-      students {
+      amount
+      Students {
         nextToken
         __typename
       }
@@ -29,9 +29,9 @@ export const updateTransactions = /* GraphQL */ `
     updateTransactions(input: $input, condition: $condition) {
       id
       sender
-      amount
       receiver
-      students {
+      amount
+      Students {
         nextToken
         __typename
       }
@@ -49,9 +49,9 @@ export const deleteTransactions = /* GraphQL */ `
     deleteTransactions(input: $input, condition: $condition) {
       id
       sender
-      amount
       receiver
-      students {
+      amount
+      Students {
         nextToken
         __typename
       }
@@ -72,7 +72,7 @@ export const createStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      Transactions {
+      transactionss {
         nextToken
         __typename
       }
@@ -93,7 +93,7 @@ export const updateStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      Transactions {
+      transactionss {
         nextToken
         __typename
       }
@@ -114,7 +114,7 @@ export const deleteStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      Transactions {
+      transactionss {
         nextToken
         __typename
       }
@@ -124,20 +124,20 @@ export const deleteStudent = /* GraphQL */ `
     }
   }
 `;
-export const createStudentTransactions = /* GraphQL */ `
-  mutation CreateStudentTransactions(
-    $input: CreateStudentTransactionsInput!
-    $condition: ModelStudentTransactionsConditionInput
+export const createTransactionsStudent = /* GraphQL */ `
+  mutation CreateTransactionsStudent(
+    $input: CreateTransactionsStudentInput!
+    $condition: ModelTransactionsStudentConditionInput
   ) {
-    createStudentTransactions(input: $input, condition: $condition) {
+    createTransactionsStudent(input: $input, condition: $condition) {
       id
       transactionsId
       studentId
       transactions {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename
@@ -158,20 +158,20 @@ export const createStudentTransactions = /* GraphQL */ `
     }
   }
 `;
-export const updateStudentTransactions = /* GraphQL */ `
-  mutation UpdateStudentTransactions(
-    $input: UpdateStudentTransactionsInput!
-    $condition: ModelStudentTransactionsConditionInput
+export const updateTransactionsStudent = /* GraphQL */ `
+  mutation UpdateTransactionsStudent(
+    $input: UpdateTransactionsStudentInput!
+    $condition: ModelTransactionsStudentConditionInput
   ) {
-    updateStudentTransactions(input: $input, condition: $condition) {
+    updateTransactionsStudent(input: $input, condition: $condition) {
       id
       transactionsId
       studentId
       transactions {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename
@@ -192,20 +192,20 @@ export const updateStudentTransactions = /* GraphQL */ `
     }
   }
 `;
-export const deleteStudentTransactions = /* GraphQL */ `
-  mutation DeleteStudentTransactions(
-    $input: DeleteStudentTransactionsInput!
-    $condition: ModelStudentTransactionsConditionInput
+export const deleteTransactionsStudent = /* GraphQL */ `
+  mutation DeleteTransactionsStudent(
+    $input: DeleteTransactionsStudentInput!
+    $condition: ModelTransactionsStudentConditionInput
   ) {
-    deleteStudentTransactions(input: $input, condition: $condition) {
+    deleteTransactionsStudent(input: $input, condition: $condition) {
       id
       transactionsId
       studentId
       transactions {
         id
         sender
-        amount
         receiver
+        amount
         createdAt
         updatedAt
         __typename
