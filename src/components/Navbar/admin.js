@@ -2,15 +2,21 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import { listStudents } from '../../graphql/queries';
+import { updateStudent } from '../../graphql/mutations';
 import { generateClient } from "aws-amplify/api";
 import { Tabs, Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField } from '@aws-amplify/ui-react';
+import { updateStudentBalance } from '../../functions/update-student-balance';
+import { useLocation } from 'react-router-dom';
 const client = generateClient();
 
 const AdminNavbar = () => {
+    const location = useLocation();
+    const isAdmin = location.state?.isAdmin;
     const [students, setStudents] = useState([]);
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [sortOrder, setSortOrder] = useState(true);
     const [sortIcon, setSortIcon] = useState('▼');
+    const [balance, setBalance] = useState('');
 
     useEffect(() => {
         const getStudents = async () => {
@@ -58,20 +64,34 @@ const AdminNavbar = () => {
 
     const handleSelectAll = (event) => {
         if (event.target.checked) {
-            setSelectedStudents(students.map(student => student.id));
+            setSelectedStudents(students);
         } else {
             setSelectedStudents([]);
         }
     };
-
-    const handleSelectStudent = (id) => {
+    
+    const handleSelectStudent = (student) => {
         setSelectedStudents(prevSelected => {
-            if (prevSelected.includes(id)) {
-                return prevSelected.filter(studentId => studentId !== id);
+            if (prevSelected.some(selectedStudent => selectedStudent.id === student.id)) {
+                return prevSelected.filter(selectedStudent => selectedStudent.id !== student.id);
             } else {
-                return [...prevSelected, id];
+                return [...prevSelected, student];
             }
         });
+    };
+
+    const onButtonClick = async () => {
+        if (selectedStudents.length !== 0) {
+            selectedStudents.map(student => {
+                console.log(student.id);
+                const updatedBalance = Number(balance) + Number(student.balance);
+                console.log(updatedBalance);
+                updateStudentBalance(student.id, updatedBalance);
+            });
+        }
+        else {
+            console.log('no selected students');
+        }
     };
     
     return (
@@ -112,8 +132,8 @@ const AdminNavbar = () => {
                             <TableRow className="students-display" key={student.id}>
                                 <TableCell>
                                     <CheckboxField
-                                        onChange={() => handleSelectStudent(student.id)}
-                                        checked={selectedStudents.includes(student.id)}
+                                        onChange={() => handleSelectStudent(student)}
+                                        checked={selectedStudents.some(selectedStudent => selectedStudent.id === student.id)}
                                         label=""
                                     />
                                 </TableCell>
@@ -131,6 +151,12 @@ const AdminNavbar = () => {
                     </TableBody>
                 </Table>
             </div>
+            {isAdmin && 
+            <div>
+                <input type="number" value={balance} min="1" placeholder="Enter Balance" onChange={(ev) => setBalance(ev.target.value)} className={'balanceBox'}/>
+                <input type="button" onClick={onButtonClick} value={'Send Money'}/> 
+            </div>
+            }
         </div>
     );
 };

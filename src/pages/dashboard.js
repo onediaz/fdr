@@ -72,21 +72,6 @@ const Dashboard = (props) => {
         }
     };
 
-    // useEffect(() => {
-    //     setDashboard();
-    // }, [currentStudent, dashboardStudent]);
-
-    // const setDashboard = () => {
-    //     if (dashboardStudent){
-    //         setDashboardStudentBalance(dashboardStudent.balance);
-    //         setDashboardStudentEmail(dashboardStudent.email);
-    //     }
-    //     if (currentStudent){
-    //         setCurrentStudentBalance(currentStudent.balance);
-    //         setCurrentStudentEmail(currentStudent.email);
-    //     }
-    // };
-
     const onButtonClick2 = async() => {
         console.log('Current Student:', currentStudent);
         console.log('Dashboard Student:', dashboardStudent);

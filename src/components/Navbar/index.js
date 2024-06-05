@@ -28,7 +28,7 @@ const Navbar = ({email, setEmail, isAdmin}) => {
                             )}
                             <Tabs.Item value="3">
                                 
-                                <NavLink to="/admin" className={({ isActive }) => isActive ? 'custom-tabs-item custom-tabs-item--active' : 'custom-tabs-item'}>
+                                <NavLink to={{ pathname: "/admin" }} state={ {isAdmin: isAdmin} } className={({ isActive }) => isActive ? 'custom-tabs-item custom-tabs-item--active' : 'custom-tabs-item'}>
                                     Students
                                 </NavLink>
                             </Tabs.Item>

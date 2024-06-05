@@ -59,7 +59,7 @@ function App({user}) {
             <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
             <Route path="/account" element={<Account email={email} setEmail={setEmail} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
             <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
-            <Route path="/admin" element={<Admin email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
+            <Route path="/admin" element={<Admin isAdmin={isAdmin} />} />
             <Route path="/create-student" element={<Student email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
             <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} />} />
             </Routes>
