@@ -101,13 +101,17 @@ const AdminNavbar = () => {
                 <Table highlightOnHover={true} variation="striped">
                     <TableHead >
                         <TableRow>
-                            <TableCell as="th">
-                                <CheckboxField
-                                    onChange={handleSelectAll}
-                                    checked={selectedStudents.length === students.length}
-                                    label=""
-                                />
-                            </TableCell>
+                            {isAdmin &&
+                                <div>
+                                    <TableCell as="th">
+                                        <CheckboxField
+                                            onChange={handleSelectAll}
+                                            checked={selectedStudents.length === students.length}
+                                            label=""
+                                        />
+                                    </TableCell>
+                                </div>
+                            }
                             <TableCell as="th"> 
                                 <div className="admin-table-head-cell">
                                     <div className="table-cell-text"> Name </div>
@@ -130,13 +134,17 @@ const AdminNavbar = () => {
                     <TableBody>
                         {students.map(student => ( 
                             <TableRow className="students-display" key={student.id}>
-                                <TableCell>
-                                    <CheckboxField
-                                        onChange={() => handleSelectStudent(student)}
-                                        checked={selectedStudents.some(selectedStudent => selectedStudent.id === student.id)}
-                                        label=""
-                                    />
-                                </TableCell>
+                                {isAdmin &&
+                                    <div>
+                                        <TableCell>
+                                            <CheckboxField
+                                                onChange={() => handleSelectStudent(student)}
+                                                checked={selectedStudents.some(selectedStudent => selectedStudent.id === student.id)}
+                                                label=""
+                                            />
+                                        </TableCell>
+                                    </div>
+                                }
                                 <TableCell> 
                                     <NavLink to={`/dashboard/${student.email}`} className="nav_link"> {student.name} </NavLink> 
                                 </TableCell>
