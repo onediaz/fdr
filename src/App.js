@@ -55,8 +55,8 @@ function App({user}) {
         <div className='app-main-body'>
           <Routes>
             {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/about" element={<About user={user}/>} />
             <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
+            <Route path="/about" element={<About user={user}/>} />
             <Route path="/account" element={<Account email={email} setEmail={setEmail} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
             <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
             <Route path="/admin" element={<Admin isAdmin={isAdmin} />} />

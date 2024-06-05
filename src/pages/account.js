@@ -1,6 +1,6 @@
 // pages/account .js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../App.css';
 import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
 import { Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
@@ -12,6 +12,7 @@ const client = generateClient();
 const Account = (props) => {
     const [email, setEmail] = useState('');
     const { authStatus } = useAuthenticator(context => [context.authStatus]);
+    const hasEffectRun = useRef(false);
     // const [name, setStudentName] = useState('');
     const formFields = {
         signUp: {
@@ -26,6 +27,7 @@ const Account = (props) => {
     const checkAccount = async () => {
         try {    
             const tempUser = await fetchUserAttributes();
+            console.log(tempUser);
             // setStudentName(tempUser.name);
             const allStudents = await client.graphql({
                 query: listStudents,
@@ -41,14 +43,15 @@ const Account = (props) => {
             const studentExists = student.length === 0 ? false : true;
             console.log('studentExists: ', studentExists);
             if (studentExists === false){
-                createAccount(tempUser.name);
+                console.log('adding new email: ', tempUser.email);
+                createAccount(tempUser.name, tempUser.email);
             }}
         catch (error){
             console.log('Failed to create: ', error);
         }
     };
 
-    const createAccount = async (name) => {
+    const createAccount = async (name, email) => {
         try {
             console.log(`creating new student ${email} with name ${name}`);
             const newStudent = await client.graphql({
@@ -85,11 +88,13 @@ const Account = (props) => {
     }
 
     useEffect(() => {
-        if (authStatus === 'authenticated') {
-          checkAccount();
-          setAdmin();
+        if (authStatus === 'authenticated' && !hasEffectRun.current) {
+            hasEffectRun.current = true;
+            console.log(authStatus);
+            checkAccount();
+            setAdmin();
         }
-        else {
+        else if (authStatus !== 'authenticated') {
             setEmail('');
             props.setEmail('');
             props.setAdmin(false);
@@ -103,17 +108,17 @@ const Account = (props) => {
         </div>
         <Authenticator formFields={formFields}>
             {({ signOut, user }) => {
-            setEmail(user.signInDetails.loginId);
-            props.setEmail(user.signInDetails.loginId);
-            return (
-                <div className='mainContainer'>
-                    <div className='textContainer'>
-                        Welcome {email}
+                setEmail(user.signInDetails.loginId);
+                props.setEmail(user.signInDetails.loginId);
+                return (
+                    <div className='mainContainer'>
+                        <div className='textContainer'>
+                            Welcome {email}
+                        </div>
+                        <input type='button' className='inputButton' onClick={signOut} value={'Sign out'}/>
                     </div>
-                    <input type='button' className='inputButton' onClick={signOut} value={'Sign out'}/>
-                </div>
-                
-            )}
+                    
+                )}
             }
         </Authenticator>
     </div>
