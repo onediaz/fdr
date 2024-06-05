@@ -1,4 +1,41 @@
+
 .trans-container {
     padding: 15px;
     margin: 15px;
 }
+
+.transactions-table-ascending::after {
+  content: '▼';
+  display: inline-block;
+  position: absolute;
+}
+
+.transactions-table-descending::after {
+  content: '▲';
+  display: inline-block;
+  position: absolute;
+}
+
+.transactions-table-head-cell {
+  display: flex;
+  justify-content: space-between;
+}
+
+.transactions-table-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.amplify-button.amplify-field-group__control.transactions-button {
+  width: 100%;
+  /* all: unset; */
+}
+
+/* .amplify-button.amplify-field-group__control.transactions-button:hover {
+  all: unset;
+}
+
+.amplify-button.amplify-field-group__control.transactions-buttonn:focus {
+  all: unset;
+} */

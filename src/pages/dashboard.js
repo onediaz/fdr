@@ -92,7 +92,10 @@ const Dashboard = (props) => {
         console.log('Dashboard Student:', dashboardStudent);
     
         try {
-            if (currentStudentBalance > balance && window.confirm(`Do you want to send ${dashboardStudent.name} $${balance}?`)) {
+            if (balance < 1){
+                window.confirm('Balance must be greater than 0');
+            }
+            else if (currentStudentBalance > balance && window.confirm(`Do you want to send ${dashboardStudent.name} $${balance}?`)) {
                 // Update current student's balance
                 console.log('Updating Balance');
                 const updatedCurrentBalance = Number(currentStudentBalance) - Number(balance);
@@ -159,6 +162,7 @@ const Dashboard = (props) => {
                 <input
                     type="number"
                     value={balance}
+                    min="1"
                     placeholder="Enter Balance"
                     onChange={(ev) => setBalance(ev.target.value)}
                     className={'balanceBox'}
@@ -168,7 +172,7 @@ const Dashboard = (props) => {
             </div>}
         </div>
 
-        {currentStudent && currentStudent.id && <Transactions id={currentStudent.id} name={currentStudent.name}/>}
+        {/* {currentStudent && currentStudent.id && <Transactions id={currentStudent.id} name={currentStudent.name}/>} */}
         </div>
     );
 };

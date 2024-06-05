@@ -3,11 +3,12 @@ import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import { listStudents } from '../../graphql/queries';
 import { generateClient } from "aws-amplify/api";
-import { Tabs, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@aws-amplify/ui-react';
+import { Tabs, Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField } from '@aws-amplify/ui-react';
 const client = generateClient();
 
 const AdminNavbar = () => {
     const [students, setStudents] = useState([]);
+    const [selectedStudents, setSelectedStudents] = useState([]);
     const [sortOrder, setSortOrder] = useState(true);
     const [sortIcon, setSortIcon] = useState('▼');
 
@@ -54,37 +55,82 @@ const AdminNavbar = () => {
             console.log('Sorting Error')
         }
     };
+
+    const handleSelectAll = (event) => {
+        if (event.target.checked) {
+            setSelectedStudents(students.map(student => student.id));
+        } else {
+            setSelectedStudents([]);
+        }
+    };
+
+    const handleSelectStudent = (id) => {
+        setSelectedStudents(prevSelected => {
+            if (prevSelected.includes(id)) {
+                return prevSelected.filter(studentId => studentId !== id);
+            } else {
+                return [...prevSelected, id];
+            }
+        });
+    };
     
     return (
         <div className="admin_nav_container">
-            <Tabs
-                defaultValue={'Class 1'}
-                items={[
-                { label: 'Class 1', value: 'Class 1', 
-                    content: <div className="admin_nav_item_container">
-                    If you are logged in, you can click on a student name to view their balance.
-                    <Table highlightOnHover={true} variation="striped">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell as="th"> Name <Button ariaLabel="Arrow Down" size="small" onClick={sortStudents}> {sortIcon} </Button></TableCell>
-                                <TableCell as="th"> Email </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {students.map(student => ( 
-                                <TableRow className="students-display" key={student.id}>
-                                    <TableCell> <NavLink to={`/dashboard/${student.email}`} className="nav_link"> {student.name} </NavLink> </TableCell>
-                                    <TableCell> {student.email}</TableCell>
-                                </TableRow> 
-                            ))}
-                        </TableBody>
-                    </Table>
-                </div>
-                },
-                { label: 'Class 2', value: 'Class 2', content: 'Class #2' },
-                { label: 'Class 3', value: 'Class 3', content: 'Class #3' },
-                ]}
-            />
+            <div className="admin_nav_item_container">
+                If you are logged in, you can click on a student name to view their balance.
+                <Table highlightOnHover={true} variation="striped">
+                    <TableHead >
+                        <TableRow>
+                            <TableCell as="th">
+                                <CheckboxField
+                                    onChange={handleSelectAll}
+                                    checked={selectedStudents.length === students.length}
+                                    label=""
+                                />
+                            </TableCell>
+                            <TableCell as="th"> 
+                                <div className="admin-table-head-cell">
+                                    <div className="table-cell-text"> Name </div>
+                                    <Button onClick={sortStudents} className="admin-table-button"> {sortIcon} </Button>
+                                </div>
+                            </TableCell>
+                            <TableCell as="th"> 
+                                <div className="admin-table-head-cell">
+                                    <div className="table-cell-text"> Email </div> 
+                                    <Button onClick={() => console.log('hihi')} className="admin-table-button"> O </Button>
+                                </div>
+                            </TableCell>
+                            <TableCell as="th"> 
+                                <div className="admin-table-head-cell">
+                                    <div className="table-cell-text"> Balance </div> 
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {students.map(student => ( 
+                            <TableRow className="students-display" key={student.id}>
+                                <TableCell>
+                                    <CheckboxField
+                                        onChange={() => handleSelectStudent(student.id)}
+                                        checked={selectedStudents.includes(student.id)}
+                                        label=""
+                                    />
+                                </TableCell>
+                                <TableCell> 
+                                    <NavLink to={`/dashboard/${student.email}`} className="nav_link"> {student.name} </NavLink> 
+                                </TableCell>
+                                <TableCell> 
+                                    {student.email}
+                                </TableCell>
+                                <TableCell> 
+                                    {student.balance}
+                                </TableCell>
+                            </TableRow> 
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     );
 };

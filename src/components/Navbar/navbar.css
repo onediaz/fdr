@@ -87,3 +87,20 @@
    background-color: var(--amplify-components-tabs-item-active-background-color);
    transition-property: none;
 }
+
+.admin-table-head-cell {
+   display: flex;
+   justify-content: space-between;
+}
+
+.amplify-button.admin-table-button {
+   all: unset;
+}
+
+.amplify-button.admin-table-button:hover {
+   all: unset;
+}
+
+.amplify-button.admin-table-button:focus {
+   all: unset;
+}

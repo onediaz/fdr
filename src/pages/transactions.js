@@ -20,6 +20,7 @@ const Transactions = (props) => {
     const receivedTransactions = useCallback(async () => {
         setTransactions([]);
         try {
+            console.log('finding receiver');
             const newViewTransaction = await viewTransactions('receiver', props.id);
             setTransactions(newViewTransaction);
         } catch (error) {
@@ -27,17 +28,23 @@ const Transactions = (props) => {
         }
     }, [props.id]);
 
-    const sortTransactions = useCallback((key) => {
+    const sortTransactions = (key) => {
         let direction = 'ascending';
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
             direction = 'descending';
         }
-        setSortConfig({ key, direction });
-    }, [sortConfig]);
+        console.log(direction);
+        setSortConfig({ key: key, direction: direction });
+        console.log('Config: ', sortConfig);
+    };
 
-    const getClassName = useCallback((name) => {
-        console.log(name);
-    }, []);
+    const getClassName = (name) => {
+        console.log('getting class name: ', sortConfig);
+        if (!sortConfig) {
+            return;
+          }
+          return sortConfig.key === name ? 'transactions-table-' + sortConfig.direction : undefined;
+    };
 
     return (
         <div className={'trans-container'}>
@@ -52,19 +59,37 @@ const Transactions = (props) => {
                         <Table highlightOnHover={true} variation="striped">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell as="th">Sender</TableCell>
                                     <TableCell as="th">
-                                        Receiver
-                                        {/* <Button size="small" onClick={() => sortTransactions('receiver')} className={getClassName('receiver')}>Receiver</Button> */}
+                                        <Button onClick={() => sortTransactions('sender')} className='transactions-button'>
+                                            <div className='transactions-table-button'>
+                                                <div>Sender</div>
+                                                <div className={getClassName('sender')}></div>
+                                            </div>
+                                        </Button>
                                     </TableCell>
-                                    <TableCell as="th">Amount</TableCell>
+                                    <TableCell as="th">
+                                        <Button onClick={() => sortTransactions('receiver')} className='transactions-button'>
+                                            <div className='transactions-table-button'>
+                                                <div>Receiver</div>
+                                                <div className={getClassName('receiver')}></div>
+                                            </div>
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell as="th">
+                                        <Button onClick={() => sortTransactions('amount')} className='transactions-button'>
+                                            <div className='transactions-table-button'>
+                                                <div>Amount</div>
+                                                <div className={getClassName('amount')}></div>
+                                            </div>
+                                        </Button>
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {transactions.length > 0 && transactions.map(transaction => (
                                     <TableRow className="students-display" key={transaction.id}>
                                         <TableCell>{props.name}</TableCell>
-                                        <TableCell>{transaction.receiver.name}</TableCell>
+                                        <TableCell>{transaction.receiver && transaction.receiver.name}</TableCell>
                                         <TableCell>{transaction.amount}</TableCell>
                                     </TableRow>
                                 ))}

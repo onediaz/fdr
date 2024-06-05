@@ -9,7 +9,6 @@ async function viewTransactions(key, studentID) {
         let modifiedTransactions = [];
         let studentTransaction = null;
         if(key === 'sender'){
-            console.log('Looking for senders');
             studentTransaction = await client.graphql({
                 query: listTransactions,
                 variables: {
@@ -43,7 +42,7 @@ async function viewTransactions(key, studentID) {
                 // if looking for sender transactions, we must find receiver info
                 obj['receiver'] = await getStudent(item.receiver);
             }
-            if (key ==='recevier'){
+            if (key ==='receiver'){
                 // if looking for receiver transactions, we must find sender info
                 obj['sender'] = await getStudent(item.sender);
             }
