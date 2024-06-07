@@ -2,18 +2,16 @@
 import './styling/dashboard.css';
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
-import { listStudents } from '../graphql/queries';
-import { updateStudent } from '../graphql/mutations';
-import { generateClient } from "aws-amplify/api";
+import { fetchUserAttributes } from '@aws-amplify/auth';
 import { createTransaction } from '../functions/create-transaction';
-import Transactions from './transactions';
 import { updateStudentBalance } from '../functions/update-student-balance';
-const client = generateClient();
+import { getStudentByEmail } from '../functions/get-student';
+import CustomBarChart from '../components/barchart';
 
 const Dashboard = (props) => {
     const { email: dashboardEmail } = useParams();
     const [balance, setBalance] = useState('');
+    const [message, setMessage] = useState('');
     const [balanceError, setBalanceError] = useState('');
     const [currentStudent, setCurrentStudent] = useState(null);
     const [currentStudentBalance, setCurrentStudentBalance] = useState(null);
@@ -21,49 +19,33 @@ const Dashboard = (props) => {
     const [dashboardStudent, setDashboardStudent] = useState(null);
     const [dashboardStudentBalance, setDashboardStudentBalance] = useState(null);
     const [dashboardStudentEmail, setDashboardStudentEmail] = useState(null);
+    const [weeklyData, setWeeklyData] = useState([]);
 
     useEffect(() => {
         fetchUser();
-        // setDashboard();
+        fetchWeeklyData();
     }, [dashboardEmail]);
 
     const fetchUser = async () => {
         try {
             const tempUser = await fetchUserAttributes();
             if(tempUser){
-                const currentUser = await client.graphql({
-                    query: listStudents,
-                    variables: {
-                        filter: {
-                            email: {
-                                eq: tempUser.email
-                            }
-                        }
-                    }
-                });
-                if (currentUser.data.listStudents.items.length > 0) {
-                    setCurrentStudent(currentUser.data.listStudents.items[0]);
-                    setCurrentStudentBalance(currentUser.data.listStudents.items[0].balance);
-                    setCurrentStudentEmail(currentUser.data.listStudents.items[0].email);
+                const currentUser = await getStudentByEmail(tempUser.email);
+                console.log(currentUser);
+                if (currentUser) {
+                    setCurrentStudent(currentUser);
+                    setCurrentStudentBalance(currentUser.balance);
+                    setCurrentStudentEmail(currentUser.email);
                 } else {
                     console.log("No student found with that email.");
                 }
             }
             if(dashboardEmail){
-                const dashboardUser = await client.graphql({
-                    query: listStudents,
-                    variables: {
-                        filter: {
-                            email: {
-                                eq: dashboardEmail
-                            }
-                        }
-                    }
-                });
-                if (dashboardUser.data.listStudents.items.length > 0) {
-                    setDashboardStudent(dashboardUser.data.listStudents.items[0]);
-                    setDashboardStudentBalance(dashboardUser.data.listStudents.items[0].balance);
-                    setDashboardStudentEmail(dashboardUser.data.listStudents.items[0].email);
+                const dashboardUser = await getStudentByEmail(dashboardEmail);
+                if (dashboardUser) {
+                    setDashboardStudent(dashboardUser);
+                    setDashboardStudentBalance(dashboardUser.balance);
+                    setDashboardStudentEmail(dashboardUser.email);
                 } else {
                     console.log("No student found with that email.");
                 }
@@ -99,50 +81,91 @@ const Dashboard = (props) => {
             console.log('Success');
             // CALL CREATE TRANSACTION FUNCTION
             console.log(currentStudent);
-            await createTransaction(currentStudent, dashboardStudent, balance);
+            await createTransaction(currentStudent, dashboardStudent, balance, message);
             setBalance('');
+            setMessage('');
         } catch (error) {
             console.log('Catching Balance Error:');
             console.log(error);
         }
-    };    
+    };
+
+    const fetchWeeklyData = async () => {
+        // Mock data for the example. Replace this with your actual fetch logic.
+        const mockData = [
+            { date: '01/06', balance: 120 },
+            { date: '02/06', balance: 150 },
+            { date: '03/06', balance: 100 },
+            { date: '04/06', balance: 200 },
+            { date: '05/06', balance: 170 },
+            { date: '06/06', balance: 220 },
+            { date: '07/06', balance: 190 }
+        ];
+        setWeeklyData(mockData);
+    };
 
     return (
-        <div>
-        <div className="dashboardContainer">
+        <div className="mainDashboardContainer">
             {currentStudent &&
-                <div className='propContainer'>
-                    <div className={'dashboardTitle'}>
+                <div className='dashboardSection'>
+                    <div className='dashboardTitle'>
                         Overview
                     </div>
-                        {currentStudentEmail}
-                    <div className='balanceContainer'>
-                        <div className='balanceText'>Total Balance</div>
-                        <div className='balanceAmount'>${currentStudentBalance}</div>
+                    <div className='dashboardContent'>
+                        <div className='dashboardRow'>
+                            <span className='dashboardLabel'>Name: </span>
+                            <span className='dashboardValue'>{currentStudent.name}</span>
+                        </div>
+                        <div className='dashboardRow'>
+                            <span className='dashboardLabel'>Email: </span>
+                            <span className='dashboardValue'>{currentStudentEmail}</span>
+                        </div>
+                        <div className='dashboardRow'>
+                            <span className='dashboardLabel'>Total Balance: </span>
+                            <span className='dashboardValue'>${currentStudentBalance}</span>
+                        </div>
                     </div>
-                </div>}
-            {dashboardStudent && currentStudentEmail !== dashboardStudentEmail &&
-            <div className='studentContainer'>
-                <div className='dashboardTitle'> Viewing {dashboardStudent.name}</div>
-                   {dashboardStudent.email}
-                <div className='balanceContainer'>
-                    <div className='balanceText'>Total Balance</div>
-                    <div className='balanceAmount'> ${dashboardStudentBalance} </div>
                 </div>
-                <input
-                    type="number"
-                    value={balance}
-                    min="1"
-                    placeholder="Enter Balance"
-                    onChange={(ev) => setBalance(ev.target.value)}
-                    className={'balanceBox'}
-                />
-                <label className="errorLabel">{balanceError}</label>
-                <input type="button" onClick={onButtonClick2} value={'Send Money'}/> 
-            </div>}
-        </div>
-
-        {/* {currentStudent && currentStudent.id && <Transactions id={currentStudent.id} name={currentStudent.name}/>} */}
+            }
+            {dashboardStudent && currentStudentEmail !== dashboardStudentEmail &&
+                <div className='studentContainer'>
+                    <div className='dashboardSection'>
+                        <div className='dashboardTitle'>Viewing {dashboardStudent.name}</div>
+                        <div className='dashboardContent'>
+                            <div className='dashboardRow'>
+                                <span className='dashboardLabel'>Email: </span>
+                                <span className='dashboardValue'>{dashboardStudent.email}</span>
+                            </div>
+                            <div className='dashboardRow'>
+                                <span className='dashboardLabel'>Total Balance: </span>
+                                <span className='dashboardValue'>${dashboardStudentBalance}</span>
+                            </div>
+                        </div>
+                        <input
+                            type="text"
+                            value={message}
+                            placeholder="Enter Message"
+                            onChange={(ev) => setMessage(ev.target.value)}
+                            className='balanceBox'
+                        />
+                        <input
+                            type="number"
+                            value={balance}
+                            min="1"
+                            placeholder="Enter Balance"
+                            onChange={(ev) => setBalance(ev.target.value)}
+                            className='balanceBox'
+                        />
+                        <label className="errorLabel">{balanceError}</label>
+                        <input type="button" onClick={onButtonClick2} value='Send Money' className='sendMoneyButton' />
+                    </div>
+                    
+                </div>
+            }
+            {/* <div className="chartContainer">
+                <div className="chartTitle">Balance Over the Last 7 Days</div>
+                <CustomBarChart data={weeklyData} />
+            </div> */}
         </div>
     );
 };

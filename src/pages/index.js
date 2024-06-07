@@ -1,15 +1,11 @@
 // pages/index.js
-
+import './styling/transactions.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { getAllTransactions } from '../functions/view-transactions';
 
 const Home = (props) => {
     const { loggedIn, email} = props
     const [transactions, setTransactions] = useState([]);
-    // const transactions = [{sender: 1}, {sender: 4}]
-    useEffect(() => {
-      viewTransactions();
-    }, [email]);
 
     const viewTransactions = useCallback(async () => {
       setTransactions([]);
@@ -21,7 +17,11 @@ const Home = (props) => {
       } catch (error) {
           console.log('Failed to list sent transactions');
       }
-  }, [email]);
+  }, []);
+
+  useEffect(() => {
+    viewTransactions();
+  }, [viewTransactions]);
 
     return (
       <div className="mainContainer">
@@ -37,13 +37,32 @@ const Home = (props) => {
         </div>
         
         <div>
-          <div className='recent-transactions'>
+        <div className='recent-transactions'>
+          <ul>
             {transactions.map(transaction => (
-              <li>
-                {transaction.sender_name} sent ${transaction.amount} to {transaction.receiver_name}
+              <li key={transaction.id} className='transaction-item'>
+                <div className='transaction-details'>
+                  <span className='transaction-date'>
+                    {new Date(transaction.updatedAt).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' })}
+                  </span>
+                  <span className='transaction-sender'>
+                    {transaction.sender_name}
+                  </span> 
+                  {transaction.amount >= 1 ? "sent": "took"}
+                  <span className={transaction.amount >= 1 ? 'transaction-amount': 'transaction-amount-negative'}>
+                    ${Math.abs(transaction.amount)}
+                  </span> 
+                  {transaction.amount >= 1 ? "to": "from"} 
+                  <span className='transaction-receiver'>
+                    {transaction.receiver_name}
+                  </span>
+                </div>
+                {transaction.message && <div className='transaction-message'>"{transaction.message}"</div>}
               </li>
             ))}
-          </div>
+          </ul>
+        </div>
+
         </div>
       </div>
       

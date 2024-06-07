@@ -11,7 +11,6 @@ import Account from './pages/account';
 import Login from './pages/login'
 import { useEffect, useState } from 'react'
 import Admin from './pages/admin';
-import Student from './pages/student';
 import Dashboard from './pages/dashboard';
 import '@aws-amplify/ui-react/styles.css';
 import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
@@ -60,7 +59,6 @@ function App({user}) {
             <Route path="/account" element={<Account email={email} setEmail={setEmail} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
             <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
             <Route path="/admin" element={<Admin isAdmin={isAdmin} />} />
-            <Route path="/create-student" element={<Student email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
             <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} />} />
             </Routes>
         </div>

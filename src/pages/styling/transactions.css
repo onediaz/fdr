@@ -39,3 +39,70 @@
 .amplify-button.amplify-field-group__control.transactions-buttonn:focus {
   all: unset;
 } */
+
+/* HOME PAGE TRANSACTIONS*/
+.recent-transactions {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.recent-transactions ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.transaction-item {
+  background-color: #fff;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.transaction-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.transaction-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 16px;
+}
+
+.transaction-date {
+  font-weight: bold;
+  color: #555;
+  margin-right: 10px;
+}
+
+.transaction-sender {
+  font-weight: bold;
+  color: #333;
+}
+
+.transaction-amount {
+  font-weight: bold;
+  color: #1a73e8;
+}
+
+.transaction-amount-negative {
+  font-weight: bold;
+  color: rgb(255, 54, 54);
+}
+
+.transaction-receiver {
+  font-weight: bold;
+  color: #333;
+}
+
+.transaction-message {
+  margin-top: 10px;
+  font-style: italic;
+  color: #666;
+}

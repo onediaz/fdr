@@ -4,7 +4,7 @@ import { generateClient } from "aws-amplify/api";
 import { createTransactions, createTransactionsStudent } from '../graphql/mutations';
 const client = generateClient();
 
-async function createTransaction(sender, receiver, amount) {
+async function createTransaction(sender, receiver, amount, message) {
     console.log("This is my function.");
     console.log(sender);
     console.log(receiver);
@@ -16,7 +16,8 @@ async function createTransaction(sender, receiver, amount) {
             receiver_id: receiver.id,
             amount: amount,
             sender_name: sender.name,
-            receiver_name: receiver.name
+            receiver_name: receiver.name,
+            message: message
           }
         }
       });

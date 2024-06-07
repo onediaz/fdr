@@ -7,6 +7,8 @@ import { generateClient } from "aws-amplify/api";
 import { Tabs, Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField } from '@aws-amplify/ui-react';
 import { updateStudentBalance } from '../../functions/update-student-balance';
 import { useLocation } from 'react-router-dom';
+import { createTransaction } from "../../functions/create-transaction";
+import { getStudentByEmail } from "../../functions/get-student";
 const client = generateClient();
 
 const AdminNavbar = () => {
@@ -17,6 +19,7 @@ const AdminNavbar = () => {
     const [sortOrder, setSortOrder] = useState(true);
     const [sortIcon, setSortIcon] = useState('▼');
     const [balance, setBalance] = useState('');
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const getStudents = async () => {
@@ -81,12 +84,14 @@ const AdminNavbar = () => {
     };
 
     const onButtonClick = async () => {
+        const currentUser = await getStudentByEmail('juand4535@gmail.com');
         if (selectedStudents.length !== 0) {
             selectedStudents.map(student => {
                 console.log(student.id);
                 const updatedBalance = Number(balance) + Number(student.balance);
                 console.log(updatedBalance);
                 updateStudentBalance(student.id, updatedBalance);
+                createTransaction(currentUser, student, balance, message)
             });
         }
         else {
@@ -157,6 +162,7 @@ const AdminNavbar = () => {
             </div>
             {isAdmin && 
             <div>
+                <input type="text" value={message} min="1" placeholder="Enter Message" onChange={(ev) => setMessage(ev.target.value)} className={'balanceBox'}/>
                 <input type="number" value={balance} min="1" placeholder="Enter Balance" onChange={(ev) => setBalance(ev.target.value)} className={'balanceBox'}/>
                 <input type="button" onClick={onButtonClick} value={'Send Money'}/> 
             </div>

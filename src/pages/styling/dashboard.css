@@ -1,4 +1,4 @@
-
+/* 
 .dashboardContainer {
     display: flex;
     flex-direction: row;
@@ -56,7 +56,6 @@ padding-left: 8px;
 }
 
 .balanceText{
-    /* font-size: 5px; */
     color: gray;
 }
 .balanceAmount {
@@ -75,4 +74,112 @@ font-size: large;
 border-radius: 8px;
 border: 1px solid grey;
 padding-left: 8px;
+} */
+
+.mainDashboardContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.dashboardSection {
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+}
+
+.dashboardSection:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dashboardTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.dashboardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dashboardRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dashboardLabel {
+    font-weight: bold;
+    color: #555;
+}
+
+.dashboardValue {
+    color: #333;
+}
+
+.balanceBox {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.errorLabel {
+    color: red;
+    margin-top: 5px;
+}
+
+input[type='button'] {
+    margin-top: 10px !important;
+    padding: 10px 20px !important;
+    background-color: #047D95 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    align-self: center !important; /* Center the button */
+}
+
+input[type='button']:hover {
+    background-color: #047d95b9 !important;
+}
+ 
+.chartContainer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chartTitle {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .sendMoneyButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .sendMoneyButton:hover {
+    background-color: #45a049;
+  }
+  

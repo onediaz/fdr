@@ -17,9 +17,28 @@ async function getStudent(studentID) {
         });
         return student.data.listStudents.items[0];
     } catch (error) {
-        return []
+        return [];
+    }
+  }
+
+  async function getStudentByEmail (studentEmail) {
+    console.log(studentEmail);
+    try {
+        const student = await client.graphql({
+            query: listStudents,
+            variables: {
+                filter: {
+                    email: {
+                        eq: studentEmail
+                    }
+                }
+            }
+        });
+        return student.data.listStudents.items[0];
+    } catch (error) {
+        return [];
     }
   }
   
   // Export the function
-  export { getStudent };
+  export { getStudent, getStudentByEmail };
