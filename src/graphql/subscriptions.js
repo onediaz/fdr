@@ -7,13 +7,16 @@ export const onCreateTransactions = /* GraphQL */ `
   ) {
     onCreateTransactions(filter: $filter) {
       id
-      sender
-      receiver
+      sender_id
+      receiver_id
       amount
       Students {
         nextToken
         __typename
       }
+      sender_name
+      receiver_name
+      message
       createdAt
       updatedAt
       __typename
@@ -26,13 +29,16 @@ export const onUpdateTransactions = /* GraphQL */ `
   ) {
     onUpdateTransactions(filter: $filter) {
       id
-      sender
-      receiver
+      sender_id
+      receiver_id
       amount
       Students {
         nextToken
         __typename
       }
+      sender_name
+      receiver_name
+      message
       createdAt
       updatedAt
       __typename
@@ -45,13 +51,16 @@ export const onDeleteTransactions = /* GraphQL */ `
   ) {
     onDeleteTransactions(filter: $filter) {
       id
-      sender
-      receiver
+      sender_id
+      receiver_id
       amount
       Students {
         nextToken
         __typename
       }
+      sender_name
+      receiver_name
+      message
       createdAt
       updatedAt
       __typename
@@ -122,9 +131,12 @@ export const onCreateTransactionsStudent = /* GraphQL */ `
       studentId
       transactions {
         id
-        sender
-        receiver
+        sender_id
+        receiver_id
         amount
+        sender_name
+        receiver_name
+        message
         createdAt
         updatedAt
         __typename
@@ -155,9 +167,12 @@ export const onUpdateTransactionsStudent = /* GraphQL */ `
       studentId
       transactions {
         id
-        sender
-        receiver
+        sender_id
+        receiver_id
         amount
+        sender_name
+        receiver_name
+        message
         createdAt
         updatedAt
         __typename
@@ -188,9 +203,12 @@ export const onDeleteTransactionsStudent = /* GraphQL */ `
       studentId
       transactions {
         id
-        sender
-        receiver
+        sender_id
+        receiver_id
         amount
+        sender_name
+        receiver_name
+        message
         createdAt
         updatedAt
         __typename

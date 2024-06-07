@@ -12,9 +12,11 @@ async function createTransaction(sender, receiver, amount) {
         query: createTransactions,
         variables: {
           input: {
-            sender: sender.id,
-            receiver: receiver.id,
-            amount: amount
+            sender_id: sender.id,
+            receiver_id: receiver.id,
+            amount: amount,
+            sender_name: sender.name,
+            receiver_name: receiver.name
           }
         }
       });

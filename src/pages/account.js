@@ -60,7 +60,7 @@ const Account = (props) => {
                 input: {
                   email: email,
                   name: name,
-                  balance: 1000,
+                  balance: 0,
                   isAdmin: false
                 }
               }
@@ -88,7 +88,10 @@ const Account = (props) => {
     }
 
     useEffect(() => {
-        if (authStatus === 'authenticated' && !hasEffectRun.current) {
+        if (props.email !== '') {
+            return;
+        }
+        else if (authStatus === 'authenticated' && !hasEffectRun.current) {
             hasEffectRun.current = true;
             console.log(authStatus);
             checkAccount();

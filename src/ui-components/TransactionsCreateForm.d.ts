@@ -22,21 +22,30 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type TransactionsCreateFormInputValues = {
-    sender?: string;
-    receiver?: string;
+    sender_id?: string;
+    receiver_id?: string;
     amount?: number;
+    sender_name?: string;
+    receiver_name?: string;
+    message?: string;
 };
 export declare type TransactionsCreateFormValidationValues = {
-    sender?: ValidationFunction<string>;
-    receiver?: ValidationFunction<string>;
+    sender_id?: ValidationFunction<string>;
+    receiver_id?: ValidationFunction<string>;
     amount?: ValidationFunction<number>;
+    sender_name?: ValidationFunction<string>;
+    receiver_name?: ValidationFunction<string>;
+    message?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TransactionsCreateFormOverridesProps = {
     TransactionsCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    sender?: PrimitiveOverrideProps<TextFieldProps>;
-    receiver?: PrimitiveOverrideProps<TextFieldProps>;
+    sender_id?: PrimitiveOverrideProps<TextFieldProps>;
+    receiver_id?: PrimitiveOverrideProps<TextFieldProps>;
     amount?: PrimitiveOverrideProps<TextFieldProps>;
+    sender_name?: PrimitiveOverrideProps<TextFieldProps>;
+    receiver_name?: PrimitiveOverrideProps<TextFieldProps>;
+    message?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TransactionsCreateFormProps = React.PropsWithChildren<{
     overrides?: TransactionsCreateFormOverridesProps | undefined | null;

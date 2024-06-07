@@ -102,15 +102,13 @@ const AdminNavbar = () => {
                     <TableHead >
                         <TableRow>
                             {isAdmin &&
-                                <div>
-                                    <TableCell as="th">
-                                        <CheckboxField
-                                            onChange={handleSelectAll}
-                                            checked={selectedStudents.length === students.length}
-                                            label=""
-                                        />
-                                    </TableCell>
-                                </div>
+                                <TableCell as="th">
+                                    <CheckboxField
+                                        onChange={handleSelectAll}
+                                        checked={selectedStudents.length === students.length}
+                                        label=""
+                                    />
+                                </TableCell>
                             }
                             <TableCell as="th"> 
                                 <div className="admin-table-head-cell">
@@ -135,7 +133,6 @@ const AdminNavbar = () => {
                         {students.map(student => ( 
                             <TableRow className="students-display" key={student.id}>
                                 {isAdmin &&
-                                    <div>
                                         <TableCell>
                                             <CheckboxField
                                                 onChange={() => handleSelectStudent(student)}
@@ -143,7 +140,6 @@ const AdminNavbar = () => {
                                                 label=""
                                             />
                                         </TableCell>
-                                    </div>
                                 }
                                 <TableCell> 
                                     <NavLink to={`/dashboard/${student.email}`} className="nav_link"> {student.name} </NavLink> 

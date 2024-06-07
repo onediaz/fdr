@@ -1,9 +1,28 @@
 // pages/index.js
 
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { getAllTransactions } from '../functions/view-transactions';
 
 const Home = (props) => {
     const { loggedIn, email} = props
+    const [transactions, setTransactions] = useState([]);
+    // const transactions = [{sender: 1}, {sender: 4}]
+    useEffect(() => {
+      viewTransactions();
+    }, [email]);
+
+    const viewTransactions = useCallback(async () => {
+      setTransactions([]);
+      try {
+          const newViewTransaction = await getAllTransactions();
+          newViewTransaction.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          console.log(newViewTransaction);
+          setTransactions(newViewTransaction);
+      } catch (error) {
+          console.log('Failed to list sent transactions');
+      }
+  }, [email]);
+
     return (
       <div className="mainContainer">
         <div className='titleContainer'> FDR</div>
@@ -17,6 +36,15 @@ const Home = (props) => {
           My future goals will be for students to have access to an investing account, and roles that pay them on a schedule. 
         </div>
         
+        <div>
+          <div className='recent-transactions'>
+            {transactions.map(transaction => (
+              <li>
+                {transaction.sender_name} sent ${transaction.amount} to {transaction.receiver_name}
+              </li>
+            ))}
+          </div>
+        </div>
       </div>
       
     );

@@ -8,6 +8,7 @@ import { updateStudent } from '../graphql/mutations';
 import { generateClient } from "aws-amplify/api";
 import { createTransaction } from '../functions/create-transaction';
 import Transactions from './transactions';
+import { updateStudentBalance } from '../functions/update-student-balance';
 const client = generateClient();
 
 const Dashboard = (props) => {
@@ -84,28 +85,12 @@ const Dashboard = (props) => {
                 // Update current student's balance
                 console.log('Updating Balance');
                 const updatedCurrentBalance = Number(currentStudentBalance) - Number(balance);
-                const currentStudentResult = await client.graphql({
-                    query: updateStudent,
-                    variables: {
-                        input: {
-                            id: currentStudent.id,
-                            balance: updatedCurrentBalance
-                        }
-                    }
-                });
+                const currentStudentResult = await updateStudentBalance(currentStudent.id, updatedCurrentBalance);
                 console.log('Updated Current Student Balance:', currentStudentResult);
     
                 // Update dashboard student's balance
                 const updatedDashboardBalance = Number(dashboardStudentBalance) + Number(balance);
-                const dashboardStudentResult = await client.graphql({
-                    query: updateStudent,
-                    variables: {
-                        input: {
-                            id: dashboardStudent.id,
-                            balance: updatedDashboardBalance
-                        }
-                    }
-                });
+                const dashboardStudentResult = await updateStudentBalance(dashboardStudent.id, updatedDashboardBalance);
     
                 // Update local state
                 setCurrentStudentBalance(updatedCurrentBalance);

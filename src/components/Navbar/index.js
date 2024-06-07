@@ -34,7 +34,7 @@ const Navbar = ({email, setEmail, isAdmin}) => {
                             </Tabs.Item>
                             {isAdmin && (
                                 <>
-                                    <Tabs.Item value="2">
+                                    <Tabs.Item value="4">
                                         <NavLink to={`/create-student`} className={({ isActive }) => isActive ? 'custom-tabs-item custom-tabs-item--active' : 'custom-tabs-item'}>
                                             Admin
                                         </NavLink>

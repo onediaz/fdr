@@ -13,7 +13,7 @@ async function viewTransactions(key, studentID) {
                 query: listTransactions,
                 variables: {
                     filter: {
-                        sender: {
+                        sender_id: {
                             eq: studentID
                         },
                     }
@@ -25,7 +25,7 @@ async function viewTransactions(key, studentID) {
                 query: listTransactions,
                 variables: {
                     filter: {
-                        receiver: {
+                        receiver_id: {
                             eq: studentID
                         },
                     }
@@ -56,5 +56,14 @@ async function viewTransactions(key, studentID) {
     }
   }
   
+async function getAllTransactions () {
+    console.log("Getting all Transactions");
+    try {
+        const transactions = await client.graphql({query: listTransactions });
+        return transactions.data.listTransactions.items;
+    } catch (error) {
+        return [];
+    }
+}
   // Export the function
-  export { viewTransactions };
+  export { viewTransactions, getAllTransactions };

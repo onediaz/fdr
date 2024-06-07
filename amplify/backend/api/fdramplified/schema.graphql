@@ -1,9 +1,12 @@
 type Transactions @model @auth(rules: [{allow: public}]) {
   id: ID!
-  sender: String
-  receiver: String
+  sender_id: String
+  receiver_id: String
   amount: Int
   Students: [Student] @manyToMany(relationName: "TransactionsStudent")
+  sender_name: String
+  receiver_name: String
+  message: String
 }
 
 type Student @model @auth(rules: [{allow: public}]) {

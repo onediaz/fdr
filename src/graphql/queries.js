@@ -5,13 +5,16 @@ export const getTransactions = /* GraphQL */ `
   query GetTransactions($id: ID!) {
     getTransactions(id: $id) {
       id
-      sender
-      receiver
+      sender_id
+      receiver_id
       amount
       Students {
         nextToken
         __typename
       }
+      sender_name
+      receiver_name
+      message
       createdAt
       updatedAt
       __typename
@@ -27,9 +30,12 @@ export const listTransactions = /* GraphQL */ `
     listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        sender
-        receiver
+        sender_id
+        receiver_id
         amount
+        sender_name
+        receiver_name
+        message
         createdAt
         updatedAt
         __typename
@@ -87,9 +93,12 @@ export const getTransactionsStudent = /* GraphQL */ `
       studentId
       transactions {
         id
-        sender
-        receiver
+        sender_id
+        receiver_id
         amount
+        sender_name
+        receiver_name
+        message
         createdAt
         updatedAt
         __typename
