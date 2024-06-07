@@ -39,6 +39,5 @@ async function getStudent(studentID) {
         return [];
     }
   }
-  
   // Export the function
   export { getStudent, getStudentByEmail };

@@ -26,12 +26,14 @@ export declare type StudentUpdateFormInputValues = {
     name?: string;
     balance?: number;
     isAdmin?: boolean;
+    profile_picture?: string;
 };
 export declare type StudentUpdateFormValidationValues = {
     email?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
     balance?: ValidationFunction<number>;
     isAdmin?: ValidationFunction<boolean>;
+    profile_picture?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type StudentUpdateFormOverridesProps = {
@@ -40,6 +42,7 @@ export declare type StudentUpdateFormOverridesProps = {
     name?: PrimitiveOverrideProps<TextFieldProps>;
     balance?: PrimitiveOverrideProps<TextFieldProps>;
     isAdmin?: PrimitiveOverrideProps<SwitchFieldProps>;
+    profile_picture?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type StudentUpdateFormProps = React.PropsWithChildren<{
     overrides?: StudentUpdateFormOverridesProps | undefined | null;

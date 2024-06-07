@@ -16,5 +16,6 @@ type Student @model @auth(rules: [{allow: public}]) {
   balance: Int!
   isAdmin: Boolean
   transactionss: [Transactions] @manyToMany(relationName: "TransactionsStudent")
+  profile_picture: String
 }
  

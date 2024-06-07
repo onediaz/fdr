@@ -11,13 +11,15 @@ import { Policy, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { myApiFunction } from "./functions/api-function/resource";
 import { auth } from "./auth/resource";
 import { data } from "./data/resource";
-import { signUp } from "./functions/sign-up/resource"
+import { signUp } from "./functions/sign-up/resource";
+import { storage } from './storage/resource';
 
 const backend = defineBackend({
   auth,
   data,
   myApiFunction,
-  signUp
+  signUp,
+  storage
 });
 
 // create a new API stack

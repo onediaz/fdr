@@ -79,6 +79,7 @@ export const onCreateStudent = /* GraphQL */ `
         nextToken
         __typename
       }
+      profile_picture
       createdAt
       updatedAt
       __typename
@@ -97,6 +98,7 @@ export const onUpdateStudent = /* GraphQL */ `
         nextToken
         __typename
       }
+      profile_picture
       createdAt
       updatedAt
       __typename
@@ -115,6 +117,7 @@ export const onDeleteStudent = /* GraphQL */ `
         nextToken
         __typename
       }
+      profile_picture
       createdAt
       updatedAt
       __typename
@@ -147,6 +150,7 @@ export const onCreateTransactionsStudent = /* GraphQL */ `
         name
         balance
         isAdmin
+        profile_picture
         createdAt
         updatedAt
         __typename
@@ -183,6 +187,7 @@ export const onUpdateTransactionsStudent = /* GraphQL */ `
         name
         balance
         isAdmin
+        profile_picture
         createdAt
         updatedAt
         __typename
@@ -219,6 +224,7 @@ export const onDeleteTransactionsStudent = /* GraphQL */ `
         name
         balance
         isAdmin
+        profile_picture
         createdAt
         updatedAt
         __typename

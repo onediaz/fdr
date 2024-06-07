@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchUserAttributes } from '@aws-amplify/auth';
 import { createTransaction } from '../functions/create-transaction';
-import { updateStudentBalance } from '../functions/update-student-balance';
+import { updateStudentBalance, updateStudentProfilePicture } from '../functions/update-student-balance';
 import { getStudentByEmail } from '../functions/get-student';
 import CustomBarChart from '../components/barchart';
+import FileUpload from '../components/fileupload';
 
 const Dashboard = (props) => {
     const { email: dashboardEmail } = useParams();
@@ -20,6 +21,7 @@ const Dashboard = (props) => {
     const [dashboardStudentBalance, setDashboardStudentBalance] = useState(null);
     const [dashboardStudentEmail, setDashboardStudentEmail] = useState(null);
     const [weeklyData, setWeeklyData] = useState([]);
+    const [profilePicture, setProfilePicture] = useState('');
 
     useEffect(() => {
         fetchUser();
@@ -104,6 +106,15 @@ const Dashboard = (props) => {
         setWeeklyData(mockData);
     };
 
+    const handleProfilePictureUpload = async (key) => {
+        try {
+          await updateStudentProfilePicture(currentStudent.id, key);
+          setProfilePicture(key);
+        } catch (error) {
+          console.error('Error updating profile picture:', error);
+        }
+      };
+
     return (
         <div className="mainDashboardContainer">
             {currentStudent &&
@@ -111,6 +122,14 @@ const Dashboard = (props) => {
                     <div className='dashboardTitle'>
                         Overview
                     </div>
+                    {/* <div className="profilePictureContainer">
+                        <img 
+                            src={profilePicture ? `https://${process.env.REACT_APP_S3_BUCKET_NAME}.s3.amazonaws.com/${profilePicture}` : 'default-profile-picture-url'}
+                            alt="Profile"
+                            className="profilePicture"
+                        />
+                        <FileUpload onUpload={handleProfilePictureUpload} />
+                    </div> */}
                     <div className='dashboardContent'>
                         <div className='dashboardRow'>
                             <span className='dashboardLabel'>Name: </span>

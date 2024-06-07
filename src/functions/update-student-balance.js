@@ -22,5 +22,26 @@ async function updateStudentBalance(id, amount) {
     }
   }
   
+  async function updateStudentProfilePicture (studentId, profilePicture) {
+    try {
+        //   const input = { id: studentId, profilePicture };
+        //   const updatedStudent = await API.graphql(graphqlOperation(updateStudent, { input }));
+        const updatedStudent = await client.graphql({
+        query: updateStudent,
+        variables: {
+            input: {
+                id: studentId,
+                profile_picture: profilePicture
+            }
+        }
+        });
+        // return updatedStudent;
+        return updatedStudent.data.updateStudent;
+    } catch (error) {
+      console.error('Error updating student profile picture:', error);
+      throw error;
+    }
+  };
+
   // Export the function
-  export { updateStudentBalance };
+  export { updateStudentBalance, updateStudentProfilePicture };

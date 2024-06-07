@@ -57,6 +57,7 @@ export const getStudent = /* GraphQL */ `
         nextToken
         __typename
       }
+      profile_picture
       createdAt
       updatedAt
       __typename
@@ -76,6 +77,7 @@ export const listStudents = /* GraphQL */ `
         name
         balance
         isAdmin
+        profile_picture
         createdAt
         updatedAt
         __typename
@@ -109,6 +111,7 @@ export const getTransactionsStudent = /* GraphQL */ `
         name
         balance
         isAdmin
+        profile_picture
         createdAt
         updatedAt
         __typename

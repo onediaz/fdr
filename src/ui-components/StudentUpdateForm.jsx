@@ -35,11 +35,15 @@ export default function StudentUpdateForm(props) {
     name: "",
     balance: "",
     isAdmin: false,
+    profile_picture: "",
   };
   const [email, setEmail] = React.useState(initialValues.email);
   const [name, setName] = React.useState(initialValues.name);
   const [balance, setBalance] = React.useState(initialValues.balance);
   const [isAdmin, setIsAdmin] = React.useState(initialValues.isAdmin);
+  const [profile_picture, setProfile_picture] = React.useState(
+    initialValues.profile_picture
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = studentRecord
@@ -49,6 +53,7 @@ export default function StudentUpdateForm(props) {
     setName(cleanValues.name);
     setBalance(cleanValues.balance);
     setIsAdmin(cleanValues.isAdmin);
+    setProfile_picture(cleanValues.profile_picture);
     setErrors({});
   };
   const [studentRecord, setStudentRecord] = React.useState(studentModelProp);
@@ -72,6 +77,7 @@ export default function StudentUpdateForm(props) {
     name: [{ type: "Required" }],
     balance: [{ type: "Required" }],
     isAdmin: [],
+    profile_picture: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -103,6 +109,7 @@ export default function StudentUpdateForm(props) {
           name,
           balance,
           isAdmin: isAdmin ?? null,
+          profile_picture: profile_picture ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -167,6 +174,7 @@ export default function StudentUpdateForm(props) {
               name,
               balance,
               isAdmin,
+              profile_picture,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -194,6 +202,7 @@ export default function StudentUpdateForm(props) {
               name: value,
               balance,
               isAdmin,
+              profile_picture,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -225,6 +234,7 @@ export default function StudentUpdateForm(props) {
               name,
               balance: value,
               isAdmin,
+              profile_picture,
             };
             const result = onChange(modelFields);
             value = result?.balance ?? value;
@@ -252,6 +262,7 @@ export default function StudentUpdateForm(props) {
               name,
               balance,
               isAdmin: value,
+              profile_picture,
             };
             const result = onChange(modelFields);
             value = result?.isAdmin ?? value;
@@ -266,6 +277,34 @@ export default function StudentUpdateForm(props) {
         hasError={errors.isAdmin?.hasError}
         {...getOverrideProps(overrides, "isAdmin")}
       ></SwitchField>
+      <TextField
+        label="Profile picture"
+        isRequired={false}
+        isReadOnly={false}
+        value={profile_picture}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              email,
+              name,
+              balance,
+              isAdmin,
+              profile_picture: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.profile_picture ?? value;
+          }
+          if (errors.profile_picture?.hasError) {
+            runValidationTasks("profile_picture", value);
+          }
+          setProfile_picture(value);
+        }}
+        onBlur={() => runValidationTasks("profile_picture", profile_picture)}
+        errorMessage={errors.profile_picture?.errorMessage}
+        hasError={errors.profile_picture?.hasError}
+        {...getOverrideProps(overrides, "profile_picture")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
