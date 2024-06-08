@@ -7,8 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField
 import { updateStudentBalance } from '../functions/update-student-balance';
 import { useLocation } from 'react-router-dom';
 import { createTransaction } from "../functions/create-transaction";
-import { getStudentByEmail } from "../functions/get-student";
-import { numberToCloudFormation } from "aws-cdk-lib";
+import { getStudentByEmail, getAllStudents } from "../functions/get-student";
 import { sortArrayByAttribute } from "../functions/sort-arrays";
 const client = generateClient();
 
@@ -17,15 +16,13 @@ const Students = () => {
     const isAdmin = location.state?.isAdmin;
     const [students, setStudents] = useState([]);
     const [selectedStudents, setSelectedStudents] = useState([]);
-    const [sortOrder, setSortOrder] = useState(true);
-    const [sortIcon, setSortIcon] = useState('▼');
     const [balance, setBalance] = useState('');
     const [message, setMessage] = useState('');
     const [sortConfig, setSortConfig] = useState(null);
 
     useEffect(() => {
         const getStudents = async () => {
-            const studentsList = await fetchStudents();
+            const studentsList = await getAllStudents();
             setStudents(studentsList);
         };
 

@@ -39,5 +39,18 @@ async function getStudent(studentID) {
         return [];
     }
   }
+
+  async function getAllStudents () {
+    console.log('fetching students');
+    try {
+        const allStudents = await client.graphql({
+            query: listStudents
+        });
+        return allStudents.data.listStudents.items;
+    } catch (error) {
+        console.error('Error fetching students:', error);
+        return [];
+    }
+};
   // Export the function
-  export { getStudent, getStudentByEmail };
+  export { getStudent, getStudentByEmail, getAllStudents };
