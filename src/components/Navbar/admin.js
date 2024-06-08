@@ -147,7 +147,7 @@ const AdminNavbar = () => {
                                         </TableCell>
                                 }
                                 <TableCell> 
-                                    <NavLink to={`/dashboard/${student.email}`} className="nav_link"> {student.name} </NavLink> 
+                                    <NavLink to={`/dashboard/${student.email}`} className="student_nav_link"> {student.name} </NavLink> 
                                 </TableCell>
                                 <TableCell> 
                                     {student.email}
@@ -161,7 +161,7 @@ const AdminNavbar = () => {
                 </Table>
             </div>
             {isAdmin && 
-            <div>
+            <div className="mainDashboardContainer">
                 <input type="text" value={message} min="1" placeholder="Enter Message" onChange={(ev) => setMessage(ev.target.value)} className={'balanceBox'}/>
                 <input type="number" value={balance} min="1" placeholder="Enter Balance" onChange={(ev) => setBalance(ev.target.value)} className={'balanceBox'}/>
                 <input type="button" onClick={onButtonClick} value={'Send Money'}/> 

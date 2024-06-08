@@ -1,8 +1,9 @@
-   
+
 .nav_container {
    flex-direction: column;
    display: flex;
    align-items: center;
+   width: 90%;
 }
 
 .admin_nav_container {
@@ -14,21 +15,29 @@
 .nav_logo {
    color: var(--first-color);
    transition: color 0.4s;
-   /* font-size: var(--h2-font-size); */
    font-size: 25px;
    font-family: var(--second-font);
    text-align: center;
-   padding-left: 25%;
+   font-weight: bolder;
+   text-decoration: none;
+}
+
+.nav_logo:hover {
+   color: #047d95da;
+}
+
+.nav_list_container {
+   width: 100%;
 }
 
 .nav_list {
-   /* display: flex;
-   flex-wrap: wrap; */
+   width: 100%;
    list-style-type: none;
-   /* justify-content: space-around; */
-   /* align-items: center; */
    border-radius: 1px;
    border-color: black;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
 }
 
 .admin_nav_list {
@@ -37,15 +46,30 @@
 }
 
 .nav_link {
+   font-size: 20px;
+   font-weight: bolder;
    color: var(--title-color);
-   font-weight: var(--font-semi-bold);
    transition: color 0.4s;
    text-decoration: none;
+   margin: 10px;
 }
 
 .nav_link:hover {
-   color: var(--first-color);
+   color: #047d95da;
    text-decoration: underline;
+}
+
+.student_nav_link {
+   font-weight: bold;
+   color: var(--title-color);
+   transition: color 0.4s;
+   text-decoration: none;
+   margin: 10px;
+}
+
+.student_nav_link:hover {
+   text-decoration: underline;
+   color: #047d95da;
 }
 
 .nav-tabs {

@@ -6,44 +6,29 @@ import { Tabs, Flex } from '@aws-amplify/ui-react';
 const Navbar = ({email, setEmail, isAdmin}) => {
 
     return (
-            <div className="nav_container">
-                <Flex direction="column" gap="2rem">
-                    <Tabs.Container defaultValue="1">
-                    <Tabs.List spacing="equal">
-
-                        <Flex direction="row" gap="2rem">
-                            <Tabs.Item value="1">
-                                <NavLink to="/" className={({ isActive }) => isActive ? 'custom-tabs-item custom-tabs-item--active' : 'custom-tabs-item'}>
-                                    Home
-                                </NavLink>
-                            </Tabs.Item>
-                            {email && (
-                                <>
-                                    <Tabs.Item value="2">
-                                        <NavLink to={`/dashboard/${email}`} className={({ isActive }) => isActive ? 'custom-tabs-item custom-tabs-item--active' : 'custom-tabs-item'}>
-                                            Dashboard
-                                        </NavLink>
-                                    </Tabs.Item>
-                                </>
-                            )}
-                            <Tabs.Item value="3">
-                                
-                                <NavLink to={{ pathname: "/admin" }} state={ {isAdmin: isAdmin} } className={({ isActive }) => isActive ? 'custom-tabs-item custom-tabs-item--active' : 'custom-tabs-item'}>
-                                    Students
-                                </NavLink>
-                            </Tabs.Item>
-                            <Tabs.Item value="4">
-                                
-                                <NavLink to="/account" className={({ isActive }) => isActive ? 'custom-tabs-item custom-tabs-item--active' : 'custom-tabs-item'}>
-                                    Account
-                                </NavLink>
-                            </Tabs.Item>
-                        </Flex>
-                    </Tabs.List>
-                    </Tabs.Container>
-                </Flex>
-
+        <div className="nav_container">
+            <NavLink to="/" className="nav_logo">
+                FDR
+            </NavLink>
+            <div className="nav_list_container">
+                <ul className="nav_list">
+                    <li className="nav_item">
+                        <NavLink to="/" className="nav_link">
+                        Home
+                        </NavLink>
+                    </li>
+                    {email && <li>
+                        <NavLink to={`/dashboard/${email}`} className="nav_link"> Dashboard </NavLink> 
+                    </li> }
+                    <li>
+                        <NavLink to="/admin" className="nav_link">Students</NavLink>
+                    </li>
+                    <li> 
+                        <NavLink to="/account" className="nav_link"> Account </NavLink> 
+                    </li>
+                </ul>
             </div>
+        </div>
     );
 };
 
