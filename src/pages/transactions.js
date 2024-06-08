@@ -31,6 +31,7 @@ const Transactions = (props) => {
     const sortTransactions = (key) => {
         let direction = 'ascending';
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+            console.log('changing direction');
             direction = 'descending';
         }
         console.log(direction);

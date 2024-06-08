@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./navbar.css";
-import { listStudents } from '../../graphql/queries';
-import { updateStudent } from '../../graphql/mutations';
+import "./styling/students.css";
+import { listStudents } from '../graphql/queries';
 import { generateClient } from "aws-amplify/api";
-import { Tabs, Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField } from '@aws-amplify/ui-react';
-import { updateStudentBalance } from '../../functions/update-student-balance';
+import { Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField } from '@aws-amplify/ui-react';
+import { updateStudentBalance } from '../functions/update-student-balance';
 import { useLocation } from 'react-router-dom';
-import { createTransaction } from "../../functions/create-transaction";
-import { getStudentByEmail } from "../../functions/get-student";
+import { createTransaction } from "../functions/create-transaction";
+import { getStudentByEmail } from "../functions/get-student";
+import { numberToCloudFormation } from "aws-cdk-lib";
+import { sortArrayByAttribute } from "../functions/sort-arrays";
 const client = generateClient();
 
-const AdminNavbar = () => {
+const Students = () => {
     const location = useLocation();
     const isAdmin = location.state?.isAdmin;
     const [students, setStudents] = useState([]);
@@ -20,11 +21,12 @@ const AdminNavbar = () => {
     const [sortIcon, setSortIcon] = useState('▼');
     const [balance, setBalance] = useState('');
     const [message, setMessage] = useState('');
+    const [sortConfig, setSortConfig] = useState(null);
 
     useEffect(() => {
         const getStudents = async () => {
-        const studentsList = await fetchStudents();
-        setStudents(studentsList);
+            const studentsList = await fetchStudents();
+            setStudents(studentsList);
         };
 
         getStudents();
@@ -32,6 +34,7 @@ const AdminNavbar = () => {
 
 
     const fetchStudents = async () => {
+        console.log('fetching students');
         try {
             const allStudents = await client.graphql({
                 query: listStudents
@@ -40,29 +43,26 @@ const AdminNavbar = () => {
         } catch (error) {
             console.error('Error fetching students:', error);
             return [];
-        }};
+        }
+    };
     
-    const sortStudents = async () => {
-        try {
-            if (sortOrder){
-                const studentList =  await fetchStudents();
-                studentList.sort((a,b) =>  b.name.localeCompare(a.name));
-                setStudents(studentList);
-                setSortOrder(false);
-                setSortIcon('▲');
-            }
-            else {
-                const studentList =  await fetchStudents();
-                studentList.sort((a,b) =>  a.name.localeCompare(b.name));
-                setStudents(studentList);
-                setSortOrder(true);
-                setSortIcon('▼');
-            }
-            
+    const sortStudents = async (key) => {
+        console.log('changing direction');
+        let direction = 'ascending';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
         }
-        catch(error) {
-            console.log('Sorting Error')
-        }
+        const sortedStudents = sortArrayByAttribute(key, direction, students);
+        console.log(sortedStudents);
+        setStudents(sortedStudents);
+        setSortConfig({ key: key, direction: direction });
+    };
+
+    const getClassName = (name) => {
+        if (!sortConfig) {
+            return;
+          }
+          return sortConfig.key === name ? 'students-table-' + sortConfig.direction : undefined;
     };
 
     const handleSelectAll = (event) => {
@@ -116,20 +116,29 @@ const AdminNavbar = () => {
                                 </TableCell>
                             }
                             <TableCell as="th"> 
-                                <div className="admin-table-head-cell">
-                                    <div className="table-cell-text"> Name </div>
-                                    <Button onClick={sortStudents} className="admin-table-button"> {sortIcon} </Button>
+                                <div className="student-table-head-cell">
+                                    <Button onClick={() => sortStudents('name')} className='students-table-button'>
+
+                                        <div className="table-cell-text"> Name </div>
+                                        <div className={getClassName('name')}></div>
+                                    </Button>
+                                    
                                 </div>
                             </TableCell>
                             <TableCell as="th"> 
-                                <div className="admin-table-head-cell">
-                                    <div className="table-cell-text"> Email </div> 
-                                    <Button onClick={() => console.log('hihi')} className="admin-table-button"> O </Button>
+                                <div className="student-table-head-cell">
+                                    <Button onClick={() => sortStudents('email')} className="students-table-button">
+                                        <div className="table-cell-text"> Email </div> 
+                                        <div className={getClassName('email')}></div>
+                                    </Button>
                                 </div>
                             </TableCell>
                             <TableCell as="th"> 
-                                <div className="admin-table-head-cell">
-                                    <div className="table-cell-text"> Balance </div> 
+                                <div className="student-table-head-cell">
+                                    <Button onClick={() => sortStudents('balance')} className="students-table-button">
+                                        <div className="table-cell-text"> Balance </div> 
+                                        <div className={getClassName('balance')}></div>
+                                    </Button>
                                 </div>
                             </TableCell>
                         </TableRow>
@@ -171,4 +180,4 @@ const AdminNavbar = () => {
     );
 };
 
-export default AdminNavbar;
+export default Students;

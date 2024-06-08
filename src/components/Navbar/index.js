@@ -21,7 +21,7 @@ const Navbar = ({email, setEmail, isAdmin}) => {
                         <NavLink to={`/dashboard/${email}`} className="nav_link"> Dashboard </NavLink> 
                     </li> }
                     <li>
-                        <NavLink to="/admin" className="nav_link">Students</NavLink>
+                        <NavLink to="/students" className="nav_link">Students</NavLink>
                     </li>
                     <li> 
                         <NavLink to="/account" className="nav_link"> Account </NavLink> 

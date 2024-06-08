@@ -112,7 +112,7 @@ const Account = (props) => {
         <Authenticator formFields={formFields}>
             {({ signOut, user }) => {
                 setEmail(user.signInDetails.loginId);
-                props.setEmail(user.signInDetails.loginId);
+                // props.setEmail(user.signInDetails.loginId);
                 return (
                     <div className='mainContainer'>
                         <div className='textContainer'>

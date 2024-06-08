@@ -10,11 +10,11 @@ import About from "./pages/about";
 import Account from './pages/account';
 import Login from './pages/login'
 import { useEffect, useState } from 'react'
-import Admin from './pages/admin';
 import Dashboard from './pages/dashboard';
 import '@aws-amplify/ui-react/styles.css';
 import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
 import { Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
+import Students from './pages/students';
 
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
@@ -58,7 +58,7 @@ function App({user}) {
             <Route path="/about" element={<About user={user}/>} />
             <Route path="/account" element={<Account email={email} setEmail={setEmail} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
             <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
-            <Route path="/admin" element={<Admin isAdmin={isAdmin} />} />
+            <Route path="/students" element={<Students isAdmin={isAdmin} />} />
             <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} />} />
             </Routes>
         </div>

@@ -1,0 +1,38 @@
+.amplify-button.students-table-button {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+ }
+ 
+ .amplify-button.students-table-button:hover {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: #047d95da;
+    cursor: pointer;
+ }
+ 
+ .amplify-button.students-table-button:focus {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: #047d95da;
+    cursor: pointer;
+ }
+
+
+.students-table-ascending::after {
+    content: '▼';
+    display: inline-block;
+}
+  
+.students-table-descending::after {
+    content: '▲';
+    display: inline-block;
+}
