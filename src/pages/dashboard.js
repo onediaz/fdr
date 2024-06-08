@@ -8,6 +8,7 @@ import { updateStudentBalance, updateStudentProfilePicture } from '../functions/
 import { getStudentByEmail } from '../functions/get-student';
 import CustomBarChart from '../components/barchart';
 import FileUpload from '../components/fileupload';
+import { Image } from '@aws-amplify/ui-react';
 
 const Dashboard = (props) => {
     const { email: dashboardEmail } = useParams();
@@ -22,6 +23,7 @@ const Dashboard = (props) => {
     const [dashboardStudentEmail, setDashboardStudentEmail] = useState(null);
     const [weeklyData, setWeeklyData] = useState([]);
     const [profilePicture, setProfilePicture] = useState('');
+    const [dashboardProfilePicture, setDashboardProfilePicture] = useState('');
 
     useEffect(() => {
         fetchUser();
@@ -38,6 +40,7 @@ const Dashboard = (props) => {
                     setCurrentStudent(currentUser);
                     setCurrentStudentBalance(currentUser.balance);
                     setCurrentStudentEmail(currentUser.email);
+                    setProfilePicture(currentUser.profile_picture);
                 } else {
                     console.log("No student found with that email.");
                 }
@@ -48,6 +51,7 @@ const Dashboard = (props) => {
                     setDashboardStudent(dashboardUser);
                     setDashboardStudentBalance(dashboardUser.balance);
                     setDashboardStudentEmail(dashboardUser.email);
+                    setDashboardProfilePicture(dashboardUser.profile_picture);
                 } else {
                     console.log("No student found with that email.");
                 }
@@ -122,26 +126,30 @@ const Dashboard = (props) => {
                     <div className='dashboardTitle'>
                         Overview
                     </div>
-                    {/* <div className="profilePictureContainer">
-                        <img 
-                            src={profilePicture ? `https://${process.env.REACT_APP_S3_BUCKET_NAME}.s3.amazonaws.com/${profilePicture}` : 'default-profile-picture-url'}
-                            alt="Profile"
-                            className="profilePicture"
-                        />
-                        <FileUpload onUpload={handleProfilePictureUpload} />
-                    </div> */}
+                    
                     <div className='dashboardContent'>
-                        <div className='dashboardRow'>
-                            <span className='dashboardLabel'>Name: </span>
-                            <span className='dashboardValue'>{currentStudent.name}</span>
+                        <div className="profilePictureContainer">
+                            <div className='profilePictureBorder'>
+                                <Image
+                                    src={`https://fdr-storagebae6c-fdr.s3.us-east-2.amazonaws.com/public/${profilePicture}`}
+                                    alt={``}
+                                    className='profilePicture'
+                                />
+                            </div>
+                            <FileUpload onUpload={handleProfilePictureUpload} />
                         </div>
-                        <div className='dashboardRow'>
-                            <span className='dashboardLabel'>Email: </span>
-                            <span className='dashboardValue'>{currentStudentEmail}</span>
-                        </div>
-                        <div className='dashboardRow'>
-                            <span className='dashboardLabel'>Total Balance: </span>
-                            <span className='dashboardValue'>${currentStudentBalance}</span>
+                        <div className='dashboardRows'>
+                            <div className='dashboardRow'>
+                                <span className='dashboardName'>{currentStudent.name}</span>
+                            </div>
+                            <div className='dashboardRow'>
+                                <span className='dashboardLabel'>Email: </span>
+                                <span className='dashboardValue'>{currentStudentEmail}</span>
+                            </div>
+                            <div className='dashboardBalanceRow'>
+                                <span className='dashboardBalanceLabel'>Total Balance: </span>
+                                <span className='dashboardBalanceValue'>${currentStudentBalance}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,15 +157,29 @@ const Dashboard = (props) => {
             {dashboardStudent && currentStudentEmail !== dashboardStudentEmail &&
                 <div className='studentContainer'>
                     <div className='dashboardSection'>
-                        <div className='dashboardTitle'>Viewing {dashboardStudent.name}</div>
+                        <div className='dashboardTitle'>Send Money </div>
                         <div className='dashboardContent'>
-                            <div className='dashboardRow'>
-                                <span className='dashboardLabel'>Email: </span>
-                                <span className='dashboardValue'>{dashboardStudent.email}</span>
+                            <div className="profilePictureContainer">
+                                <div className='profilePictureBorder'>
+                                    <Image
+                                        src={`https://fdr-storagebae6c-fdr.s3.us-east-2.amazonaws.com/public/${dashboardProfilePicture}`}
+                                        alt={``}
+                                        className='profilePicture'
+                                    />
+                                </div>
                             </div>
-                            <div className='dashboardRow'>
-                                <span className='dashboardLabel'>Total Balance: </span>
-                                <span className='dashboardValue'>${dashboardStudentBalance}</span>
+                            <div className='dashboardRows'>
+                                <div className='dashboardRow'>
+                                    <span className='dashboardName'>{dashboardStudent.name}</span>
+                                </div>
+                                <div className='dashboardRow'>
+                                    <span className='dashboardLabel'>Email: </span>
+                                    <span className='dashboardValue'>{dashboardStudent.email}</span>
+                                </div>
+                                <div className='dashboardBalanceRow'>
+                                    <span className='dashboardBalanceLabel'>Total Balance: </span>
+                                    <span className='dashboardBalanceValue'>${dashboardStudentBalance}</span>
+                                </div>
                             </div>
                         </div>
                         <input

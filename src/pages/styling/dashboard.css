@@ -1,81 +1,4 @@
-/* 
-.dashboardContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-
-.propContainer, .studentContainer {
-    flex: 1;
-    margin: 15px;
-    border: 1px solid white;
-    border-radius: 25px;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
-.dashboardTitle {
-    font-size: 50px;
-    font-weight: bolder;
-  }
-
-.buttonContainer {
-display: flex;
-flex-direction: column;
-align-items: center;
-}
-
-.inputContainer {
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-justify-content: center;
-}
-
-.inputContainer > .errorLabel {
-color: red;
-font-size: 12px;
-}
-
-.inputBox {
-height: 48px;
-width: 400px;
-font-size: large;
-border-radius: 8px;
-border: 1px solid grey;
-padding-left: 8px;
-}
-
-.balanceContainer {
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 15px;
-    box-sizing: border-box;
-    width: 50%;
-}
-
-.balanceText{
-    color: gray;
-}
-.balanceAmount {
-    font-size: 25px;
-    font-weight: bolder;
-}
-
-.studentContainer > .errorLabel {
-color: red;
-font-size: 12px;
-}
-.balanceBox {
-height: 48px;
-width: 200px;
-font-size: large;
-border-radius: 8px;
-border: 1px solid grey;
-padding-left: 8px;
-} */
-
+/* dashboard.css */
 .mainDashboardContainer {
     max-width: 600px;
     margin: 0 auto;
@@ -99,20 +22,53 @@ padding-left: 8px;
 }
 
 .dashboardTitle {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .dashboardContent {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    /* justify-content: spa; */
     gap: 10px;
 }
 
-.dashboardRow {
+.dashboardName {
+    font-size: 45px;
+    font-weight: bolder;
+}
+
+.dashboardRows {
+    width: 70%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dashboardBalanceRow {
+    border-radius: 25px;
+    border: 2px solid #047D95;
+    margin-top: 10px;
+    padding: 20px;
+    width: 200px;
+    height: 150px;
+    box-shadow: 0 2px 4px #047D95;
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboardBalanceLabel {
+    font-weight: bold;
+    color: #55555594;
+}
+
+.dashboardBalanceValue {
+    flex-grow: 1;
+    font-weight: bold;
+    text-align: center;
+    font-size: xxx-large;
 }
 
 .dashboardLabel {
@@ -182,4 +138,26 @@ input[type='button']:hover {
   .sendMoneyButton:hover {
     background-color: #45a049;
   }
+  
+  .profilePictureContainer {
+    position: relative;
+    width: 40%;
+  }
+  
+  .amplify-image.profilePicture {
+    width: 98px;
+    height: 98px;
+    object-fit: cover;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+  
+  /* Additional styles for the container to center the image */
+  .profilePictureContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
   

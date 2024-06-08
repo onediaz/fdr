@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Amplify } from 'aws-amplify';
+import { Amplify, Storage } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
 import { ThemeProvider } from "@aws-amplify/ui-react";
 import { studioTheme } from "./ui-components";
 import { Authenticator } from '@aws-amplify/ui-react';
+
 
 // import amplifyconfig from './amplifyconfiguration.json';
 // Amplify.configure(amplifyconfig);
