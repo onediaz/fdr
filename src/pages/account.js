@@ -1,18 +1,15 @@
 // pages/account .js
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import '../App.css';
-import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
-import { Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
+import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
+import { Authenticator} from '@aws-amplify/ui-react';
 import { createStudent } from '../graphql/mutations';
-import { getStudent, listStudents } from '../graphql/queries';
 import { generateClient } from "aws-amplify/api";
 import { getStudentByEmail } from '../functions/get-student';
 const client = generateClient();
 
 const Account = ({studentUser, setStudentUser}) => {
-    const { authStatus } = useAuthenticator(context => [context.authStatus]);
-    const hasEffectRun = useRef(false);
     // const [name, setStudentName] = useState('');
     const formFields = {
         signUp: {
@@ -39,12 +36,12 @@ const Account = ({studentUser, setStudentUser}) => {
                 const newStudent = await client.graphql({
                     query: createStudent,
                     variables: {
-                    input: {
-                        email: tempUser.email,
-                        name: tempUser.name,
-                        balance: 0,
-                        isAdmin: false
-                    }
+                        input: {
+                            email: tempUser.email,
+                            name: tempUser.name,
+                            balance: 0,
+                            isAdmin: false
+                        }
                     }
                 });
                 setStudentUser(fetchUser);

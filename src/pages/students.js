@@ -13,7 +13,6 @@ const Students = ({isAdmin, profilePictures}) => {
     const [balance, setBalance] = useState('');
     const [message, setMessage] = useState('');
     const [sortConfig, setSortConfig] = useState(null);
-    console.log(profilePictures);
 
     useEffect(() => {
         const getStudents = async () => {

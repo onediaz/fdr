@@ -15,6 +15,7 @@ export const getTransactions = /* GraphQL */ `
       sender_name
       receiver_name
       message
+      likes
       createdAt
       updatedAt
       __typename
@@ -36,6 +37,7 @@ export const listTransactions = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename
@@ -101,6 +103,7 @@ export const getTransactionsStudent = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename

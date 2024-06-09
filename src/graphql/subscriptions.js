@@ -17,6 +17,7 @@ export const onCreateTransactions = /* GraphQL */ `
       sender_name
       receiver_name
       message
+      likes
       createdAt
       updatedAt
       __typename
@@ -39,6 +40,7 @@ export const onUpdateTransactions = /* GraphQL */ `
       sender_name
       receiver_name
       message
+      likes
       createdAt
       updatedAt
       __typename
@@ -61,6 +63,7 @@ export const onDeleteTransactions = /* GraphQL */ `
       sender_name
       receiver_name
       message
+      likes
       createdAt
       updatedAt
       __typename
@@ -140,6 +143,7 @@ export const onCreateTransactionsStudent = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename
@@ -177,6 +181,7 @@ export const onUpdateTransactionsStudent = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename
@@ -214,6 +219,7 @@ export const onDeleteTransactionsStudent = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename

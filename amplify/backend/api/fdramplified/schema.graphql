@@ -7,6 +7,7 @@ type Transactions @model @auth(rules: [{allow: public}]) {
   sender_name: String
   receiver_name: String
   message: String
+  likes: AWSJSON
 }
 
 type Student @model @auth(rules: [{allow: public}]) {

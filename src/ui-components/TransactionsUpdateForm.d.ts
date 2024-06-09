@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -28,6 +28,7 @@ export declare type TransactionsUpdateFormInputValues = {
     sender_name?: string;
     receiver_name?: string;
     message?: string;
+    likes?: string;
 };
 export declare type TransactionsUpdateFormValidationValues = {
     sender_id?: ValidationFunction<string>;
@@ -36,6 +37,7 @@ export declare type TransactionsUpdateFormValidationValues = {
     sender_name?: ValidationFunction<string>;
     receiver_name?: ValidationFunction<string>;
     message?: ValidationFunction<string>;
+    likes?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TransactionsUpdateFormOverridesProps = {
@@ -46,6 +48,7 @@ export declare type TransactionsUpdateFormOverridesProps = {
     sender_name?: PrimitiveOverrideProps<TextFieldProps>;
     receiver_name?: PrimitiveOverrideProps<TextFieldProps>;
     message?: PrimitiveOverrideProps<TextFieldProps>;
+    likes?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type TransactionsUpdateFormProps = React.PropsWithChildren<{
     overrides?: TransactionsUpdateFormOverridesProps | undefined | null;

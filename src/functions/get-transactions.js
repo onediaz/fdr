@@ -65,5 +65,48 @@ async function getAllTransactions () {
         return [];
     }
 }
+
+async function getTransactionByID (transactionID) {
+    try {
+        const transaction = await client.graphql({
+            query: listTransactions,
+            variables: {
+                filter: {
+                    id: {
+                        eq: transactionID
+                    }
+                }
+            }
+        });
+        return transaction.data.listTransactions.items[0];
+    } catch(error) {
+        console.log('failed to get transaction by ID');
+        return [];
+    }
+}
+
+/**
+ * 
+ * @param {*} transactionID 
+ * @param {*} user 
+ * @returns 
+ */
+async function getUserLikedTransaction (transactionID, user) {
+    try {
+        const transaction = await getTransactionByID(transactionID);
+        const likes = JSON.parse(transaction.likes)
+        if(likes && likes.users) {
+            console.log(likes)
+            if(likes.users.includes(user.id)){
+                console.log('found user in likes: ', transaction.message);
+                return true;
+            }
+        }
+        return false;
+    } catch(error) {
+        console.log('failed on getUserLikedTransaction');
+        return false;
+    }
+}
   // Export the function
-  export { getStudentTransactions, getAllTransactions };
+  export { getStudentTransactions, getAllTransactions, getUserLikedTransaction, getTransactionByID };

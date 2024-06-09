@@ -18,6 +18,7 @@ export const createTransactions = /* GraphQL */ `
       sender_name
       receiver_name
       message
+      likes
       createdAt
       updatedAt
       __typename
@@ -41,6 +42,7 @@ export const updateTransactions = /* GraphQL */ `
       sender_name
       receiver_name
       message
+      likes
       createdAt
       updatedAt
       __typename
@@ -64,6 +66,7 @@ export const deleteTransactions = /* GraphQL */ `
       sender_name
       receiver_name
       message
+      likes
       createdAt
       updatedAt
       __typename
@@ -153,6 +156,7 @@ export const createTransactionsStudent = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename
@@ -191,6 +195,7 @@ export const updateTransactionsStudent = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename
@@ -229,6 +234,7 @@ export const deleteTransactionsStudent = /* GraphQL */ `
         sender_name
         receiver_name
         message
+        likes
         createdAt
         updatedAt
         __typename

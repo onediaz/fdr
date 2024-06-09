@@ -1,6 +1,6 @@
 
 /* HOME PAGE TRANSACTIONS*/
-.recent-transactions {
+.recent_transactions {
   width: 525px;
   margin: 0 auto;
   padding: 20px;
@@ -8,15 +8,16 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
-.recent-transactions ul {
+.recent_transactions ul {
   list-style-type: none;
   padding: 0;
 }
 
-.transaction-item {
+.transaction_item {
   background-color: #fff;
   margin-bottom: 15px;
   padding: 15px;
@@ -25,45 +26,96 @@
   transition: box-shadow 0.2s;
 }
 
-.transaction-item:hover {
+.transaction_item:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.transaction-details {
+.transaction_upper_details {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
   font-size: 16px;
 }
 
-.transaction-date {
+.transaction_date {
   font-weight: bold;
   color: #555;
   margin-right: 10px;
 }
 
-.transaction-sender {
+.transaction_sender {
   font-weight: bold;
   color: #333;
 }
 
-.transaction-amount {
+.transaction_amount {
   font-weight: bold;
   color: #047d95da;
 }
 
-.transaction-amount-negative {
+.transaction_amount_negative {
   font-weight: bold;
   color: rgb(255, 54, 54);
 }
 
-.transaction-receiver {
+.transaction_receiver {
   font-weight: bold;
   color: #333;
 }
 
-.transaction-message {
-  margin-top: 10px;
+.transaction_lower_details {
+    display: flex;
+    margin-top: 10px;
+}
+
+.transaction_message {
   font-style: italic;
   color: #666;
+  width: 90%;
+  align-self: center;
+}
+
+.transaction_likes {
+    font-style: italic;
+    align-self: center;
+}
+
+.transaction_likes_img {
+    all: unset;
+    /* margin-top: 10px; */
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 25px;
+    transition: color 0.45s ease;
+}
+
+.transaction_likes_img.unliked:disabled:hover {
+    cursor: default;
+    color: black;
+}
+
+.transaction_likes_img.liked {
+    color: rgb(255, 48, 64);
+    animation: pulse 0.45s ease;
+}
+
+.transaction_likes_img.liked:hover {
+    cursor: pointer;
+}
+
+.transaction_likes_img.unliked:hover {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.627);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

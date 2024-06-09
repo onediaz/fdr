@@ -5,7 +5,7 @@ import { ScrollView } from '@aws-amplify/ui-react';
 import { getAllTransactions } from '../functions/get-transactions';
 import TransactionCardComponent from './transactioncard';
 
-const TransactionsComponent = ({}) => {
+const TransactionsComponent = ({user}) => {
     const [transactions, setTransactions] = useState([]);
 
     const viewTransactions = useCallback(async () => {
@@ -24,12 +24,14 @@ const TransactionsComponent = ({}) => {
   }, [viewTransactions]);
 
     return (
-      <div className='recent-transactions'>
-        
+      <div className='recent_transactions'>
+        <div>
+            Trying
+        </div>
         <ScrollView height="700px" width="450px" maxWidth="100%">
           <ul>
             {transactions.map(transaction => (
-                <TransactionCardComponent transaction={transaction}/>
+                <TransactionCardComponent transaction={transaction} user={user}/>
 
             ))}
           </ul>

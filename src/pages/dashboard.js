@@ -62,9 +62,6 @@ const Dashboard = (props) => {
     };
 
     const onButtonClick2 = async() => {
-        console.log('Current Student:', currentStudent);
-        console.log('Dashboard Student:', dashboardStudent);
-    
         try {
             if (balance < 1){
                 window.confirm('Balance must be greater than 0');
@@ -74,7 +71,6 @@ const Dashboard = (props) => {
                 console.log('Updating Balance');
                 const updatedCurrentBalance = Number(currentStudentBalance) - Number(balance);
                 const currentStudentResult = await updateStudentBalance(currentStudent.id, updatedCurrentBalance);
-                console.log('Updated Current Student Balance:', currentStudentResult);
     
                 // Update dashboard student's balance
                 const updatedDashboardBalance = Number(dashboardStudentBalance) + Number(balance);
@@ -84,9 +80,7 @@ const Dashboard = (props) => {
                 setCurrentStudentBalance(updatedCurrentBalance);
                 setDashboardStudentBalance(updatedDashboardBalance);
             }
-            console.log('Success');
             // CALL CREATE TRANSACTION FUNCTION
-            console.log(currentStudent);
             await createTransaction(currentStudent, dashboardStudent, balance, message);
             setBalance('');
             setMessage('');
@@ -136,7 +130,7 @@ const Dashboard = (props) => {
                                     className='profilePicture'
                                 />
                             </div>
-                            {/* <FileUpload onUpload={handleProfilePictureUpload} /> */}
+                            <FileUpload onUpload={handleProfilePictureUpload} />
                         </div>
                         <div className='dashboardRows'>
                             <div className='dashboardRow'>

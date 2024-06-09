@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getTransactions } from "../graphql/queries";
@@ -31,6 +37,7 @@ export default function TransactionsUpdateForm(props) {
     sender_name: "",
     receiver_name: "",
     message: "",
+    likes: "",
   };
   const [sender_id, setSender_id] = React.useState(initialValues.sender_id);
   const [receiver_id, setReceiver_id] = React.useState(
@@ -44,6 +51,7 @@ export default function TransactionsUpdateForm(props) {
     initialValues.receiver_name
   );
   const [message, setMessage] = React.useState(initialValues.message);
+  const [likes, setLikes] = React.useState(initialValues.likes);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = transactionsRecord
@@ -55,6 +63,11 @@ export default function TransactionsUpdateForm(props) {
     setSender_name(cleanValues.sender_name);
     setReceiver_name(cleanValues.receiver_name);
     setMessage(cleanValues.message);
+    setLikes(
+      typeof cleanValues.likes === "string" || cleanValues.likes === null
+        ? cleanValues.likes
+        : JSON.stringify(cleanValues.likes)
+    );
     setErrors({});
   };
   const [transactionsRecord, setTransactionsRecord] = React.useState(
@@ -82,6 +95,7 @@ export default function TransactionsUpdateForm(props) {
     sender_name: [],
     receiver_name: [],
     message: [],
+    likes: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -115,6 +129,7 @@ export default function TransactionsUpdateForm(props) {
           sender_name: sender_name ?? null,
           receiver_name: receiver_name ?? null,
           message: message ?? null,
+          likes: likes ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -181,6 +196,7 @@ export default function TransactionsUpdateForm(props) {
               sender_name,
               receiver_name,
               message,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.sender_id ?? value;
@@ -210,6 +226,7 @@ export default function TransactionsUpdateForm(props) {
               sender_name,
               receiver_name,
               message,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.receiver_id ?? value;
@@ -243,6 +260,7 @@ export default function TransactionsUpdateForm(props) {
               sender_name,
               receiver_name,
               message,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.amount ?? value;
@@ -272,6 +290,7 @@ export default function TransactionsUpdateForm(props) {
               sender_name: value,
               receiver_name,
               message,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.sender_name ?? value;
@@ -301,6 +320,7 @@ export default function TransactionsUpdateForm(props) {
               sender_name,
               receiver_name: value,
               message,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.receiver_name ?? value;
@@ -330,6 +350,7 @@ export default function TransactionsUpdateForm(props) {
               sender_name,
               receiver_name,
               message: value,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.message ?? value;
@@ -344,6 +365,36 @@ export default function TransactionsUpdateForm(props) {
         hasError={errors.message?.hasError}
         {...getOverrideProps(overrides, "message")}
       ></TextField>
+      <TextAreaField
+        label="Likes"
+        isRequired={false}
+        isReadOnly={false}
+        value={likes}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sender_id,
+              receiver_id,
+              amount,
+              sender_name,
+              receiver_name,
+              message,
+              likes: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.likes ?? value;
+          }
+          if (errors.likes?.hasError) {
+            runValidationTasks("likes", value);
+          }
+          setLikes(value);
+        }}
+        onBlur={() => runValidationTasks("likes", likes)}
+        errorMessage={errors.likes?.errorMessage}
+        hasError={errors.likes?.hasError}
+        {...getOverrideProps(overrides, "likes")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
