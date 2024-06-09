@@ -3,7 +3,7 @@ import { listTransactions } from '../graphql/queries';
 import { getStudent } from "./get-student";
 const client = generateClient();
 
-async function viewTransactions(key, studentID) {
+async function getStudentTransactions(key, studentID) {
     console.log("This is view transactions");
     try {
         let modifiedTransactions = [];
@@ -66,4 +66,4 @@ async function getAllTransactions () {
     }
 }
   // Export the function
-  export { viewTransactions, getAllTransactions };
+  export { getStudentTransactions, getAllTransactions };

@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Amplify, Storage } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
-import { ThemeProvider } from "@aws-amplify/ui-react";
-import { studioTheme } from "./ui-components";
 import { Authenticator } from '@aws-amplify/ui-react';
 
 
@@ -14,7 +12,6 @@ import { Authenticator } from '@aws-amplify/ui-react';
 // Amplify.configure(amplifyconfig);
 
 const amplifyConfig = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
-console.log('FDR_AMPLIFY_CONFIG:', amplifyConfig);
 if (!amplifyConfig) {
   console.error('FDR_AMPLIFY_CONFIG is not set.');
 } else {

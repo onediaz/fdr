@@ -130,11 +130,11 @@ const Dashboard = (props) => {
                     <div className='dashboardContent'>
                         <div className="profilePictureContainer">
                             <div className='profilePictureBorder'>
-                                {/* <Image
-                                    src={`https://fdr-storagebae6c-fdr.s3.us-east-2.amazonaws.com/public/${profilePicture}`}
+                                <Image
+                                    src={props.profilePictures[currentStudent.id].src}
                                     alt={``}
                                     className='profilePicture'
-                                /> */}
+                                />
                             </div>
                             {/* <FileUpload onUpload={handleProfilePictureUpload} /> */}
                         </div>
@@ -161,11 +161,11 @@ const Dashboard = (props) => {
                         <div className='dashboardContent'>
                             <div className="profilePictureContainer">
                                 <div className='profilePictureBorder'>
-                                    {/* <Image
-                                        src={`https://fdr-storagebae6c-fdr.s3.us-east-2.amazonaws.com/public/${dashboardProfilePicture}`}
+                                    <Image
+                                        src={props.profilePictures[dashboardStudent.id].src}
                                         alt={``}
                                         className='profilePicture'
-                                    /> */}
+                                    />
                                 </div>
                             </div>
                             <div className='dashboardRows'>
@@ -188,6 +188,7 @@ const Dashboard = (props) => {
                             placeholder="Enter Message"
                             onChange={(ev) => setMessage(ev.target.value)}
                             className='balanceBox'
+                            maxLength={100}
                         />
                         <input
                             type="number"

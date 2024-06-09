@@ -15,6 +15,8 @@ import '@aws-amplify/ui-react/styles.css';
 import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
 import { useAuthenticator} from '@aws-amplify/ui-react';
 import Students from './pages/students';
+import { getAllStudents, getStudentByEmail } from './functions/get-student';
+import { getRole } from './functions/get-role';
 
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
@@ -24,15 +26,38 @@ function App({user}) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [isAdmin, setAdmin] = useState(false);
+  const [profilePictures, setProfilePictures] = useState({});
+  const [studentUser, setStudentUser] = useState(null);
 
   const resetEmail = async () => {
     try {    
         const tempUser = await fetchUserAttributes();
         setEmail(tempUser.email);
+        const role = await getRole();
+        if (role === 'admin') {
+          console.log('assigning admin role');
+          setAdmin(true);
+        }
+        else {
+          console.log('no admin role');
+        }
+        const tempStudentUser = await getStudentByEmail(tempUser.email);
+        setStudentUser(tempStudentUser);
     } catch (error){
       console.log('Failed to create: ', error);
     }
   }
+
+  const preloadProfilePictures = async () => {
+    const studentsList = await getAllStudents();
+    const images = {};
+    studentsList.forEach(student => {
+        const img = new Image();
+        img.src = `https://fdr-storagebae6c-fdr.s3.us-east-2.amazonaws.com/public/${student.profile_picture}`;
+        images[student.id] = img;
+    });
+    setProfilePictures(images);
+  };
 
   useEffect(() => {
     if (authStatus === 'authenticated') {
@@ -40,8 +65,11 @@ function App({user}) {
       // setAdmin();
     }
     else {
-        setEmail('');
+      console.log('resetting email + studentUser');
+      setEmail('');
+      setStudentUser(null);
     }
+    preloadProfilePictures();
   }, [authStatus]);
   
   return (
@@ -53,13 +81,10 @@ function App({user}) {
         </div>
         <div className='app-main-body'>
           <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
-            <Route path="/about" element={<About user={user}/>} />
-            <Route path="/account" element={<Account email={email} setEmail={setEmail} isAdmin={isAdmin} setAdmin={setAdmin}/>} />
-            <Route path="/login" element={<Login email={email} loggedIn={loggedIn} isAdmin={isAdmin} setLoggedIn={setLoggedIn} setEmail={setEmail} setAdmin={setAdmin} />} />
-            <Route path="/students" element={<Students isAdmin={isAdmin} />} />
-            <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} />} />
+            <Route path="/" element={<Home isAdmin={isAdmin} studentUser={studentUser}/>} />
+            <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} profilePictures={profilePictures} />} />
+            <Route path="/students" element={<Students isAdmin={isAdmin} profilePictures={profilePictures}/>} />
+            <Route path="/account" element={<Account studentUser={studentUser} setStudentUser={setStudentUser}/>} />
             </Routes>
         </div>
           

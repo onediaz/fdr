@@ -147,9 +147,9 @@ input[type='button']:hover {
   .amplify-image.profilePicture {
     width: 98px;
     height: 98px;
-    object-fit: cover;
-    border-radius: 50%;
-    overflow: hidden;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
 
   

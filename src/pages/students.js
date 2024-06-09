@@ -1,47 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./styling/students.css";
-import { listStudents } from '../graphql/queries';
-import { generateClient } from "aws-amplify/api";
 import { Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField } from '@aws-amplify/ui-react';
 import { updateStudentBalance } from '../functions/update-student-balance';
-import { useLocation } from 'react-router-dom';
 import { createTransaction } from "../functions/create-transaction";
 import { getStudentByEmail, getAllStudents } from "../functions/get-student";
 import { sortArrayByAttribute } from "../functions/sort-arrays";
-const client = generateClient();
 
-const Students = () => {
-    const location = useLocation();
-    const isAdmin = location.state?.isAdmin;
+const Students = ({isAdmin, profilePictures}) => {
     const [students, setStudents] = useState([]);
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [balance, setBalance] = useState('');
     const [message, setMessage] = useState('');
     const [sortConfig, setSortConfig] = useState(null);
+    console.log(profilePictures);
 
     useEffect(() => {
         const getStudents = async () => {
-            const studentsList = await getAllStudents();
-            setStudents(studentsList);
+            const studentList = await getAllStudents();
+            setStudents(studentList);
         };
-
         getStudents();
     }, []);
 
-
-    const fetchStudents = async () => {
-        console.log('fetching students');
-        try {
-            const allStudents = await client.graphql({
-                query: listStudents
-            });
-            return allStudents.data.listStudents.items;
-        } catch (error) {
-            console.error('Error fetching students:', error);
-            return [];
-        }
-    };
     
     const sortStudents = async (key) => {
         console.log('changing direction');
@@ -84,11 +65,9 @@ const Students = () => {
         const currentUser = await getStudentByEmail('juand4535@gmail.com');
         if (selectedStudents.length !== 0) {
             selectedStudents.map(student => {
-                console.log(student.id);
                 const updatedBalance = Number(balance) + Number(student.balance);
-                console.log(updatedBalance);
                 updateStudentBalance(student.id, updatedBalance);
-                createTransaction(currentUser, student, balance, message)
+                createTransaction(currentUser, student, balance, message);
             });
         }
         else {
@@ -112,6 +91,9 @@ const Students = () => {
                                     />
                                 </TableCell>
                             }
+                            <TableCell as="th">
+                                Picture
+                            </TableCell>
                             <TableCell as="th"> 
                                 <div className="student-table-head-cell">
                                     <Button onClick={() => sortStudents('name')} className='students-table-button'>
@@ -152,6 +134,16 @@ const Students = () => {
                                             />
                                         </TableCell>
                                 }
+                                <TableCell>
+                                    {profilePictures[student.id] && (
+                                        <img
+                                            src={profilePictures[student.id].src}
+                                            alt=""
+                                            className="student-table-profile-picture"
+                                        />
+                                    )}
+                                </TableCell>
+
                                 <TableCell> 
                                     <NavLink to={`/dashboard/${student.email}`} className="student_nav_link"> {student.name} </NavLink> 
                                 </TableCell>

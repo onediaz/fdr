@@ -5,12 +5,12 @@ import '../App.css';
 import { fetchUserAttributes, fetchAuthSession } from '@aws-amplify/auth'; // Import for user data access
 import { Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
 import { createStudent } from '../graphql/mutations';
-import { listStudents } from '../graphql/queries';
+import { getStudent, listStudents } from '../graphql/queries';
 import { generateClient } from "aws-amplify/api";
+import { getStudentByEmail } from '../functions/get-student';
 const client = generateClient();
 
-const Account = (props) => {
-    const [email, setEmail] = useState('');
+const Account = ({studentUser, setStudentUser}) => {
     const { authStatus } = useAuthenticator(context => [context.authStatus]);
     const hasEffectRun = useRef(false);
     // const [name, setStudentName] = useState('');
@@ -24,85 +24,42 @@ const Account = (props) => {
         },
        };
 
-    const checkAccount = async () => {
-        try {    
+    const createAccount = async () => {
+        // first check to see if user is signed in
+        try {
             const tempUser = await fetchUserAttributes();
-            console.log(tempUser);
-            // setStudentName(tempUser.name);
-            const allStudents = await client.graphql({
-                query: listStudents,
-                variables: {
-                    filter: {
-                        email: {
-                            eq: tempUser.email
-                        }
+            // second check if studentUser was passed correctly from App.js or if it exists
+            const fetchUser = await getStudentByEmail(tempUser.email);
+            if (fetchUser) {
+                console.log('student user exists: ', fetchUser.email );
+            }
+            else {
+                console.log('student user does not exist');
+                console.log(`creating new student ${tempUser.email} with name ${tempUser.name}`);
+                const newStudent = await client.graphql({
+                    query: createStudent,
+                    variables: {
+                    input: {
+                        email: tempUser.email,
+                        name: tempUser.name,
+                        balance: 0,
+                        isAdmin: false
                     }
-                }
-            });
-            const student = allStudents.data.listStudents.items;
-            const studentExists = student.length === 0 ? false : true;
-            console.log('studentExists: ', studentExists);
-            if (studentExists === false){
-                console.log('adding new email: ', tempUser.email);
-                createAccount(tempUser.name, tempUser.email);
-            }}
-        catch (error){
-            console.log('Failed to create: ', error);
-        }
-    };
-
-    const createAccount = async (name, email) => {
-        try {
-            console.log(`creating new student ${email} with name ${name}`);
-            const newStudent = await client.graphql({
-              query: createStudent,
-              variables: {
-                input: {
-                  email: email,
-                  name: name,
-                  balance: 0,
-                  isAdmin: false
-                }
-              }
-            });
-            console.log('NEW STUDENT: ' + newStudent);
-          } catch (error) {
-            console.error('Error creating student:', error);
-          }
-    };
-
-    const setAdmin = async () => {
-        const adminUser = await fetchAuthSession();
-        try {
-            const adminExists = adminUser.tokens.accessToken.payload['cognito:groups'];
-            if (adminExists === undefined){
-                props.setAdmin(false);
+                    }
+                });
+                setStudentUser(fetchUser);
             }
-            else if(adminExists.includes('admin')) {
-                props.setAdmin(true);
-            }
-        }
-        catch(error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        if (props.email !== '') {
+        } catch(error) {
+            console.log('user not logged in');
             return;
         }
-        else if (authStatus === 'authenticated' && !hasEffectRun.current) {
-            hasEffectRun.current = true;
-            console.log(authStatus);
-            checkAccount();
-            setAdmin();
-        }
-        else if (authStatus !== 'authenticated') {
-            setEmail('');
-            props.setEmail('');
-            props.setAdmin(false);
-        }
-      }, [authStatus]);
+        
+        
+    };
+
+    useEffect(() => {
+        createAccount();
+    }, [studentUser]);
 
     return (
     <div className={'mainContainer'}>
@@ -111,12 +68,10 @@ const Account = (props) => {
         </div>
         <Authenticator formFields={formFields}>
             {({ signOut, user }) => {
-                setEmail(user.signInDetails.loginId);
-                // props.setEmail(user.signInDetails.loginId);
                 return (
                     <div className='mainContainer'>
                         <div className='textContainer'>
-                            Welcome {email}
+                            Welcome {studentUser && studentUser.email} {studentUser && studentUser.name}
                         </div>
                         <input type='button' className='inputButton' onClick={signOut} value={'Sign out'}/>
                     </div>
