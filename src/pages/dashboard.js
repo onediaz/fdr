@@ -125,7 +125,7 @@ const Dashboard = (props) => {
                         <div className="profilePictureContainer">
                             <div className='profilePictureBorder'>
                                 <Image
-                                    src={props.profilePictures[currentStudent.id].src}
+                                    src={`https://fdr-storagebae6c-fdr.s3.us-east-2.amazonaws.com/public/${profilePicture}`}
                                     alt={``}
                                     className='profilePicture'
                                 />
