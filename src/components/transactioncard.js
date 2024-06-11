@@ -1,5 +1,5 @@
 // pages/index.js
-import { getTransactionByID, getUserLikedTransaction } from '../functions/get-transactions';
+import { getUserLikedTransaction } from '../functions/get-transactions';
 import { updateTransactionLikes } from '../functions/update-transaction';
 import './styling/TransactionsComponent.css';
 import React, { useEffect, useState } from 'react';
@@ -33,13 +33,13 @@ const TransactionCardComponent = ({transaction, user}) => {
             }
         };
         onLoad();
-    }, [user]);
+    }, [user, transaction]);
 
     return (
         <div className='transaction_item'>
             <div className='transaction_upper_details'>
                 <span className='transaction_date'>
-                    {new Date(transaction.updatedAt).toLocaleDateString('en-US', { month: 'numeric', day: '2-digit' })}
+                    {new Date(transaction.createdAt).toLocaleDateString('en-US', { month: 'numeric', day: '2-digit' })}
                 </span>
                 <span className='transaction_sender'>
                     {transaction.sender_name}

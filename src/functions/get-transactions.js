@@ -96,7 +96,6 @@ async function getUserLikedTransaction (transactionID, user) {
         const transaction = await getTransactionByID(transactionID);
         const likes = JSON.parse(transaction.likes)
         if(likes && likes.users) {
-            console.log(likes)
             if(likes.users.includes(user.id)){
                 console.log('found user in likes: ', transaction.message);
                 return true;

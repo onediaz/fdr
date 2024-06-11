@@ -68,8 +68,7 @@ const Students = ({isAdmin, profilePictures}) => {
                 updateStudentBalance(student.id, updatedBalance);
                 createTransaction(currentUser, student, balance, message);
             });
-        }
-        else {
+        } else {
             console.log('no selected students');
         }
     };

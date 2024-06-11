@@ -44,7 +44,7 @@ const Account = ({studentUser, setStudentUser}) => {
                         }
                     }
                 });
-                setStudentUser(fetchUser);
+                setStudentUser(newStudent);
             }
         } catch(error) {
             console.log('user not logged in');
@@ -72,7 +72,6 @@ const Account = ({studentUser, setStudentUser}) => {
                         </div>
                         <input type='button' className='inputButton' onClick={signOut} value={'Sign out'}/>
                     </div>
-                    
                 )}
             }
         </Authenticator>

@@ -33,7 +33,7 @@ async function updateTransactionLikes(transactionID, user) {
             newLikes = likes.total;
             likes = JSON.stringify(likes);
         }
-        const currentTransactionResult = await client.graphql({
+        await client.graphql({
             query: updateTransactions,
             variables: {
                 input: {
