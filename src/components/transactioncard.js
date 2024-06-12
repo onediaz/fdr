@@ -21,7 +21,7 @@ const TransactionCardComponent = ({transaction, user}) => {
             try {
                 if (user) {
                     setIsDisabled(false);
-                    const userLiked = await getUserLikedTransaction(transaction.id, user);
+                    const userLiked = await getUserLikedTransaction(transaction, user);
                     setLiked(userLiked);
                 }
                 const tempLikes = JSON.parse(transaction.likes);

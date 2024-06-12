@@ -4,7 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Autocomplete, Button, SelectField } from '@aws-amplify/ui-react';
 import { getAllTransactions } from '../functions/get-transactions';
 import TransactionCardComponent from './transactioncard';
-import { sortArrayByAttribute } from '../functions/sort-arrays';
+import { sortArrayByAttribute } from '../functions/functions-arrays';
+import { createAutoOptions } from '../functions/functions-transactions';
 
 const TransactionsComponent = ({user}) => {
     const [transactions, setTransactions] = useState([]);
@@ -15,21 +16,18 @@ const TransactionsComponent = ({user}) => {
     const viewTransactions = useCallback(async () => {
       setTransactions([]);
       try {
-          const newViewTransaction = await getAllTransactions();
-          newViewTransaction.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          setTransactions(newViewTransaction);
-          const tempOptions = []
-        //   newViewTransaction.map(transaction => {
-        //     tempOptions.push({id: transaction.id, label: transaction.message});
-        //   });
-          setAutocompleteOptions(tempOptions);
+          const newViewTransactions = await getAllTransactions();
+          setTransactions(newViewTransactions);
+          const autoOptions = createAutoOptions(newViewTransactions);
+          setAutocompleteOptions(autoOptions);
 
       } catch (error) {
-          console.log('Failed to list sent transactions');
+        console.log(error);
+        console.log('Failed to list sent transactions');
       }
   }, []);
 
-  const sortStudents = async (key) => {
+  const sortTransactions = async (key) => {
     let direction = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
         direction = 'descending';
@@ -62,11 +60,11 @@ const getClassName = (name) => {
             </div>
             <div className='transactions_lower_navbar'>
                 <div className='transactions_lower_navbar_buttons'>
-                    <Button onClick={() => sortStudents('createdAt')} className="transactions_sort_button">
+                    <Button onClick={() => sortTransactions('createdAt')} className="transactions_sort_button">
                         <div className="transactions_date_button_text"> Date </div> 
                         <div className={getClassName('createdAt') } ></div>
                     </Button>
-                    <Button onClick={() => sortStudents('likes')} className="transactions_sort_button">
+                    <Button onClick={() => sortTransactions('likes')} className="transactions_sort_button">
                         <div className="transactions_date_button_text"> Likes </div> 
                         <div className={getClassName('likes')}></div>
                     </Button>
@@ -89,7 +87,7 @@ const getClassName = (name) => {
         </div>
         <ScrollView height="700px" maxWidth="100%">
           <ul>
-            {transactions.map(transaction => (
+            {transactions.slice(0, 10).map(transaction => (
                 <TransactionCardComponent transaction={transaction} user={user}/>
             ))}
           </ul>

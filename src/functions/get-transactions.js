@@ -55,12 +55,18 @@ async function getStudentTransactions(key, studentID) {
         return [];
     }
   }
-  
+
+/**
+ * 
+ * @returns array of Transaction DB objects, sorted from most recent date to latest date.
+ */
 async function getAllTransactions () {
     console.log("Getting all Transactions");
     try {
         const transactions = await client.graphql({query: listTransactions });
-        return transactions.data.listTransactions.items;
+        const transactionsArray = transactions.data.listTransactions.items
+        transactionsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        return transactionsArray;
     } catch (error) {
         return [];
     }
@@ -91,7 +97,7 @@ async function getTransactionByID (transactionID) {
  * @param {*} user 
  * @returns 
  */
-async function getUserLikedTransaction (transactionID, user) {
+async function getUserLikedTransactionByID (transactionID, user) {
     try {
         const transaction = await getTransactionByID(transactionID);
         const likes = JSON.parse(transaction.likes)
@@ -107,5 +113,21 @@ async function getUserLikedTransaction (transactionID, user) {
         return false;
     }
 }
+
+async function getUserLikedTransaction (transaction, user) {
+    try {
+        const likes = JSON.parse(transaction.likes)
+        if(likes && likes.users) {
+            if(likes.users.includes(user.id)){
+                console.log('found user in likes: ', transaction.message);
+                return true;
+            }
+        }
+        return false;
+    } catch(error) {
+        console.log('failed on getUserLikedTransaction');
+        return false;
+    }
+}
   // Export the function
-  export { getStudentTransactions, getAllTransactions, getUserLikedTransaction, getTransactionByID };
+  export { getStudentTransactions, getAllTransactions, getUserLikedTransaction, getUserLikedTransactionByID, getTransactionByID };

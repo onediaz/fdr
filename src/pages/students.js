@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField
 import { updateStudentBalance } from '../functions/update-student-balance';
 import { createTransaction } from "../functions/create-transaction";
 import { getStudentByEmail, getAllStudents } from "../functions/get-student";
-import { sortArrayByAttribute } from "../functions/sort-arrays";
+import { sortArrayByAttribute } from "../functions/functions-arrays";
 
 const Students = ({isAdmin, profilePictures}) => {
     const [students, setStudents] = useState([]);

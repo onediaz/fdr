@@ -31,4 +31,24 @@ function sortArrayByAttribute (key, direction, array) {
     }
 }
 
-export {sortArrayByAttribute};
+/**
+ * 
+ * @param {Array} array, must be sorted, where each item is an object that contains the attribute key
+ * @param {String} key attribute within each item of Array 
+ * @returns 
+ */
+function removeDuplicates (array, key) {
+    let insert_index = 1;
+    for (let i = 1; i < array.length; i++) {
+        if (array[i][key] === array[i-1][key]) {
+            continue;
+        }
+        if (insert_index !== i) {
+            array[insert_index][key] = array[i][key];
+         }
+        insert_index += 1;
+    }
+    return array.splice(0,insert_index);
+}
+
+export {sortArrayByAttribute, removeDuplicates};
