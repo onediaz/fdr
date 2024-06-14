@@ -2,51 +2,72 @@
 import './styling/transactionscomponent.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Autocomplete, Button, SelectField } from '@aws-amplify/ui-react';
-import { getAllTransactions, getRecentTransactions, getStudentTransactions } from '../functions/get-transactions';
+import { getRecentTransactions, getStudentTransactions, getTransactionByID } from '../functions/get-transactions';
 import TransactionCardComponent from './transactioncard';
 import { sortArrayByAttribute } from '../functions/functions-arrays';
 import { createAutoOptions } from '../functions/functions-transactions';
 
-const TransactionsComponent = ({user}) => {
+const TransactionsComponent = ({user, filterKey}) => {
+    const [errorLabel, setErrorLabel] = useState('');
     const [transactions, setTransactions] = useState([]);
     const [autocompleteKey, setAutocompleteKey] = useState('');
     const [autocompleteOptions, setAutocompleteOptions] = useState([]);
     const [sortConfig, setSortConfig] = useState(null);
+    const [displayCount, setDisplayCount] = useState(10);
 
     const viewTransactions = useCallback(async () => {
+        console.log(filterKey)
         setTransactions([]);
         try {
-            const newViewTransactions = await getRecentTransactions();
+            let newViewTransactions = []; 
+            if(filterKey === 'recent') {
+                newViewTransactions = await getRecentTransactions();
+            }
+            if(filterKey === 'student') {
+                newViewTransactions = await getStudentTransactions(user.id);
+            }
             setTransactions(newViewTransactions);
-            console.log(newViewTransactions);
+            setDisplayCount(newViewTransactions.length >= 10 ? 10: newViewTransactions.length);
             const autoOptions = createAutoOptions(newViewTransactions);
             setAutocompleteOptions(autoOptions);
         } catch (error) {
             console.log(error);
             console.log('Failed to list sent transactions');
         }
-    }, []);
+    }, [user, filterKey]);
 
-  const sortTransactions = async (key) => {
-    let direction = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-        direction = 'descending';
+    const loadMoreTransactions = async () => {
+        console.log('loading more transactions');
+        if (displayCount + 10 >= transactions.length) {
+            setErrorLabel('Maximum transactions');
+            setTimeout(() => {
+                setErrorLabel('');
+            }, 1000); // Clear error label after 2 seconds
+        }
+        const newCount = (transactions.length>= displayCount + 10 ) ? displayCount+10 : transactions.length;
+        setDisplayCount(prevCount => newCount)
     }
-    const sortedTransactions = sortArrayByAttribute(key, direction, transactions);
-    setTransactions(sortedTransactions);
-    setSortConfig({ key: key, direction: direction });
-};
 
-const getClassName = (name) => {
-    if (!sortConfig) {
-        return;
-      }
-      return sortConfig.key === name ? 'transactions_icon_' + sortConfig.direction : undefined;
-};
+    const sortTransactions = async (key) => {
+        let direction = 'ascending';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        const sortedTransactions = sortArrayByAttribute(key, direction, transactions);
+        setTransactions(sortedTransactions);
+        setSortConfig({ key: key, direction: direction });
+    };
 
-  useEffect(() => {
-    viewTransactions();
-  }, []);
+    const getClassName = (name) => {
+        if (!sortConfig) {
+            return;
+        }
+        return sortConfig.key === name ? 'transactions_icon_' + sortConfig.direction : undefined;
+    };
+
+    useEffect(() => {
+        viewTransactions();
+    }, []);
 
     return (
       <div className='recent_transactions'>
@@ -86,11 +107,17 @@ const getClassName = (name) => {
             </div>
         </div>
         <ScrollView height="700px" maxWidth="100%">
-          <ul>
-            {transactions.slice(0, 10).map(transaction => (
-                <TransactionCardComponent transaction={transaction} user={user}/>
-            ))}
-          </ul>
+            <div className='transactions_container'>
+                <div className='transaction_cards_container'>
+                    {transactions.slice(0, displayCount).map(transaction => (
+                        <TransactionCardComponent transaction={transaction} user={user}/>
+                    ))}
+                </div>
+                <div className='transactions_load_more' onClick={loadMoreTransactions}>
+                    <div className='transactions_load_more_error'>{errorLabel}</div>
+                    <div className='load_more_button_containter'><div className='transactions_load_more_button'>Load More</div></div>
+                </div>
+            </div>
         </ScrollView>
 
       </div>

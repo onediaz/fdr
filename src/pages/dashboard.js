@@ -8,6 +8,7 @@ import FileUpload from '../components/fileupload';
 import { Image } from '@aws-amplify/ui-react';
 import DashboardReceiverComponent from '../components/dashboardreceiver';
 import DashboardComponent from '../components/dashboard';
+import TransactionsComponent from '../components/transactions';
 
 const Dashboard = ({studentUser, setStudentUser}) => {
     const { email: dashboardEmail } = useParams();
@@ -57,7 +58,7 @@ const Dashboard = ({studentUser, setStudentUser}) => {
     //   };
 
     return (
-        <div className="mainDashboardContainer">
+        <div className="main_dashboard_container">
             {/* <FileUpload onUpload={handleProfilePictureUpload} /> */}
             <div className='dashboards'>
                 {studentUser 
@@ -67,7 +68,8 @@ const Dashboard = ({studentUser, setStudentUser}) => {
                     <DashboardReceiverComponent receiverUser={dashboardStudent} setReceiverUser={setDashboardStudent} studentUser={studentUser} setStudentUser={setStudentUser}/>
                 }
             </div>
-            <div className='dashboard-transactions'>
+            <div className='dashboard_transactions'>
+                <TransactionsComponent user={studentUser} filterKey="student"/>
             </div>
             {/* <div className="chartContainer">
                 <div className="chartTitle">Balance Over the Last 7 Days</div>

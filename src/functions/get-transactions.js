@@ -6,7 +6,7 @@ const client = generateClient();
 /**
  * 
  * @param {String} key a string key that allows you to get specific transactions. 
- * 'all' - gets all transactions
+ * 'recent' - gets all transactions
  * 'user' - gets specific user transactions
  * ''
  */
@@ -14,58 +14,36 @@ async function getTransactionsByKey (key) {
     return;
 }
 
-async function getStudentTransactions(key, studentID) {
-    console.log("This is view transactions");
-    try {
-        let modifiedTransactions = [];
-        let studentTransaction = null;
-        if(key === 'sender'){
-            studentTransaction = await client.graphql({
+async function getStudentTransactions(studentID) {
+    console.log("Getting Student Transactions");
+    let allTransactions = [];
+    let nextToken = null;
+
+    do {
+        try {
+            const transactions = await client.graphql({
                 query: listTransactions,
-                variables: {
-                    filter: {
-                        sender_id: {
-                            eq: studentID
-                        },
-                    }
-                }
+                variables: { nextToken }
             });
+            console.log("Transactions response: ", transactions);
+            const fetchedTransactions = transactions.data.listTransactions.items;
+
+            // Filter transactions by date
+            const recentTransactions = fetchedTransactions.filter(transaction => 
+                transaction.sender_id === studentID || transaction.receiver_id === studentID
+            );
+
+            allTransactions = allTransactions.concat(recentTransactions);
+            nextToken = transactions.data.listTransactions.nextToken;
+        } catch (error) {
+            console.error("Error fetching transactions: ", error);
+            break;
         }
-        else if(key ==='receiver'){
-            studentTransaction = await client.graphql({
-                query: listTransactions,
-                variables: {
-                    filter: {
-                        receiver_id: {
-                            eq: studentID
-                        },
-                    }
-                }
-            });
-        }
-        const transactions = studentTransaction.data.listTransactions.items;
-        for (const item of transactions){
-            let obj = {};
-            obj['amount'] = item.amount;
-            obj['id'] = item.id;
-            console.log(item);
-            if (key ==='sender'){
-                // if looking for sender transactions, we must find receiver info
-                obj['receiver'] = await getStudent(item.receiver);
-            }
-            if (key ==='receiver'){
-                // if looking for receiver transactions, we must find sender info
-                obj['sender'] = await getStudent(item.sender);
-            }
-            modifiedTransactions.push(obj);
-        }
-        console.log('Success within view-transactions');
-        return modifiedTransactions;
-        // return ['seom', 'hahaha'];
-    } catch(error){
-        return [];
-    }
-  }
+    } while (nextToken);
+    console.log('success sender/receiver')
+    allTransactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return allTransactions;
+}
 
 /**
  * 
@@ -136,7 +114,7 @@ async function getRecentTransactions(days = 2) {
             break;
         }
     } while (nextToken);
-
+    console.log('Success day 2');
     allTransactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return allTransactions;
 }

@@ -126,6 +126,45 @@
     justify-content: space-between;
 }
 
+.transactions_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.transactions_load_more {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.transactions_load_more_error {
+    color: rgb(255, 77, 77);
+}
+
+.load_more_button_containter {
+    display: flex;
+    justify-content: center;
+}
+
+.transactions_load_more_button {
+    width: max-content;
+    color: rgb(134, 134, 134);
+    border: black;
+    border-radius: 1px;
+}
+
+.transactions_load_more_button:hover {
+    width: max-content;
+    cursor: pointer;
+}
+
+.transactions_navbar {
+    margin-bottom: 15px;
+}
+
 .amplify-button.transactions_sort_button {
     display: flex;
     justify-content: space-between;

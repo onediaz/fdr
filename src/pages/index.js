@@ -16,7 +16,7 @@ const Home = ({studentUser}) => {
           <br/>
           My future goals will be for students to have access to an investing account, and roles that will pay them on a real life schedule. 
         </div>
-        <TransactionsComponent user={studentUser}/>
+        <TransactionsComponent user={studentUser} filterKey="recent" />
       </div>
       
     );
