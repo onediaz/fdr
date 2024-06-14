@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./styling/students.css";
 import { Table, TableBody, TableCell, TableHead, TableRow, Button, CheckboxField } from '@aws-amplify/ui-react';
-import { updateStudentBalance } from '../functions/update-student-balance';
+import { updateStudentBalance } from '../functions/update-students';
 import { createTransaction } from "../functions/create-transaction";
 import { getStudentByEmail, getAllStudents } from "../functions/get-student";
 import { sortArrayByAttribute } from "../functions/functions-arrays";

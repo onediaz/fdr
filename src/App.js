@@ -35,11 +35,7 @@ function App({user}) {
         setEmail(tempUser.email);
         const role = await getRole();
         if (role === 'admin') {
-          console.log('assigning admin role');
           setAdmin(true);
-        }
-        else {
-          console.log('no admin role');
         }
         const tempStudentUser = await getStudentByEmail(tempUser.email);
         setStudentUser(tempStudentUser);
@@ -82,7 +78,7 @@ function App({user}) {
         <div className='app-main-body'>
           <Routes>
             <Route path="/" element={<Home isAdmin={isAdmin} studentUser={studentUser}/>} />
-            <Route path="/dashboard/:email" element={<Dashboard email={email} loggedIn={loggedIn} profilePictures={profilePictures} />} />
+            <Route path="/dashboard/:email" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} />
             <Route path="/students" element={<Students isAdmin={isAdmin} profilePictures={profilePictures}/>} />
             <Route path="/account" element={<Account studentUser={studentUser} setStudentUser={setStudentUser}/>} />
             </Routes>

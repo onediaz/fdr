@@ -1,8 +1,8 @@
 // pages/index.js
-import './styling/TransactionsComponent.css';
+import './styling/transactionscomponent.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Autocomplete, Button, SelectField } from '@aws-amplify/ui-react';
-import { getAllTransactions } from '../functions/get-transactions';
+import { getAllTransactions, getRecentTransactions, getStudentTransactions } from '../functions/get-transactions';
 import TransactionCardComponent from './transactioncard';
 import { sortArrayByAttribute } from '../functions/functions-arrays';
 import { createAutoOptions } from '../functions/functions-transactions';
@@ -14,18 +14,18 @@ const TransactionsComponent = ({user}) => {
     const [sortConfig, setSortConfig] = useState(null);
 
     const viewTransactions = useCallback(async () => {
-      setTransactions([]);
-      try {
-          const newViewTransactions = await getAllTransactions();
-          setTransactions(newViewTransactions);
-          const autoOptions = createAutoOptions(newViewTransactions);
-          setAutocompleteOptions(autoOptions);
-
-      } catch (error) {
-        console.log(error);
-        console.log('Failed to list sent transactions');
-      }
-  }, []);
+        setTransactions([]);
+        try {
+            const newViewTransactions = await getRecentTransactions();
+            setTransactions(newViewTransactions);
+            console.log(newViewTransactions);
+            const autoOptions = createAutoOptions(newViewTransactions);
+            setAutocompleteOptions(autoOptions);
+        } catch (error) {
+            console.log(error);
+            console.log('Failed to list sent transactions');
+        }
+    }, []);
 
   const sortTransactions = async (key) => {
     let direction = 'ascending';
@@ -46,7 +46,7 @@ const getClassName = (name) => {
 
   useEffect(() => {
     viewTransactions();
-  }, [viewTransactions]);
+  }, []);
 
     return (
       <div className='recent_transactions'>

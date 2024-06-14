@@ -3,6 +3,17 @@ import { listTransactions } from '../graphql/queries';
 import { getStudent } from "./get-student";
 const client = generateClient();
 
+/**
+ * 
+ * @param {String} key a string key that allows you to get specific transactions. 
+ * 'all' - gets all transactions
+ * 'user' - gets specific user transactions
+ * ''
+ */
+async function getTransactionsByKey (key) {
+    return;
+}
+
 async function getStudentTransactions(key, studentID) {
     console.log("This is view transactions");
     try {
@@ -64,6 +75,7 @@ async function getAllTransactions () {
     console.log("Getting all Transactions");
     try {
         const transactions = await client.graphql({query: listTransactions });
+        console.log(transactions);
         const transactionsArray = transactions.data.listTransactions.items
         transactionsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         return transactionsArray;
@@ -90,6 +102,45 @@ async function getTransactionByID (transactionID) {
         return [];
     }
 }
+
+/**
+ * 
+ * @param {Number} days you want previous transactions for.
+ * @returns array of Transactions that are within that day range
+ */
+async function getRecentTransactions(days = 2) {
+    console.log("Getting recent Transactions");
+    let allTransactions = [];
+    let nextToken = null;
+    const now = new Date();
+    const cutoffDate = new Date(now.setDate(now.getDate() - days)).toISOString();
+
+    do {
+        try {
+            const transactions = await client.graphql({
+                query: listTransactions,
+                variables: { nextToken }
+            });
+            console.log("Transactions response: ", transactions);
+            const fetchedTransactions = transactions.data.listTransactions.items;
+
+            // Filter transactions by date
+            const recentTransactions = fetchedTransactions.filter(transaction => 
+                new Date(transaction.createdAt) >= new Date(cutoffDate)
+            );
+
+            allTransactions = allTransactions.concat(recentTransactions);
+            nextToken = transactions.data.listTransactions.nextToken;
+        } catch (error) {
+            console.error("Error fetching transactions: ", error);
+            break;
+        }
+    } while (nextToken);
+
+    allTransactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return allTransactions;
+}
+
 
 /**
  * 
@@ -130,4 +181,4 @@ async function getUserLikedTransaction (transaction, user) {
     }
 }
   // Export the function
-  export { getStudentTransactions, getAllTransactions, getUserLikedTransaction, getUserLikedTransactionByID, getTransactionByID };
+  export { getStudentTransactions, getAllTransactions, getUserLikedTransaction, getUserLikedTransactionByID, getTransactionByID, getRecentTransactions };

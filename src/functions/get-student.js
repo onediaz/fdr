@@ -15,14 +15,15 @@ async function getStudent(studentID) {
                 }
             }
         });
+        console.log('success getting student: ', student.data.listStudents.items[0]);
         return student.data.listStudents.items[0];
     } catch (error) {
+        console.log('failure getting student by id');
         return [];
     }
   }
 
   async function getStudentByEmail (studentEmail) {
-    console.log(studentEmail);
     try {
         const student = await client.graphql({
             query: listStudents,
@@ -34,8 +35,10 @@ async function getStudent(studentID) {
                 }
             }
         });
+        console.log('success getting student by email: ', student.data.listStudents.items[0]);
         return student.data.listStudents.items[0];
     } catch (error) {
+        console.log('failure getting student by email');
         return [];
     }
   }
