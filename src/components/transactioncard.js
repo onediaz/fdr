@@ -1,7 +1,7 @@
 // pages/index.js
 import { getUserLikedTransaction } from '../functions/get-transactions';
 import { updateTransactionLikes } from '../functions/update-transaction';
-import './styling/transactionscomponent.css';
+import './styling/TransactionComponents.css';
 import React, { useEffect, useState } from 'react';
 
 const TransactionCardComponent = ({transaction, user}) => {

@@ -81,6 +81,7 @@ function App({user}) {
             <Route path="/dashboard/:email" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} />
             <Route path="/students" element={<Students isAdmin={isAdmin} profilePictures={profilePictures}/>} />
             <Route path="/account" element={<Account studentUser={studentUser} setStudentUser={setStudentUser}/>} />
+            <Route path="/about" element={<About />} />
             </Routes>
         </div>
           

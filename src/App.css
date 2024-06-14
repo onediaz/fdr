@@ -69,6 +69,16 @@
   margin-right: 10%;
 }
 
+.descriptionContainer {
+  margin: 5px;
+}
+
+.aboutTextContainer {
+  margin-left: 10%;
+  margin-right: 10%;
+  display: flex;
+}
+
 
 .buttonContainer {
   display: flex;

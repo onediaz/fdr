@@ -1,5 +1,5 @@
 // pages/index.js
-import './styling/transactionscomponent.css';
+import './styling/TransactionComponents.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Autocomplete, Button, SelectField } from '@aws-amplify/ui-react';
 import { getRecentTransactions, getStudentTransactions, getTransactionByID } from '../functions/get-transactions';
