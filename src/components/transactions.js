@@ -34,7 +34,7 @@ const TransactionsComponent = ({user, filterKey}) => {
             console.log(error);
             console.log('Failed to list sent transactions');
         }
-    }, [user, filterKey]);
+    }, []);
 
     const loadMoreTransactions = async () => {
         console.log('loading more transactions');
@@ -67,7 +67,7 @@ const TransactionsComponent = ({user, filterKey}) => {
 
     useEffect(() => {
         viewTransactions();
-    }, []);
+    }, [user, filterKey]);
 
     return (
       <div className='recent_transactions'>

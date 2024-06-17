@@ -20,6 +20,10 @@ const DashboardComponent = ({ studentUser }) => {
                                 className='profile_picture'
                             />
                         </div>
+                        <div className='dashboard_balance_row'>
+                            <span className='dashboard_balance_label'>Total Balance: </span>
+                            <span className='dashboard_balance_value'>${studentUser.balance}</span>
+                        </div>
                     </div>
                     <div className='dashboard_rows'>
                         <div className='dashboard_row'>
@@ -28,10 +32,6 @@ const DashboardComponent = ({ studentUser }) => {
                         <div className='dashboard_row'>
                             <span className='dashboard_label'>Email: </span>
                             <span className='dashboard_value'>{studentUser.email}</span>
-                        </div>
-                        <div className='dashboard_balance_row'>
-                            <span className='dashboard_balance_label'>Total Balance: </span>
-                            <span className='dashboard_balance_value'>${studentUser.balance}</span>
                         </div>
                     </div>
                 </div>

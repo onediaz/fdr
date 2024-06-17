@@ -37,6 +37,10 @@ const DashboardReceiverComponent = ({receiverUser, setReceiverUser, studentUser,
                                     className='profile_picture'
                                 />
                             </div>
+                            <div className='dashboard_balance_row'>
+                                <span className='dashboard_balance_label'>Total Balance: </span>
+                                <span className='dashboard_balance_value'>${receiverUser.balance}</span>
+                            </div>
                         </div>
                         <div className='dashboard_rows'>
                             <div className='dashboard_row'>
@@ -46,31 +50,28 @@ const DashboardReceiverComponent = ({receiverUser, setReceiverUser, studentUser,
                                 <span className='dashboard_label'>Email: </span>
                                 <span className='dashboard_value'>{receiverUser.email}</span>
                             </div>
-                            <div className='dashboard_balance_row'>
-                                <span className='dashboard_balance_label'>Total Balance: </span>
-                                <span className='dashboard_balance_value'>${receiverUser.balance}</span>
-                            </div>
+                            <input
+                                type="text"
+                                value={message}
+                                placeholder="Enter Message"
+                                onChange={(ev) => setMessage(ev.target.value)}
+                                className='balanceBox'
+                                maxLength={100}
+                            />
+                            <input
+                                type="number"
+                                value={balance}
+                                min="1"
+                                placeholder="Enter Balance"
+                                onChange={(ev) => setBalance(ev.target.value)}
+                                className='balanceBox'
+                            />
+                            <label className="errorLabel">{balanceError}</label>
+                            <input type="button" onClick={onButtonClick2} value='Send Money' className='sendMoneyButton' />
                             
                         </div>
                     </div>
-                    <input
-                        type="text"
-                        value={message}
-                        placeholder="Enter Message"
-                        onChange={(ev) => setMessage(ev.target.value)}
-                        className='balanceBox'
-                        maxLength={100}
-                    />
-                    <input
-                        type="number"
-                        value={balance}
-                        min="1"
-                        placeholder="Enter Balance"
-                        onChange={(ev) => setBalance(ev.target.value)}
-                        className='balanceBox'
-                    />
-                    <label className="errorLabel">{balanceError}</label>
-                    <input type="button" onClick={onButtonClick2} value='Send Money' className='sendMoneyButton' />
+                    
                 </div>
             }
         </div>

@@ -11,7 +11,7 @@ const About = (props) => {
             </div>
             <div className="aboutTextContainer">
                 <div className="descriptionContainer">
-                    Hello name is Juan, and I am Front-End and Full-Stack Developer with a BS in Computer Science from MIT and 
+                    Hello my name is Juan, and I am Front-End and Full-Stack Developer with a BS in Computer Science from MIT and 
                     1+ years of experience at Google. I am skilled in JavaScript, React, and AWS. 
                     I am passionate about building responsive web applications and enhancing user experiences. 
                     <br/>
@@ -35,6 +35,12 @@ const About = (props) => {
                         className='about_profile_picture'
                     />
                 </div>
+            </div>
+            <div className="about_demo_video">
+                <div className={'titleContainer'}>
+                    <div>Demo Video</div>
+                </div>
+                <iframe src="https://www.youtube.com/embed/Umo5JbQk5PY" width={1000} height={500} allow="fullscreen;"></iframe>
             </div>
             
         </div>

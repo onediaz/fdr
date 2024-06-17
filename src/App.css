@@ -79,7 +79,6 @@
   display: flex;
 }
 
-
 .buttonContainer {
   display: flex;
   flex-direction: column;
@@ -124,4 +123,14 @@
   border-radius: 8px;
   border: 1px solid grey;
   padding-left: 8px;
+}
+
+.about_demo_video {
+  margin-left: 10%;
+  margin-right:10%;
+}
+
+.amplify-image.about_profile_picture {
+  height: 350px;
+  width: 1500px
 }
