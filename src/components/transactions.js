@@ -10,7 +10,8 @@ import { createAutoOptions } from '../functions/functions-transactions';
 const TransactionsComponent = ({user, filterKey}) => {
     const [errorLabel, setErrorLabel] = useState('');
     const [transactions, setTransactions] = useState([]);
-    const [autocompleteKey, setAutocompleteKey] = useState('');
+    const [loadedTransactions, setLoadedTransactions] = useState([]);
+    const [transactionType, setTransactionType] = useState('');
     const [autocompleteOptions, setAutocompleteOptions] = useState([]);
     const [sortConfig, setSortConfig] = useState(null);
     const [displayCount, setDisplayCount] = useState(10);
@@ -27,25 +28,50 @@ const TransactionsComponent = ({user, filterKey}) => {
                 newViewTransactions = await getStudentTransactions(user.id);
             }
             setTransactions(newViewTransactions);
-            setDisplayCount(newViewTransactions.length >= 10 ? 10: newViewTransactions.length);
-            const autoOptions = createAutoOptions(newViewTransactions);
-            setAutocompleteOptions(autoOptions);
+            setLoadedTransactions(newViewTransactions);
+            updateCountAndAutoOptions(newViewTransactions);
         } catch (error) {
             console.log(error);
             console.log('Failed to list sent transactions');
         }
     }, []);
 
+    const updateCountAndAutoOptions = (t) => {
+        setDisplayCount(t.length >= 10 ? 10: t.length);
+        const autoOptions = createAutoOptions(t);
+        setAutocompleteOptions(autoOptions);
+    }
+
     const loadMoreTransactions = async () => {
         console.log('loading more transactions');
-        if (displayCount + 10 >= transactions.length) {
+        if (displayCount + 10 >= loadedTransactions.length) {
             setErrorLabel('Maximum transactions');
             setTimeout(() => {
                 setErrorLabel('');
-            }, 1000); // Clear error label after 2 seconds
+            }, 1000);
         }
-        const newCount = (transactions.length>= displayCount + 10 ) ? displayCount+10 : transactions.length;
-        setDisplayCount(prevCount => newCount)
+        const newCount = (loadedTransactions.length>= displayCount + 10 ) ? displayCount+10 : loadedTransactions.length;
+        setDisplayCount(prevCount => newCount);
+    }
+
+    const changeTransactions = (val) => {
+        setTransactionType(val);
+        let newTransactions = [];
+        if (val === 'sent' && user){
+            console.log('Filtering by sent');
+            newTransactions = transactions.filter(transaction => transaction.sender_id === user.id);
+            setLoadedTransactions(newTransactions);
+            updateCountAndAutoOptions(newTransactions);
+        }
+        else if (val === 'received' && user) {
+            newTransactions = transactions.filter(transaction => transaction.receiver_id === user.id);
+            setLoadedTransactions(newTransactions);
+            updateCountAndAutoOptions(newTransactions);
+        }
+        else {
+            setLoadedTransactions(transactions);
+            updateCountAndAutoOptions(transactions);
+        }
     }
 
     const sortTransactions = async (key) => {
@@ -53,8 +79,8 @@ const TransactionsComponent = ({user, filterKey}) => {
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
             direction = 'descending';
         }
-        const sortedTransactions = sortArrayByAttribute(key, direction, transactions);
-        setTransactions(sortedTransactions);
+        const sortedTransactions = sortArrayByAttribute(key, direction, loadedTransactions);
+        setLoadedTransactions(sortedTransactions);
         setSortConfig({ key: key, direction: direction });
     };
 
@@ -97,8 +123,8 @@ const TransactionsComponent = ({user, filterKey}) => {
                         label="all"
                         labelHidden
                         placeholder="All"
-                        value={autocompleteKey}
-                        onChange={(e) => setAutocompleteKey(e.target.value)}
+                        value={transactionType}
+                        onChange={(e) => changeTransactions(e.target.value)}
                     >
                         <option value="sent">Sent</option>
                         <option value="received">Received</option>
@@ -109,7 +135,7 @@ const TransactionsComponent = ({user, filterKey}) => {
         <ScrollView height="700px" maxWidth="100%">
             <div className='transactions_container'>
                 <div className='transaction_cards_container'>
-                    {transactions.slice(0, displayCount).map(transaction => (
+                    {loadedTransactions.slice(0, displayCount).map(transaction => (
                         <TransactionCardComponent transaction={transaction} user={user}/>
                     ))}
                 </div>
