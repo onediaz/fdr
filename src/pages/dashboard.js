@@ -69,7 +69,8 @@ const Dashboard = ({studentUser, setStudentUser}) => {
                 }
             </div>
             <div className='dashboard_transactions'>
-                <TransactionsComponent user={studentUser} filterKey="student"/>
+                {studentUser
+                    && <TransactionsComponent user={studentUser} filterKey="student" dashboardStudent={dashboardStudent} setDashboardStudent={setDashboardStudent} />}
             </div>
             {/* <div className="chartContainer">
                 <div className="chartTitle">Balance Over the Last 7 Days</div>

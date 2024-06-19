@@ -4,13 +4,25 @@ import { updateTransactionLikes } from '../functions/update-transaction';
 import './styling/TransactionComponents.css';
 import React, { useEffect, useState } from 'react';
 
-const TransactionCardComponent = ({transaction, user}) => {
+const TransactionCardComponent = ({transaction, user, transactions}) => {
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(0);
     const [isDisabled, setIsDisabled] = useState(true);
 
     const updateLikes = async () => {
-        const newLikes = await updateTransactionLikes(transaction.id, user);
+        const newLikes = await updateTransactionLikes(transaction, user);
+        const current_transaction = transactions.find(t => t.id === transaction.id);
+        let likes = JSON.parse(current_transaction.likes || '{"total":0,"users":[]}');
+        if (likes.users.includes(user.id)) {
+            likes.users = likes.users.filter(id => id !== user.id);
+            likes.total -= 1;
+        }
+        else {
+            likes.users.push(user.id);
+            likes.total += 1;
+        }
+        likes = JSON.stringify(likes);
+        current_transaction.likes = likes;
         setLikes(newLikes);
         setLiked(!liked);
     };

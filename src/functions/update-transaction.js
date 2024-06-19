@@ -1,6 +1,6 @@
 import { generateClient } from "aws-amplify/api";
 import { updateTransactions } from '../graphql/mutations';
-import { getTransactionByID, getUserLikedTransactionByID } from "./get-transactions";
+import { getUserLikedTransaction } from "./get-transactions";
 const client = generateClient();
 
 /**
@@ -11,12 +11,11 @@ const client = generateClient();
  * if user has not liked transaction add user to likes
  * @returns true if user liked the transaction false otherwise
  */
-async function updateTransactionLikes(transactionID, user) {
+async function updateTransactionLikes(transaction, user) {
     try {
-        const transaction = await getTransactionByID(transactionID);
         let newLikes = 0;
         // check if user has liked transaction already
-        const liked = await getUserLikedTransactionByID(transaction.id, user);
+        const liked = await getUserLikedTransaction(transaction, user);
         let likes = JSON.parse(transaction.likes || '{"total":0,"users":[]}');
         // if user liked transaction will be removing user from transaction likes
         if(liked) {
@@ -45,6 +44,7 @@ async function updateTransactionLikes(transactionID, user) {
         
         return newLikes;
     } catch (error) {
+        console.log(error);
         return [];
     }
 };

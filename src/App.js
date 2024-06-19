@@ -8,7 +8,6 @@ import {
 import Home from "./pages";
 import About from "./pages/about";
 import Account from './pages/account';
-import Login from './pages/login'
 import { useEffect, useState } from 'react'
 import Dashboard from './pages/dashboard';
 import '@aws-amplify/ui-react/styles.css';
@@ -21,9 +20,8 @@ import { getRole } from './functions/get-role';
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
 
-function App({user}) {
+function App() {
   const { authStatus } = useAuthenticator(context => [context.authStatus]);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [isAdmin, setAdmin] = useState(false);
   const [profilePictures, setProfilePictures] = useState({});
@@ -78,6 +76,7 @@ function App({user}) {
         <div className='app-main-body'>
           <Routes>
             <Route path="/" element={<Home isAdmin={isAdmin} studentUser={studentUser}/>} />
+            <Route path="/dashboard/" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} />
             <Route path="/dashboard/:email" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} />
             <Route path="/students" element={<Students isAdmin={isAdmin} profilePictures={profilePictures}/>} />
             <Route path="/account" element={<Account studentUser={studentUser} setStudentUser={setStudentUser}/>} />
