@@ -13,7 +13,6 @@ const TransactionsComponent = ({user, filterKey}) => {
     const [displayCount, setDisplayCount] = useState(10);
 
     const viewTransactions = useCallback(async () => {
-        console.log(filterKey)
         setTransactions([]);
         try {
             let newViewTransactions = []; 
@@ -21,7 +20,7 @@ const TransactionsComponent = ({user, filterKey}) => {
                 newViewTransactions = await getRecentTransactions();
             }
             if(filterKey === 'student') {
-                newViewTransactions = await getStudentTransactions(user.id);
+                newViewTransactions = await getStudentTransactions(user);
             }
             setTransactions(newViewTransactions);
             setLoadedTransactions(newViewTransactions);
@@ -49,7 +48,6 @@ const TransactionsComponent = ({user, filterKey}) => {
     }
 
     useEffect(() => {
-        console.log('user has been updated');
         viewTransactions();
     }, [user, filterKey]);
 
@@ -66,7 +64,7 @@ const TransactionsComponent = ({user, filterKey}) => {
             <div className='transactions_container'>
                 <div className='transaction_cards_container'>
                     {loadedTransactions.slice(0, displayCount).map(transaction => (
-                        <TransactionCardComponent transaction={transaction} user={user} transactions={transactions}/>
+                        <TransactionCardComponent transaction={transaction} user={user} transactions={transactions} key={transaction.id}/>
                     ))}
                 </div>
                 <div className='transactions_load_more' onClick={loadMoreTransactions}>

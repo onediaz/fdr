@@ -14,8 +14,12 @@ async function getTransactionsByKey (key) {
     return;
 }
 
-async function getStudentTransactions(studentID) {
-    console.log("Getting Student Transactions");
+/**
+ * 
+ * @param {Student} student DB object
+ * @returns all transactions from that student both sent or received. 
+ */
+async function getStudentTransactions(student) {
     let allTransactions = [];
     let nextToken = null;
 
@@ -25,12 +29,11 @@ async function getStudentTransactions(studentID) {
                 query: listTransactions,
                 variables: { nextToken }
             });
-            console.log("Transactions response: ", transactions);
             const fetchedTransactions = transactions.data.listTransactions.items;
 
             // Filter transactions by date
             const recentTransactions = fetchedTransactions.filter(transaction => 
-                transaction.sender_id === studentID || transaction.receiver_id === studentID
+                transaction.sender_id === student.id || transaction.receiver_id === student.id
             );
 
             allTransactions = allTransactions.concat(recentTransactions);
@@ -40,7 +43,6 @@ async function getStudentTransactions(studentID) {
             break;
         }
     } while (nextToken);
-    console.log('success sender/receiver')
     allTransactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return allTransactions;
 }
@@ -50,7 +52,6 @@ async function getStudentTransactions(studentID) {
  * @returns array of Transaction DB objects, sorted from most recent date to latest date.
  */
 async function getAllTransactions () {
-    console.log("Getting all Transactions");
     try {
         const transactions = await client.graphql({query: listTransactions });
         console.log(transactions);
@@ -87,7 +88,6 @@ async function getTransactionByID (transactionID) {
  * @returns array of Transactions that are within that day range
  */
 async function getRecentTransactions(days = 2) {
-    console.log("Getting recent Transactions");
     let allTransactions = [];
     let nextToken = null;
     const now = new Date();
@@ -99,7 +99,6 @@ async function getRecentTransactions(days = 2) {
                 query: listTransactions,
                 variables: { nextToken }
             });
-            console.log("Transactions response: ", transactions);
             const fetchedTransactions = transactions.data.listTransactions.items;
 
             // Filter transactions by date
@@ -114,7 +113,6 @@ async function getRecentTransactions(days = 2) {
             break;
         }
     } while (nextToken);
-    console.log('Success day 2');
     allTransactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return allTransactions;
 }
@@ -132,7 +130,6 @@ async function getUserLikedTransactionByID (transactionID, user) {
         const likes = JSON.parse(transaction.likes)
         if(likes && likes.users) {
             if(likes.users.includes(user.id)){
-                console.log('found user in likes: ', transaction.message);
                 return true;
             }
         }
@@ -148,7 +145,6 @@ async function getUserLikedTransaction (transaction, user) {
         const likes = JSON.parse(transaction.likes)
         if(likes && likes.users) {
             if(likes.users.includes(user.id)){
-                console.log('found user in likes: ', transaction.message);
                 return true;
             }
         }

@@ -9,23 +9,30 @@ import { Image } from '@aws-amplify/ui-react';
 import DashboardReceiverComponent from '../components/dashboardreceiver';
 import DashboardComponent from '../components/dashboard';
 import TransactionsComponent from '../components/transactions';
+import { getWeeklyData } from '../functions/get-balance-data';
+import { fetchUserAttributes } from '@aws-amplify/auth';
 
 const Dashboard = ({studentUser, setStudentUser}) => {
     const { email: dashboardEmail } = useParams();
     const [dashboardStudent, setDashboardStudent] = useState(null);
-    // const [weeklyData, setWeeklyData] = useState([]);
+    const [weeklyData, setWeeklyData] = useState([]);
+    const [selectedDate, setSelectedDate] = useState('');
     // const [profilePicture, setProfilePicture] = useState('');
 
     useEffect(() => {
         fetchUsers();
-        // fetchWeeklyData();
     }, [dashboardEmail]);
 
     const fetchUsers = async () => {
         try {
-            const updatedStudentUser = await getStudent(studentUser.id);
-            setStudentUser(updatedStudentUser);
-            if(dashboardEmail && dashboardEmail !== studentUser.email){
+            let user = studentUser;
+            if (!user) {
+                const tempUser = await fetchUserAttributes();
+                user = await getStudentByEmail(tempUser.email);
+            }
+
+            fetchWeeklyData(user);
+            if(dashboardEmail && studentUser && dashboardEmail !== studentUser.email){
                 const updatedDashboardUser = await getStudentByEmail(dashboardEmail);
                 setDashboardStudent(updatedDashboardUser);
             }
@@ -34,19 +41,10 @@ const Dashboard = ({studentUser, setStudentUser}) => {
         }
     };
 
-    // const fetchWeeklyData = async () => {
-    //     // Mock data for the example. Replace this with your actual fetch logic.
-    //     const mockData = [
-    //         { date: '01/06', balance: 120 },
-    //         { date: '02/06', balance: 150 },
-    //         { date: '03/06', balance: 100 },
-    //         { date: '04/06', balance: 200 },
-    //         { date: '05/06', balance: 170 },
-    //         { date: '06/06', balance: 220 },
-    //         { date: '07/06', balance: 190 }
-    //     ];
-    //     setWeeklyData(mockData);
-    // };
+    const fetchWeeklyData = async (user=studentUser) => {
+        let mockData = await getWeeklyData(user);
+        setWeeklyData(mockData);
+    };
 
     // const handleProfilePictureUpload = async (key) => {
     //     try {
@@ -67,15 +65,18 @@ const Dashboard = ({studentUser, setStudentUser}) => {
                 {dashboardStudent && 
                     <DashboardReceiverComponent receiverUser={dashboardStudent} setReceiverUser={setDashboardStudent} studentUser={studentUser} setStudentUser={setStudentUser}/>
                 }
+
+                {studentUser && weeklyData.length !== 0 
+                    && <div className="chartContainer">
+                        <div className="chartTitle">Balance</div>
+                            <CustomBarChart data={weeklyData} setSelectedDate={setSelectedDate}/>
+                    </div>
+                }
             </div>
             <div className='dashboard_transactions'>
                 {studentUser
-                    && <TransactionsComponent user={studentUser} filterKey="student" dashboardStudent={dashboardStudent} setDashboardStudent={setDashboardStudent} />}
+                    && <TransactionsComponent user={studentUser} filterKey="student" dashboardStudent={dashboardStudent} setDashboardStudent={setDashboardStudent} selectedDate={selectedDate}/>}
             </div>
-            {/* <div className="chartContainer">
-                <div className="chartTitle">Balance Over the Last 7 Days</div>
-                <CustomBarChart data={weeklyData} />
-            </div> */}
         </div>
     );
 };

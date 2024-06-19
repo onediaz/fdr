@@ -29,7 +29,6 @@ const TransactionCardComponent = ({transaction, user, transactions}) => {
 
     useEffect(() => {
         const onLoad = async () => {
-            console.log('On Load');
             try {
                 if (user) {
                     setIsDisabled(false);

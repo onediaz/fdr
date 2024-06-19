@@ -9,9 +9,9 @@ import { removeDuplicates } from "./functions-arrays";
 function createAutoOptions (transactions) {
     let tempOptions = [];
     transactions.map(transaction => {
-        tempOptions.push({id: transaction.id + '_message', label: transaction.message ? transaction.message : '', transactionID: transaction.id});
-        tempOptions.push({id: transaction.id + '_sender', label: transaction.sender_name ? transaction.sender_name: '', transactionID: transaction.id});
-        tempOptions.push({id: transaction.id + '_receiver', label: transaction.receiver_name ? transaction.receiver_name: '', transactionID: transaction.id});
+        tempOptions.push({id: transaction.id + '_message', label: transaction.message ? transaction.message : ''});
+        tempOptions.push({id: transaction.id + '_sender', label: transaction.sender_name ? transaction.sender_name: ''});
+        tempOptions.push({id: transaction.id + '_receiver', label: transaction.receiver_name ? transaction.receiver_name: ''});
       });
       tempOptions.sort((a, b) => a.label.localeCompare(b.label));
       return removeDuplicates(tempOptions, 'label');
