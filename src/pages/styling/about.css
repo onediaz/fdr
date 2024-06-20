@@ -3,11 +3,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    width: 80%;
     margin-top: 20px;
     padding: 3%;
     background-color: #efefef;
     box-shadow: 0 0 10px #00000043;
+    align-self: center;
+    border-radius: 30px;
 }
 
 .about_content_container {
@@ -21,10 +23,6 @@
     margin-top: 1%;
     margin-bottom: 1%;
     min-width: 650px;
-    max-width: 900px;
-    max-height: 550px;
-    /* width: 900px;
-    height: 600px; */
 }
 
 .about_content_container:hover {
