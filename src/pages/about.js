@@ -1,34 +1,36 @@
 // pages/about.js
-
+import './styling/about.css';
 import React from "react";
-import { Image } from '@aws-amplify/ui-react';
+import { Badge, Divider, Image } from '@aws-amplify/ui-react';
+import TransactionsComponent from '../components/transactions';
 
-const About = (props) => {
+const About = () => {
     return (
-        <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>About Me!</div>
-            </div>
-            <div className="aboutTextContainer">
-                <div className="descriptionContainer">
-                    Hello my name is Juan, and I am Front-End and Full-Stack Developer with a BS in Computer Science from MIT and 
-                    1+ years of experience at Google. I am skilled in JavaScript, React, and AWS. 
-                    I am passionate about building responsive web applications and enhancing user experiences. 
-                    <br/>
-                    <br/>
-                    One of my recent projects, which I am particularly proud of, involves building this website 
-                    for my students at Franklin D. Roosevelt High School of Innovation. This platform allows students to manage virtual 
-                    bank accounts, send and receive money, and learn about real-life budgeting. This project has been a rewarding experience, 
-                    seeing students actively use the application to engage with financial concepts in a practical and interactive way.
-                    <br/>
-                    <br/>
-                    This project honed my skills in frontend development, user interface design, and user experience. My role in this project 
-                    encompasses the entire development lifecycle. I designed and implemented the application's architecture using React for the 
-                    front end and AWS Amplify for authentication and data storage. I also utilized DynamoDB to manage the database, ensuring 
-                    efficient and scalable data handling. One feature I am particularly proud of is the ability to sort and filter transactions, 
-                    which provides a user-friendly interface for students to manage their finances.
+        <div className="about_container">
+            <div className="about_content_container">
+                <div className='about_text_container'>
+                    <div className="about_title">
+                        About Me! 
+                    </div>
+                    <p className='about_paragraph'>
+                        Hello my name is 
+                        Juan
+                        , and I am 
+                        <span className='mit'> Front-End and Full-Stack Developer </span>
+                        with a 
+                        <span className='mit'> BS in Computer Science </span> 
+                        from 
+                        <span className='mit'> MIT </span> 
+                        and over a year of experience at Google.
+                    </p>
+                    <p className='about_paragraph'>
+                        I am passionate about building responsive web applications and enhancing user experiences. 
+                    </p>
+                    <p className='about_paragraph'> 
+                    </p>
+
                 </div>
-                <div className="about_profile">
+                <div className="about_image">
                     <Image
                         src={'https://fdr-storagebae6c-fdr.s3.us-east-2.amazonaws.com/public/juan_profile.jpg'}
                         alt={``}
@@ -36,13 +38,33 @@ const About = (props) => {
                     />
                 </div>
             </div>
-            <div className="about_demo_video">
-                <div className={'titleContainer'}>
-                    <div>Demo Video</div>
+            <div className='about_content_container'>
+                <div className="about_transactions">
+                    <TransactionsComponent filterKey="all" className="about"/>
                 </div>
-                <iframe src="https://www.youtube.com/embed/Umo5JbQk5PY" width={1000} height={500} allow="fullscreen;"></iframe>
+                <div className='about_text_container'>
+                    <div className='about_title'>
+                        What I do.
+                    </div>
+                    <div className='about_paragraph'>
+                        Check out this transaction component. You can sort by date, likes, and if you are logged in you can check sent/received transactions.
+                    </div>
+                    <div className='about_paragraph'>
+                        Front end is built using React and Javascript. Database is hosted using DynamoDB from AWS. 
+                    </div>
+                    <div className='about_paragraph'>
+                        <Badge variation="info">Javascript</Badge> 
+                        <Badge variation="error">React</Badge> 
+                        <Badge variation="success">CSS</Badge> 
+                    </div>
+                </div>
             </div>
-            
+            <div className='about_content_container'>
+                <div className='about_title'>
+                    Demo Video
+                </div>
+                <iframe src="https://www.youtube.com/embed/Umo5JbQk5PY" width={"100%"} height={400} allow="fullscreen;"></iframe>
+            </div>
         </div>
     );
 };

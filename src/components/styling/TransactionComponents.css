@@ -55,7 +55,7 @@
 
 .transaction_amount_negative {
   font-weight: bold;
-  color: rgb(255, 54, 54);
+  color: maroon;
 }
 
 .transaction_receiver {

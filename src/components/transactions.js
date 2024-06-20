@@ -2,11 +2,11 @@
 import './styling/TransactionComponents.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView } from '@aws-amplify/ui-react';
-import { getRecentTransactions, getStudentTransactions } from '../functions/get-transactions';
+import { getAllTransactions, getRecentTransactions, getStudentTransactions } from '../functions/get-transactions';
 import TransactionCardComponent from './transactioncard';
 import TransactionsNavBarComponent from './transactionsnavbar';
 
-const TransactionsComponent = ({user, filterKey}) => {
+const TransactionsComponent = ({user, filterKey, className='', days=2}) => {
     const [errorLabel, setErrorLabel] = useState('');
     const [transactions, setTransactions] = useState([]);
     const [loadedTransactions, setLoadedTransactions] = useState([]);
@@ -17,10 +17,13 @@ const TransactionsComponent = ({user, filterKey}) => {
         try {
             let newViewTransactions = []; 
             if(filterKey === 'recent') {
-                newViewTransactions = await getRecentTransactions();
+                newViewTransactions = await getRecentTransactions(days);
             }
             if(filterKey === 'student') {
                 newViewTransactions = await getStudentTransactions(user);
+            }
+            if(filterKey === 'all') {
+                newViewTransactions = await getAllTransactions();
             }
             setTransactions(newViewTransactions);
             setLoadedTransactions(newViewTransactions);
@@ -52,7 +55,7 @@ const TransactionsComponent = ({user, filterKey}) => {
     }, [user, filterKey]);
 
     return (
-      <div className='recent_transactions'>
+      <div className={className === '' ? 'recent_transactions' : `recent_transactions_${className}`}>
         <TransactionsNavBarComponent 
             user={user} 
             transactions={transactions} 
@@ -60,7 +63,7 @@ const TransactionsComponent = ({user, filterKey}) => {
             setLoadedTransactions={setLoadedTransactions} loadedTransactions={loadedTransactions}
             />
         
-        <ScrollView height="700px" maxWidth="100%">
+        <ScrollView height="90%" maxWidth="100%">
             <div className='transactions_container'>
                 <div className='transaction_cards_container'>
                     {loadedTransactions.slice(0, displayCount).map(transaction => (
