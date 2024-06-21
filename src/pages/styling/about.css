@@ -22,10 +22,28 @@
     margin-right: 10%;
     margin-top: 1%;
     margin-bottom: 1%;
-    min-width: 650px;
+    width: 90%;
 }
 
 .about_content_container:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.about_content_container_transactions {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0000001a;
+    padding: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 90%;
+}
+
+.about_content_container_transactions:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -41,6 +59,14 @@
     flex-direction: column;
     font-size: 24px;
     width: 50%;
+    margin: 1%;
+}
+
+.about_text_container_transactions {
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    width: 100%;
     margin: 1%;
 }
 
@@ -88,4 +114,32 @@
 .career {
     font-weight: bold;
     color: #047d95da;
+}
+
+/* Media Queries for responsive design */
+@media (max-width: 768px) {
+    .about_title {
+        font-size: 32px;
+    }
+
+    .about_paragraph {
+        font-size: 18px;
+    }
+
+
+}
+
+@media (max-width: 480px) {
+    .about_title {
+        font-size: 24px;
+    }
+
+    .about_paragraph {
+        font-size: 10px;
+    }
+
+    .about_transactions {
+        height: 40%;
+    }
+
 }

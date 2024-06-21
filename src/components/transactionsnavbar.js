@@ -5,7 +5,7 @@ import { Autocomplete, Button, SelectField } from '@aws-amplify/ui-react';
 import { sortArrayByAttribute } from '../functions/functions-arrays';
 import { createAutoOptions } from '../functions/functions-transactions';
 
-const TransactionsNavBarComponent = ({user, transactions, setDisplayCount, loadedTransactions, setLoadedTransactions}) => {
+const TransactionsNavBarComponent = ({user, transactions, setDisplayCount, loadedTransactions, setLoadedTransactions, filterKey}) => {
     const [transactionType, setTransactionType] = useState('');
     const [sortConfig, setSortConfig] = useState(null);
     const [autocompleteOptions, setAutocompleteOptions] = useState([]);
@@ -101,9 +101,11 @@ const TransactionsNavBarComponent = ({user, transactions, setDisplayCount, loade
                         <div className={getClassName('')}></div>
                     </Button>
                     <SelectField
+                        className="transactions_select_field"
                         label=""
                         labelHidden
                         value={transactionType}
+                        disabled={filterKey==='all' ? true : false}
                         onChange={(e) => changeTransactions(e.target.value, value)}
                     >
                         <option value="all">All</option>

@@ -1,7 +1,7 @@
 
 /* HOME PAGE TRANSACTIONS*/
 .recent_transactions {
-  width: 525px;
+  /* width: 80%; */
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -129,8 +129,15 @@
 .transactions_container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     margin-top: 15px;
+    height: 500px;
+    overflow-y: auto;
+}
+
+.transactions_card_container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .transactions_load_more {
@@ -202,4 +209,44 @@
 .transactions_icon_descending::after {
     content: '▲';
     display: inline-block;
+}
+
+.amplify-flex.amplify-field.amplify-selectfield.transactions_select_field {
+    flex-grow: 1;
+    position: relative;
+}
+
+.amplify-flex.amplify-field.amplify-selectfield.transactions_select_field select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+@media (max-width: 480px) {
+    .amplify-button.transactions_sort_button {
+        font-size: 10px;
+        /* transform: scale(0.6);
+        transform-origin: center; */
+     }
+
+     .amplify-button.transactions_sort_button:hover {
+        font-size: 10px;
+        /* transform: scale(0.6);
+        transform-origin: center; */
+     }
+
+     .amplify-button.transactions_sort_button:focus {
+        font-size: 10px;
+        /* transform: scale(0.6);
+        transform-origin: center; */
+     }
+
+    .amplify-flex.amplify-field.amplify-selectfield.transactions_select_field {
+        width: 100%;
+    }
+
+    .amplify-flex.amplify-field.amplify-selectfield.transactions_select_field select {
+        width: 100%;
+    }
 }

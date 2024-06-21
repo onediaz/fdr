@@ -38,11 +38,8 @@ const About = () => {
                     />
                 </div>
             </div>
-            <div className='about_content_container'>
-                <div className="about_transactions">
-                    <TransactionsComponent filterKey="all" className="about"/>
-                </div>
-                <div className='about_text_container'>
+            <div className='about_content_container_transactions'>
+                <div className='about_text_container_transactions'>
                     <div className='about_title'>
                         What I do.
                     </div>
@@ -57,6 +54,10 @@ const About = () => {
                         <Badge variation="error">React</Badge> 
                         <Badge variation="success">CSS</Badge> 
                     </div>
+                </div>
+
+                <div className="about_transactions">
+                    <TransactionsComponent filterKey="all" className="about"/>
                 </div>
             </div>
             <div className='about_content_container'>

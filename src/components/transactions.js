@@ -61,21 +61,23 @@ const TransactionsComponent = ({user, filterKey, className='', days=2}) => {
             transactions={transactions} 
             setDisplayCount={setDisplayCount} 
             setLoadedTransactions={setLoadedTransactions} loadedTransactions={loadedTransactions}
+            filterKey={filterKey}
             />
         
-        <ScrollView height="90%" maxWidth="100%">
             <div className='transactions_container'>
-                <div className='transaction_cards_container'>
+                {/* <div className='transaction_cards_container'>
                     {loadedTransactions.slice(0, displayCount).map(transaction => (
                         <TransactionCardComponent transaction={transaction} user={user} transactions={transactions} key={transaction.id}/>
                     ))}
-                </div>
+                </div> */}
+                {loadedTransactions.slice(0, displayCount).map(transaction => (
+                    <TransactionCardComponent transaction={transaction} user={user} transactions={transactions} key={transaction.id}/>
+                ))}
                 <div className='transactions_load_more' onClick={loadMoreTransactions}>
                     <div className='transactions_load_more_error'>{errorLabel}</div>
                     <div className='load_more_button_containter'><div className='transactions_load_more_button'>Load More</div></div>
                 </div>
             </div>
-        </ScrollView>
 
       </div>
       
