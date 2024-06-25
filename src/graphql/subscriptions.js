@@ -1,6 +1,48 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateClassrooms = /* GraphQL */ `
+  subscription OnCreateClassrooms(
+    $filter: ModelSubscriptionClassroomsFilterInput
+  ) {
+    onCreateClassrooms(filter: $filter) {
+      id
+      name
+      tables
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateClassrooms = /* GraphQL */ `
+  subscription OnUpdateClassrooms(
+    $filter: ModelSubscriptionClassroomsFilterInput
+  ) {
+    onUpdateClassrooms(filter: $filter) {
+      id
+      name
+      tables
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteClassrooms = /* GraphQL */ `
+  subscription OnDeleteClassrooms(
+    $filter: ModelSubscriptionClassroomsFilterInput
+  ) {
+    onDeleteClassrooms(filter: $filter) {
+      id
+      name
+      tables
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onCreateTransactions = /* GraphQL */ `
   subscription OnCreateTransactions(
     $filter: ModelSubscriptionTransactionsFilterInput
@@ -10,10 +52,6 @@ export const onCreateTransactions = /* GraphQL */ `
       sender_id
       receiver_id
       amount
-      Students {
-        nextToken
-        __typename
-      }
       sender_name
       receiver_name
       message
@@ -33,10 +71,6 @@ export const onUpdateTransactions = /* GraphQL */ `
       sender_id
       receiver_id
       amount
-      Students {
-        nextToken
-        __typename
-      }
       sender_name
       receiver_name
       message
@@ -56,10 +90,6 @@ export const onDeleteTransactions = /* GraphQL */ `
       sender_id
       receiver_id
       amount
-      Students {
-        nextToken
-        __typename
-      }
       sender_name
       receiver_name
       message
@@ -78,10 +108,6 @@ export const onCreateStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      transactionss {
-        nextToken
-        __typename
-      }
       profile_picture
       createdAt
       updatedAt
@@ -97,10 +123,6 @@ export const onUpdateStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      transactionss {
-        nextToken
-        __typename
-      }
       profile_picture
       createdAt
       updatedAt
@@ -116,125 +138,7 @@ export const onDeleteStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      transactionss {
-        nextToken
-        __typename
-      }
       profile_picture
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onCreateTransactionsStudent = /* GraphQL */ `
-  subscription OnCreateTransactionsStudent(
-    $filter: ModelSubscriptionTransactionsStudentFilterInput
-  ) {
-    onCreateTransactionsStudent(filter: $filter) {
-      id
-      transactionsId
-      studentId
-      transactions {
-        id
-        sender_id
-        receiver_id
-        amount
-        sender_name
-        receiver_name
-        message
-        likes
-        createdAt
-        updatedAt
-        __typename
-      }
-      student {
-        id
-        email
-        name
-        balance
-        isAdmin
-        profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateTransactionsStudent = /* GraphQL */ `
-  subscription OnUpdateTransactionsStudent(
-    $filter: ModelSubscriptionTransactionsStudentFilterInput
-  ) {
-    onUpdateTransactionsStudent(filter: $filter) {
-      id
-      transactionsId
-      studentId
-      transactions {
-        id
-        sender_id
-        receiver_id
-        amount
-        sender_name
-        receiver_name
-        message
-        likes
-        createdAt
-        updatedAt
-        __typename
-      }
-      student {
-        id
-        email
-        name
-        balance
-        isAdmin
-        profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeleteTransactionsStudent = /* GraphQL */ `
-  subscription OnDeleteTransactionsStudent(
-    $filter: ModelSubscriptionTransactionsStudentFilterInput
-  ) {
-    onDeleteTransactionsStudent(filter: $filter) {
-      id
-      transactionsId
-      studentId
-      transactions {
-        id
-        sender_id
-        receiver_id
-        amount
-        sender_name
-        receiver_name
-        message
-        likes
-        createdAt
-        updatedAt
-        __typename
-      }
-      student {
-        id
-        email
-        name
-        balance
-        isAdmin
-        profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       updatedAt
       __typename

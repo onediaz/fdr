@@ -1,6 +1,51 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createClassrooms = /* GraphQL */ `
+  mutation CreateClassrooms(
+    $input: CreateClassroomsInput!
+    $condition: ModelClassroomsConditionInput
+  ) {
+    createClassrooms(input: $input, condition: $condition) {
+      id
+      name
+      tables
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateClassrooms = /* GraphQL */ `
+  mutation UpdateClassrooms(
+    $input: UpdateClassroomsInput!
+    $condition: ModelClassroomsConditionInput
+  ) {
+    updateClassrooms(input: $input, condition: $condition) {
+      id
+      name
+      tables
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteClassrooms = /* GraphQL */ `
+  mutation DeleteClassrooms(
+    $input: DeleteClassroomsInput!
+    $condition: ModelClassroomsConditionInput
+  ) {
+    deleteClassrooms(input: $input, condition: $condition) {
+      id
+      name
+      tables
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const createTransactions = /* GraphQL */ `
   mutation CreateTransactions(
     $input: CreateTransactionsInput!
@@ -11,10 +56,6 @@ export const createTransactions = /* GraphQL */ `
       sender_id
       receiver_id
       amount
-      Students {
-        nextToken
-        __typename
-      }
       sender_name
       receiver_name
       message
@@ -35,10 +76,6 @@ export const updateTransactions = /* GraphQL */ `
       sender_id
       receiver_id
       amount
-      Students {
-        nextToken
-        __typename
-      }
       sender_name
       receiver_name
       message
@@ -59,10 +96,6 @@ export const deleteTransactions = /* GraphQL */ `
       sender_id
       receiver_id
       amount
-      Students {
-        nextToken
-        __typename
-      }
       sender_name
       receiver_name
       message
@@ -84,10 +117,6 @@ export const createStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      transactionss {
-        nextToken
-        __typename
-      }
       profile_picture
       createdAt
       updatedAt
@@ -106,10 +135,6 @@ export const updateStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      transactionss {
-        nextToken
-        __typename
-      }
       profile_picture
       createdAt
       updatedAt
@@ -128,128 +153,7 @@ export const deleteStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      transactionss {
-        nextToken
-        __typename
-      }
       profile_picture
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const createTransactionsStudent = /* GraphQL */ `
-  mutation CreateTransactionsStudent(
-    $input: CreateTransactionsStudentInput!
-    $condition: ModelTransactionsStudentConditionInput
-  ) {
-    createTransactionsStudent(input: $input, condition: $condition) {
-      id
-      transactionsId
-      studentId
-      transactions {
-        id
-        sender_id
-        receiver_id
-        amount
-        sender_name
-        receiver_name
-        message
-        likes
-        createdAt
-        updatedAt
-        __typename
-      }
-      student {
-        id
-        email
-        name
-        balance
-        isAdmin
-        profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateTransactionsStudent = /* GraphQL */ `
-  mutation UpdateTransactionsStudent(
-    $input: UpdateTransactionsStudentInput!
-    $condition: ModelTransactionsStudentConditionInput
-  ) {
-    updateTransactionsStudent(input: $input, condition: $condition) {
-      id
-      transactionsId
-      studentId
-      transactions {
-        id
-        sender_id
-        receiver_id
-        amount
-        sender_name
-        receiver_name
-        message
-        likes
-        createdAt
-        updatedAt
-        __typename
-      }
-      student {
-        id
-        email
-        name
-        balance
-        isAdmin
-        profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deleteTransactionsStudent = /* GraphQL */ `
-  mutation DeleteTransactionsStudent(
-    $input: DeleteTransactionsStudentInput!
-    $condition: ModelTransactionsStudentConditionInput
-  ) {
-    deleteTransactionsStudent(input: $input, condition: $condition) {
-      id
-      transactionsId
-      studentId
-      transactions {
-        id
-        sender_id
-        receiver_id
-        amount
-        sender_name
-        receiver_name
-        message
-        likes
-        createdAt
-        updatedAt
-        __typename
-      }
-      student {
-        id
-        email
-        name
-        balance
-        isAdmin
-        profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       updatedAt
       __typename

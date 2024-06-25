@@ -1,9 +1,14 @@
+type Classrooms @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  tables: AWSJSON
+}
+
 type Transactions @model @auth(rules: [{allow: public}]) {
   id: ID!
   sender_id: String
   receiver_id: String
   amount: Int
-  Students: [Student] @manyToMany(relationName: "TransactionsStudent")
   sender_name: String
   receiver_name: String
   message: String
@@ -16,7 +21,6 @@ type Student @model @auth(rules: [{allow: public}]) {
   name: String!
   balance: Int!
   isAdmin: Boolean
-  transactionss: [Transactions] @manyToMany(relationName: "TransactionsStudent")
   profile_picture: String
 }
  

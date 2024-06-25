@@ -1,6 +1,38 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getClassrooms = /* GraphQL */ `
+  query GetClassrooms($id: ID!) {
+    getClassrooms(id: $id) {
+      id
+      name
+      tables
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listClassrooms = /* GraphQL */ `
+  query ListClassrooms(
+    $filter: ModelClassroomsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClassrooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        tables
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
 export const getTransactions = /* GraphQL */ `
   query GetTransactions($id: ID!) {
     getTransactions(id: $id) {
@@ -8,10 +40,6 @@ export const getTransactions = /* GraphQL */ `
       sender_id
       receiver_id
       amount
-      Students {
-        nextToken
-        __typename
-      }
       sender_name
       receiver_name
       message
@@ -55,10 +83,6 @@ export const getStudent = /* GraphQL */ `
       name
       balance
       isAdmin
-      transactionss {
-        nextToken
-        __typename
-      }
       profile_picture
       createdAt
       updatedAt
@@ -80,122 +104,6 @@ export const listStudents = /* GraphQL */ `
         balance
         isAdmin
         profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
-export const getTransactionsStudent = /* GraphQL */ `
-  query GetTransactionsStudent($id: ID!) {
-    getTransactionsStudent(id: $id) {
-      id
-      transactionsId
-      studentId
-      transactions {
-        id
-        sender_id
-        receiver_id
-        amount
-        sender_name
-        receiver_name
-        message
-        likes
-        createdAt
-        updatedAt
-        __typename
-      }
-      student {
-        id
-        email
-        name
-        balance
-        isAdmin
-        profile_picture
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const listTransactionsStudents = /* GraphQL */ `
-  query ListTransactionsStudents(
-    $filter: ModelTransactionsStudentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTransactionsStudents(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        transactionsId
-        studentId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
-export const transactionsStudentsByTransactionsId = /* GraphQL */ `
-  query TransactionsStudentsByTransactionsId(
-    $transactionsId: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelTransactionsStudentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    transactionsStudentsByTransactionsId(
-      transactionsId: $transactionsId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        transactionsId
-        studentId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
-export const transactionsStudentsByStudentId = /* GraphQL */ `
-  query TransactionsStudentsByStudentId(
-    $studentId: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelTransactionsStudentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    transactionsStudentsByStudentId(
-      studentId: $studentId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        transactionsId
-        studentId
         createdAt
         updatedAt
         __typename
