@@ -1,42 +1,45 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateClassrooms = /* GraphQL */ `
-  subscription OnCreateClassrooms(
-    $filter: ModelSubscriptionClassroomsFilterInput
+export const onCreateStudentTable = /* GraphQL */ `
+  subscription OnCreateStudentTable(
+    $filter: ModelSubscriptionStudentTableFilterInput
   ) {
-    onCreateClassrooms(filter: $filter) {
+    onCreateStudentTable(filter: $filter) {
       id
       name
-      tables
+      students
+      classroom
       createdAt
       updatedAt
       __typename
     }
   }
 `;
-export const onUpdateClassrooms = /* GraphQL */ `
-  subscription OnUpdateClassrooms(
-    $filter: ModelSubscriptionClassroomsFilterInput
+export const onUpdateStudentTable = /* GraphQL */ `
+  subscription OnUpdateStudentTable(
+    $filter: ModelSubscriptionStudentTableFilterInput
   ) {
-    onUpdateClassrooms(filter: $filter) {
+    onUpdateStudentTable(filter: $filter) {
       id
       name
-      tables
+      students
+      classroom
       createdAt
       updatedAt
       __typename
     }
   }
 `;
-export const onDeleteClassrooms = /* GraphQL */ `
-  subscription OnDeleteClassrooms(
-    $filter: ModelSubscriptionClassroomsFilterInput
+export const onDeleteStudentTable = /* GraphQL */ `
+  subscription OnDeleteStudentTable(
+    $filter: ModelSubscriptionStudentTableFilterInput
   ) {
-    onDeleteClassrooms(filter: $filter) {
+    onDeleteStudentTable(filter: $filter) {
       id
       name
-      tables
+      students
+      classroom
       createdAt
       updatedAt
       __typename

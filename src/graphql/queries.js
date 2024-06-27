@@ -1,29 +1,31 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getClassrooms = /* GraphQL */ `
-  query GetClassrooms($id: ID!) {
-    getClassrooms(id: $id) {
+export const getStudentTable = /* GraphQL */ `
+  query GetStudentTable($id: ID!) {
+    getStudentTable(id: $id) {
       id
       name
-      tables
+      students
+      classroom
       createdAt
       updatedAt
       __typename
     }
   }
 `;
-export const listClassrooms = /* GraphQL */ `
-  query ListClassrooms(
-    $filter: ModelClassroomsFilterInput
+export const listStudentTables = /* GraphQL */ `
+  query ListStudentTables(
+    $filter: ModelStudentTableFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listClassrooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listStudentTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
-        tables
+        students
+        classroom
         createdAt
         updatedAt
         __typename

@@ -5,9 +5,10 @@ import { createTransaction } from "../functions/create-transaction";
 import { getStudentByEmail, getAllStudents } from "../functions/get-student";
 import ListStudents from "../components/studentlist";
 import StudentComponent from "../components/student";
+import ClassroomComponent from "../components/classroom";
 
 const Students = ({isAdmin, profilePictures}) => {
-    const [students, setStudents] = useState([]);
+    const [students, setStudents] = useState(null);
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [balance, setBalance] = useState('');
     const [message, setMessage] = useState('');
@@ -37,6 +38,7 @@ const Students = ({isAdmin, profilePictures}) => {
         <div className="admin_nav_container">
             <div className="admin_nav_item_container">
                 If you are logged in, you can click on a student name to view their balance.
+                {/* {students && <ClassroomComponent name={'first'} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} students={students}/>} */}
                 {students && <ListStudents students={students} setStudents={setStudents} isAdmin={isAdmin} profilePictures={profilePictures} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}/>}
             </div>
             {isAdmin && 

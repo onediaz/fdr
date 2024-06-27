@@ -1,0 +1,8 @@
+.table_dnd_container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    border: 1px solid black;
+    width: fit-content;
+    height: 100px;
+}

@@ -51,4 +51,30 @@ function removeDuplicates (array, key) {
     return array.splice(0,insert_index);
 }
 
-export {sortArrayByAttribute, removeDuplicates};
+/**
+ * Tables contain 
+ * @param {Array} tables array of Table DB objects
+ * @param {Array} students array of Student DB objects
+ * @returns Array 
+ */
+function getStudentsFromTables (tables, students) {
+    let nonSeatedStudents = [];
+    let seatedStudents = new Set();
+    for (let table of tables) {
+        let tTable = JSON.parse(table.students);
+        for (let student of tTable.users) {
+            seatedStudents.add(student);
+        }
+    }
+    for (let student of students) {
+        if(seatedStudents.has(student.name)) {
+            continue;
+        } else {
+            nonSeatedStudents.push(student);
+        }
+    }
+    console.log(nonSeatedStudents);
+    return nonSeatedStudents;
+}
+
+export {sortArrayByAttribute, removeDuplicates, getStudentsFromTables};

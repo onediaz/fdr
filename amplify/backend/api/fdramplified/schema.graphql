@@ -1,7 +1,8 @@
-type Classrooms @model @auth(rules: [{allow: public}]) {
+type StudentTable @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
-  tables: AWSJSON
+  students: AWSJSON
+  classroom: String
 }
 
 type Transactions @model @auth(rules: [{allow: public}]) {

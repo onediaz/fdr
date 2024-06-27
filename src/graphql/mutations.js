@@ -1,45 +1,48 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createClassrooms = /* GraphQL */ `
-  mutation CreateClassrooms(
-    $input: CreateClassroomsInput!
-    $condition: ModelClassroomsConditionInput
+export const createStudentTable = /* GraphQL */ `
+  mutation CreateStudentTable(
+    $input: CreateStudentTableInput!
+    $condition: ModelStudentTableConditionInput
   ) {
-    createClassrooms(input: $input, condition: $condition) {
+    createStudentTable(input: $input, condition: $condition) {
       id
       name
-      tables
+      students
+      classroom
       createdAt
       updatedAt
       __typename
     }
   }
 `;
-export const updateClassrooms = /* GraphQL */ `
-  mutation UpdateClassrooms(
-    $input: UpdateClassroomsInput!
-    $condition: ModelClassroomsConditionInput
+export const updateStudentTable = /* GraphQL */ `
+  mutation UpdateStudentTable(
+    $input: UpdateStudentTableInput!
+    $condition: ModelStudentTableConditionInput
   ) {
-    updateClassrooms(input: $input, condition: $condition) {
+    updateStudentTable(input: $input, condition: $condition) {
       id
       name
-      tables
+      students
+      classroom
       createdAt
       updatedAt
       __typename
     }
   }
 `;
-export const deleteClassrooms = /* GraphQL */ `
-  mutation DeleteClassrooms(
-    $input: DeleteClassroomsInput!
-    $condition: ModelClassroomsConditionInput
+export const deleteStudentTable = /* GraphQL */ `
+  mutation DeleteStudentTable(
+    $input: DeleteStudentTableInput!
+    $condition: ModelStudentTableConditionInput
   ) {
-    deleteClassrooms(input: $input, condition: $condition) {
+    deleteStudentTable(input: $input, condition: $condition) {
       id
       name
-      tables
+      students
+      classroom
       createdAt
       updatedAt
       __typename

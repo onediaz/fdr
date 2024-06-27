@@ -1,0 +1,21 @@
+.table_dnd_create{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    border: 1px solid black;
+    width: fit-content;
+    height: 100px;
+}
+
+.table_dnd_create>*:last-child {
+    align-self: stretch;
+}
+
+/* .table_dnd_create_button {
+    align-self: stretch;
+} */
+
+.table_dnd_remaining_students {
+    display: flex;
+    flex-wrap: wrap;
+}
