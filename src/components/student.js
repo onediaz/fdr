@@ -1,16 +1,17 @@
 import './styling/StudentComponent.css';
 import { CheckboxField } from "@aws-amplify/ui-react";
 
-const StudentComponent = ({student, selectedStudents, setSelectedStudents}) => {
+const StudentComponent = ({student, selectedStudents, setSelectedStudents, table}) => {
 
     const handleSelectStudent = (student) => {
         setSelectedStudents(prevSelected => {
             if (prevSelected.some(selectedStudent => selectedStudent.id === student.id)) {
                 return prevSelected.filter(selectedStudent => selectedStudent.id !== student.id);
             } else {
-                return [...prevSelected, student];
+                return [...prevSelected, {...student, 'tableId': table.id}];
             }
         });
+        console.log(selectedStudents);
     };
 
     return (

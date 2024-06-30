@@ -13,7 +13,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "aws-amplify": "^6.3.6",
+    "aws-amplify": "^6.3.8",
     "aws-sdk": "^2.1627.0",
     "bcrypt": "^5.1.1",
     "react": "^18.3.0",

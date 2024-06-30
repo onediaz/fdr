@@ -43,26 +43,7 @@ app.use(function(req, res, next) {
 
 app.get('/get-students', async function(req, res) {
   console.log('------------ Here is the API ----------');
-  console.log(API);
-  const email = 'juand4535@gmail.com';
-  const dashboardStudent = await API.API.graphql({
-    query: listStudents,
-    variables: {
-        // id: email,
-        filter: {
-            email: {
-                eq: email
-            }
-        }
-    }
-  });
-  if (dashboardStudent.data.listStudents.items.length > 0) {
-    console.log(dashboardStudent.data.listStudents.items[0]); // Access the first student
-    res.json({success: `get-students/${email} success`, url: req.url});
-  } else {
-    console.log("No student found with that email.");
-    res.json({success: `did not find student`, url: req.url});
-  }
+  return ['Hi'];
 });
 
 app.get('/get-students/*', async function(req, res) {

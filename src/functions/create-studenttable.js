@@ -18,7 +18,13 @@ async function createTableForStudents(name, classroom="default") {
           });
         console.log(newStudentTable.data.createStudentTable);
         console.log('success creating student table');
-        return newStudentTable.data.createStudentTable;
+        let table = {
+            'name': newStudentTable.data.createStudentTable.name,
+            'classroom': newStudentTable.data.createStudentTable.classroom,
+            'students': JSON.parse(newStudentTable.data.createStudentTable.students).users,
+            'id': newStudentTable.data.createStudentTable.id
+        }
+        return table;
 
     } catch (error) {
         console.log('Error creating student table');

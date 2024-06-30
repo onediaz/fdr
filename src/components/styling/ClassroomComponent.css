@@ -1,4 +1,20 @@
-.table_dnd_create{
+.classroom_body {
+    display: flex;
+    flex-direction: row;
+}
+
+.classroom_tables {
+    border: 1px solid black;
+    width: 65%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.classroom_tables>* {
+    flex: 1 1 160px;
+}
+
+.table_create{
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -7,15 +23,11 @@
     height: 100px;
 }
 
-.table_dnd_create>*:last-child {
+.table_create>*:last-child {
     align-self: stretch;
 }
 
-/* .table_dnd_create_button {
-    align-self: stretch;
-} */
-
-.table_dnd_remaining_students {
-    display: flex;
-    flex-wrap: wrap;
+.classroom_update_settings {
+    border: 1px solid red;
+    width: 35%;
 }

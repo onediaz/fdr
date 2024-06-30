@@ -1,0 +1,38 @@
+.update_students_container {
+    border: 1px solid black;
+}
+
+/* UPDATE BALANCES COMPONENT */
+.update_balances_container{
+    border: 1px solid black;
+}
+
+.update_balances_body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* UPDATE STUDENT TABLE COMPONENT */
+.update_student_tables_container {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.update_student_tables_header {
+    display: flex;
+    flex-direction: column;
+}
+
+.update_student_tables_header_error {
+    height: 24px;
+}
+
+.update_student_tables_body {
+    display: flex;
+    flex-direction: column;
+}
+
+.update_student_table_select {
+    display: flex;
+}

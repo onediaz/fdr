@@ -1,0 +1,19 @@
+
+.table_remaining_students {
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.table_remaining_students_header {
+    margin: 1%;
+}
+
+.table_remaining_students_body {
+    margin: 1%;
+}
+
+.remaining_students_list {
+    display: flex;
+    flex-wrap: wrap;
+}

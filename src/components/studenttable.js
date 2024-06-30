@@ -1,28 +1,38 @@
 import './styling/StudentTableComponent.css';
 import { useEffect, useState } from "react";
 import StudentComponent from "./student";
+import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd';
+import { CheckboxField } from '@aws-amplify/ui-react';
 
 /**
  * 
  * @param {table} Table object 
  * @returns 
  */
-const StudentTableComponent = ({table, selectedStudents, setSelectedStudents}) => {
-    const [students, setStudents] = useState([]);
+const StudentTableComponent = ({table, selectedStudents, setSelectedStudents, tables}) => {
+    const [students, setStudents] = useState(null);
 
     useEffect(() => {
-
         const fetchStudents = async () => {
-            // let tStudents = await getStudents();
-            // let tStudents = JSON.parse(tables.students || '{"users":[]}');
-            let tStudents = [];
-            setStudents(tStudents);
+            console.log('Fetch stdudents');
+            setStudents(table.students);
         }
 
         fetchStudents();
 
-    }, [table]);
+    }, [tables]);
 
+    const handleSelectAll = (event) => {
+        if (event.target.checked) {
+            setSelectedStudents(prevSelected => {
+                return prevSelected.concat(students);
+            });
+        } else {
+            setSelectedStudents(prevSelected => {
+                return prevSelected.filter(a => !students.find(student => a.id === student.id));
+            });
+        }
+    };
 
     return (
         <div className="table_dnd_container">
@@ -30,12 +40,24 @@ const StudentTableComponent = ({table, selectedStudents, setSelectedStudents}) =
                 <div>
                     {table.name}
                 </div>
+                {students && 
+                    <div>
+                        <CheckboxField
+                            onChange={handleSelectAll}
+                            isDisabled={students.length === 0}
+                            // checked={selectedStudents.length - students.length === 0}
+                            label=""
+                        />
+                    </div>}
             </div>
             <div className="table_dnd_body">
-                {students.map(student => {
-                    <div className={`table_dnd_student`}>
-                        <StudentComponent student={student} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}/>
-                    </div>
+                {students &&
+                    students.map((student, index) => {
+                        return (
+                            <li key={student.id}>
+                                <StudentComponent student={student} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} table={table}/>
+                            </li>
+                        );
                 })}
             </div>
         </div>

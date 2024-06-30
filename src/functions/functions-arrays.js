@@ -61,8 +61,8 @@ function getStudentsFromTables (tables, students) {
     let nonSeatedStudents = [];
     let seatedStudents = new Set();
     for (let table of tables) {
-        let tTable = JSON.parse(table.students);
-        for (let student of tTable.users) {
+        let tTable = table.students;
+        for (let student of tTable) {
             seatedStudents.add(student);
         }
     }
@@ -70,11 +70,69 @@ function getStudentsFromTables (tables, students) {
         if(seatedStudents.has(student.name)) {
             continue;
         } else {
-            nonSeatedStudents.push(student);
+            nonSeatedStudents.push({...student, 'tableId': 'remaining'});
         }
     }
     console.log(nonSeatedStudents);
     return nonSeatedStudents;
 }
 
-export {sortArrayByAttribute, removeDuplicates, getStudentsFromTables};
+function handleDragAndDrop(remainingStudents, tables, result) {
+    let source = [];
+    let dest = [];
+    let sourceId = result.source.droppableId;
+    let destId = result.destination.droppableId;
+
+    if(sourceId === destId) {
+        if (sourceId === 'remaining') {
+            const items = Array.from(remainingStudents);
+            const [reorderedItem] = items.splice(result.source.index, 1);
+            items.splice(result.destination.index, 0, reorderedItem);
+            return [items, tables];
+        } else {
+            let sourceIndex = tables.findIndex(table => table.id === sourceId);
+            // const table = JSON.parse(tables[sourceIndex].students);
+            const table = tables[sourceIndex].students;
+            // source = table.users;
+
+            const items = Array.from(table);
+            const [reorderedItem] = items.splice(result.source.index, 1);
+            items.splice(result.destination.index, 0, reorderedItem);
+
+            // table.students = items;
+            // tables[sourceIndex].students = JSON.stringify(table);
+
+            let copyTable = [...tables];
+            copyTable[sourceIndex].students = items;
+
+            return [remainingStudents, copyTable];
+        }
+    }
+    else {
+        let sourceIndex = tables.findIndex(table => table.id === sourceId);
+        let destIndex = tables.findIndex(table => table.id === destId);
+        if (sourceIndex === -1) {
+            source = Array.from(remainingStudents);
+            // const table = JSON.parse(tables[destIndex].students);
+            const table = tables[destIndex].students;
+            // dest = table.users;
+
+            const [reorderedItem] = source.splice(result.source.index, 1);
+            // dest.splice(result.destination.index, 0, reorderedItem);
+            table.splice(result.destination.index, 0, reorderedItem);
+
+            // table.users = dest;
+            // let copyTable = [...tables];
+            // copyTable[destIndex].students = JSON.stringify(table);
+            tables[destIndex].students = table;
+
+            // console.log(source, copyTable);
+            return [source, tables];
+        }
+        return [remainingStudents, tables];
+    }
+
+}
+
+
+export {sortArrayByAttribute, removeDuplicates, getStudentsFromTables, handleDragAndDrop};
