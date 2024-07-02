@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { createTransaction } from "../functions/create-transaction";
-import { getStudentByEmail } from "../functions/get-student";
+import { getAllStudents, getStudentByEmail } from "../functions/get-student";
 import { updateStudentBalance } from "../functions/update-students";
 
-const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents}) => {
+const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents, allStudents, setStudents}) => {
     const [balance, setBalance] = useState('');
     const [message, setMessage] = useState('');
 
@@ -13,12 +13,15 @@ const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents}) => {
         } else if(message === '' || balance === '') {
             window.alert('Transaction message or balance empty');
         } else if (selectedStudents.length !== 0) {
-            selectedStudents.map(student => {
-                const updatedBalance = Number(balance) + Number(student.balance);
-                updateStudentBalance(student.id, updatedBalance);
+            for (let student of selectedStudents) {
+                const updatedBalance = Number(balance);
+                console.log('Updating student balance: ', student.id);
+                let updatedStudent = await updateStudentBalance(student.id, updatedBalance);
+                console.log(updatedStudent);
                 createTransaction({'name': 'Mr. Diaz', 'id': '1'}, student, balance, message);
-            });
-
+            }
+            let studs = await getAllStudents();
+            setStudents(studs);
             window.alert(`Successfully sent money ${balance} to selected students`);
             setBalance('');
             setMessage('');

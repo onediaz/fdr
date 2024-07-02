@@ -11,7 +11,7 @@ async function createTableForStudents(name, classroom="default") {
             variables: {
               input: {
                 name: name, 
-                students: "{\"users\": []}",
+                students: "[]",
                 classroom: classroom
               }
             }
@@ -21,7 +21,7 @@ async function createTableForStudents(name, classroom="default") {
         let table = {
             'name': newStudentTable.data.createStudentTable.name,
             'classroom': newStudentTable.data.createStudentTable.classroom,
-            'students': JSON.parse(newStudentTable.data.createStudentTable.students).users,
+            'students': JSON.parse(newStudentTable.data.createStudentTable.students),
             'id': newStudentTable.data.createStudentTable.id
         }
         return table;

@@ -8,7 +8,7 @@ import { getStudentsFromTables, handleDragAndDrop } from '../functions/functions
 import RemainingStudentsTableComponent from './remainingstudentstable';
 import UpdateStudentsComponent from './updatestudents';
 
-const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudents, students}) => {
+const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudents, students, setStudents}) => {
     const [tables, setTables] = useState(null);
     const [tablename, setTablename] = useState('');
     const [remainingStudents, setRemainingStudents] = useState(null);
@@ -46,7 +46,10 @@ const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudent
                     {tables && selectedStudents &&
                         tables.map((table) => {
                             return (
-                                <StudentTableComponent key={table.id} table={table} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} tables={tables}/>
+                                <StudentTableComponent key={table.id} table={table} tables={tables}
+                                    selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} 
+                                    allStudents={students}
+                                />
                             )
                     })}
                     <div className="table_create" >
@@ -60,8 +63,7 @@ const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudent
                             selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}
                             tables={tables} setTables={setTables}
                             remainingStudents={remainingStudents} setRemainingStudents={setRemainingStudents}
-                            students={students}
-
+                            students={students} setStudents={setStudents}
                         />
                     }
                 </div>

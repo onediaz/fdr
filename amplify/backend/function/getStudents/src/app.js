@@ -6,24 +6,9 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
-
-// import { generateClient } from "aws-amplify/api";
-// import { listStudents } from '../../../../../src/graphql/queries';
-// const client = generateClient();
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-
-// Import the Amplify libraries (assuming you have them installed)
-const Amplify = require('aws-amplify');
-const { API } = require('@aws-amplify/api'); // For interacting with Amplify APIs
-// Configure Amplify with the parsed configuration
-const envVars = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
-// Parse the string into a JavaScript object
-const amplifyConfig = JSON.parse(envVars);
-Amplify.configure(amplifyConfig);
 
 // declare a new express app
 const app = express()
@@ -43,33 +28,24 @@ app.use(function(req, res, next) {
 
 app.get('/get-students', async function(req, res) {
   console.log('------------ Here is the API ----------');
-  return ['Hi'];
+  // res.json({success: `get-students/success`});
+  const params = {
+    TableName: 'StudentTable-tejldcxcpnc35hmzlzzrw2blmy-fdr', // Your DynamoDB table name
+  };
+
+  try {
+    // const data = await dynamoDB.scan(params).promise();
+    res.json(params);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    res.status(500).json({ error: 'Error fetching students' });
+  }
 });
 
 app.get('/get-students/*', async function(req, res) {
   // Add your code here
   // const {email} = req.query;
-  const email = 'juand4535@gmail.com';
-  console.log(email);
-  const dashboardStudent = await API.graphql({
-    query: listStudents,
-    variables: {
-        filter: {
-            email: {
-                eq: email
-            }
-        }
-    }
-  });
-  if (dashboardStudent.data.listStudents.items.length > 0) {
-    console.log(dashboardStudent.data.listStudents.items[0]); // Access the first student
-    res.json({success: `get-students/${email} success`, url: req.url});
-  } else {
-    console.log("No student found with that email.");
-    res.json({success: `did not find student`, url: req.url});
-  }
-
-  // res.json({success: `get-students/${email} success`, url: req.url});
+  res.json({success: `get-students/ success`, url: req.url});
 });
 
 /****************************
@@ -113,33 +89,6 @@ app.delete('/get-students/*', function(req, res) {
   // Add your code here
   res.json({success: 'delete call succeed!', url: req.url});
 });
-
-/****************************
-* GraphQL Functions *
-****************************/
-
-const listStudents =  `
-  query ListStudents(
-    $filter: ModelStudentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listStudents(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        email
-        name
-        balance
-        isAdmin
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
 
 app.listen(3000, function() {
     console.log("App started")

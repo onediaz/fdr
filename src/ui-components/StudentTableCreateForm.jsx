@@ -6,13 +6,7 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  TextAreaField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { createStudentTable } from "../graphql/mutations";
@@ -45,7 +39,7 @@ export default function StudentTableCreateForm(props) {
   };
   const validations = {
     name: [],
-    students: [{ type: "JSON" }],
+    students: [],
     classroom: [],
   };
   const runValidationTasks = async (
@@ -156,10 +150,11 @@ export default function StudentTableCreateForm(props) {
         hasError={errors.name?.hasError}
         {...getOverrideProps(overrides, "name")}
       ></TextField>
-      <TextAreaField
+      <TextField
         label="Students"
         isRequired={false}
         isReadOnly={false}
+        value={students}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -180,7 +175,7 @@ export default function StudentTableCreateForm(props) {
         errorMessage={errors.students?.errorMessage}
         hasError={errors.students?.hasError}
         {...getOverrideProps(overrides, "students")}
-      ></TextAreaField>
+      ></TextField>
       <TextField
         label="Classroom"
         isRequired={false}

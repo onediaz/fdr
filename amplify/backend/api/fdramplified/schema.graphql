@@ -1,7 +1,7 @@
 type StudentTable @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
-  students: AWSJSON
+  students: String
   classroom: String
 }
 

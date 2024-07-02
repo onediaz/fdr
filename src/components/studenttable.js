@@ -9,23 +9,33 @@ import { CheckboxField } from '@aws-amplify/ui-react';
  * @param {table} Table object 
  * @returns 
  */
-const StudentTableComponent = ({table, selectedStudents, setSelectedStudents, tables}) => {
+const StudentTableComponent = ({table, selectedStudents, setSelectedStudents, tables, allStudents}) => {
     const [students, setStudents] = useState(null);
 
     useEffect(() => {
         const fetchStudents = async () => {
-            console.log('Fetch stdudents');
-            setStudents(table.students);
+            let curStudents = []
+            let curTables = table.students;
+            if (typeof curTables === "string") {
+                curTables = JSON.parse(curTables);
+            }
+            for (let tStudent of curTables) {
+                let sIndex = allStudents.findIndex(student => student.id === tStudent.id);
+                if (sIndex !== -1) {
+                    curStudents.push(allStudents[sIndex]);
+                }
+            }
+            setStudents(curStudents);
         }
 
         fetchStudents();
 
-    }, [tables]);
+    }, [tables, allStudents]);
 
     const handleSelectAll = (event) => {
         if (event.target.checked) {
             setSelectedStudents(prevSelected => {
-                return prevSelected.concat(students);
+                return prevSelected.concat(students.map(student => ({'id': student.id, 'tableId': table.id, 'name': student.name})));
             });
         } else {
             setSelectedStudents(prevSelected => {

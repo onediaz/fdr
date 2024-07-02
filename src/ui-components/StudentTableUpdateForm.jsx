@@ -6,13 +6,7 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  TextAreaField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getStudentTable } from "../graphql/queries";
@@ -44,11 +38,7 @@ export default function StudentTableUpdateForm(props) {
       ? { ...initialValues, ...studentTableRecord }
       : initialValues;
     setName(cleanValues.name);
-    setStudents(
-      typeof cleanValues.students === "string" || cleanValues.students === null
-        ? cleanValues.students
-        : JSON.stringify(cleanValues.students)
-    );
+    setStudents(cleanValues.students);
     setClassroom(cleanValues.classroom);
     setErrors({});
   };
@@ -72,7 +62,7 @@ export default function StudentTableUpdateForm(props) {
   React.useEffect(resetStateValues, [studentTableRecord]);
   const validations = {
     name: [],
-    students: [{ type: "JSON" }],
+    students: [],
     classroom: [],
   };
   const runValidationTasks = async (
@@ -181,7 +171,7 @@ export default function StudentTableUpdateForm(props) {
         hasError={errors.name?.hasError}
         {...getOverrideProps(overrides, "name")}
       ></TextField>
-      <TextAreaField
+      <TextField
         label="Students"
         isRequired={false}
         isReadOnly={false}
@@ -206,7 +196,7 @@ export default function StudentTableUpdateForm(props) {
         errorMessage={errors.students?.errorMessage}
         hasError={errors.students?.hasError}
         {...getOverrideProps(overrides, "students")}
-      ></TextAreaField>
+      ></TextField>
       <TextField
         label="Classroom"
         isRequired={false}

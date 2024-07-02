@@ -14,8 +14,11 @@ const RemainingStudentsTableComponent = ({remainingStudents, selectedStudents, s
 
     const handleSelectAll = (event) => {
         if (event.target.checked) {
+            // setSelectedStudents(prevSelected => {
+            //     return prevSelected.concat(remainingStudents);
+            // });
             setSelectedStudents(prevSelected => {
-                return prevSelected.concat(remainingStudents);
+                return prevSelected.concat(remainingStudents.map(student => ({'id': student.id, 'tableId': 'remaining', 'name': student.name})));
             });
         } else {
             setSelectedStudents(prevSelected => {

@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import { generateClient } from "aws-amplify/api";
 // import { createStudent } from './graphql/mutations.js';
 import { updateStudent } from '../graphql/mutations';
@@ -7,18 +7,31 @@ const client = generateClient();
 
 async function updateStudentBalance(id, amount) {
     console.log('Updating Student Balance');
+    console.log(id);
     try {
-        const currentStudentResult = await client.graphql({
-            query: updateStudent,
-            variables: {
-                input: {
-                    id: id,
-                    balance: amount
-                }
+        // const currentStudentResult = await client.graphql({
+        //     query: updateStudent,
+        //     variables: {
+        //         input: {
+        //             id: id,
+        //             balance: amount
+        //         }
+        //     }
+        // });
+        // console.log(currentStudentResult);
+        // return currentStudentResult.data.updateStudent;
+        let res = await axios({
+            method: 'put',
+            url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/students-db',
+            params: {
+                TableName: "Student-tejldcxcpnc35hmzlzzrw2blmy-fdr",
+                studentId: id,
+                amount: amount,
             }
         });
-        return currentStudentResult.data.updateStudent;
+        return res.data;
     } catch (error) {
+        console.log(error);
         return [];
     }
   }

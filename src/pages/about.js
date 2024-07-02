@@ -64,7 +64,7 @@ const About = () => {
                 <div className='about_title'>
                     Demo Video
                 </div>
-                <iframe src="https://www.youtube.com/embed/Umo5JbQk5PY" width={"100%"} height={400} allow="fullscreen;"></iframe>
+                <iframe className="about_content_video" src="https://www.youtube.com/embed/Umo5JbQk5PY" width={"100%"} height={400} allow="fullscreen;"></iframe>
             </div>
         </div>
     );

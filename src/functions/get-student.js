@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { generateClient } from "aws-amplify/api";
 // import { createStudent } from './graphql/mutations.js';
 import { listStudents } from '../graphql/queries';
@@ -46,10 +47,18 @@ async function getStudent(studentID) {
   async function getAllStudents () {
     console.log('fetching students');
     try {
-        const allStudents = await client.graphql({
-            query: listStudents
+        // const allStudents = await client.graphql({
+        //     query: listStudents
+        // });
+        // return allStudents.data.listStudents.items;
+        let res = await axios({
+            method: 'get',
+            url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/students-db',
+            params: {
+                TableName: "Student-tejldcxcpnc35hmzlzzrw2blmy-fdr",
+            }
         });
-        return allStudents.data.listStudents.items;
+        return res.data;
     } catch (error) {
         console.error('Error fetching students:', error);
         return [];

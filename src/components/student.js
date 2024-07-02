@@ -8,7 +8,7 @@ const StudentComponent = ({student, selectedStudents, setSelectedStudents, table
             if (prevSelected.some(selectedStudent => selectedStudent.id === student.id)) {
                 return prevSelected.filter(selectedStudent => selectedStudent.id !== student.id);
             } else {
-                return [...prevSelected, {...student, 'tableId': table.id}];
+                return [...prevSelected, {'id': student.id, 'name': student.name, 'tableId': table.id}];
             }
         });
         console.log(selectedStudents);

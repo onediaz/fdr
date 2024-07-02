@@ -22,7 +22,6 @@ async function getTablesByClassroomName(name, students) {
         let tableStudents = [];
         // go through each table object and create a JSON object that is more user friendly to use than what is fetched
         for (let table of classroom.data.listStudentTables.items) {
-            console.log(table);
             let t = {
                 'name': '',
                 'classroom': '',
@@ -32,10 +31,10 @@ async function getTablesByClassroomName(name, students) {
             t.name = table.name;
             t.id = table.id;
             t.classroom = table.classroom;
-            tableStudents = JSON.parse(table.students).users;
+            tableStudents = JSON.parse(table.students);
             // for each student in the table get the actual student object
             for (let tStudent of tableStudents) {
-                let student = students.find(stud => stud.id === tStudent);
+                let student = students.find(stud => stud.id === tStudent.id);
                 if(student) {
                     t.students.push(student);
                 }
@@ -45,6 +44,7 @@ async function getTablesByClassroomName(name, students) {
         return tables;
         // return classroom.data.listClassrooms.items[0];
     } catch(error) {
+        console.log(error);
         console.log('failed to get transaction by ID');
         return [];
     }
