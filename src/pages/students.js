@@ -3,9 +3,8 @@ import "./styling/students.css";
 import { updateStudentBalance } from '../functions/update-students';
 import { createTransaction } from "../functions/create-transaction";
 import { getStudentByEmail, getAllStudents } from "../functions/get-student";
-import ListStudents from "../components/studentlist";
-import StudentComponent from "../components/student";
 import ClassroomComponent from "../components/classroom";
+import ListStudents from "../components/studentlist";
 
 const Students = ({isAdmin, profilePictures}) => {
     const [students, setStudents] = useState(null);
@@ -25,11 +24,11 @@ const Students = ({isAdmin, profilePictures}) => {
     const onButtonClick = async () => {
         const currentUser = await getStudentByEmail('juand4535@gmail.com');
         if (selectedStudents.length !== 0) {
-            selectedStudents.map(student => {
+            for (let student of selectedStudents) {
                 const updatedBalance = Number(balance) + Number(student.balance);
                 updateStudentBalance(student.id, updatedBalance);
                 createTransaction(currentUser, student, balance, message);
-            });
+            }
         } else {
             console.log('no selected students');
         }

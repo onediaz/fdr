@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './styling/UpdateStudentsComponent.css';
 import UpdateBalancesComponent from './updatebalances';
 import UpdateStudentTablesComponent from './updatestudenttables';

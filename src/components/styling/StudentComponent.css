@@ -1,3 +1,15 @@
 .student_dnd_container {
     border: 1px solid black;
+    padding: 3%;
+    margin: 1%;
+}
+
+.student_dnd_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student_dnd_check {
+    vertical-align: middle;
+    align-content: center;
 }

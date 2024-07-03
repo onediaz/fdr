@@ -2,10 +2,10 @@
 import './styling/dashboard.css';
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getStudent, getStudentByEmail } from '../functions/get-student';
+import { getStudentByEmail } from '../functions/get-student';
 import CustomBarChart from '../components/barchart';
-import FileUpload from '../components/fileupload';
-import { Image } from '@aws-amplify/ui-react';
+// import FileUpload from '../components/fileupload';
+// import { Image } from '@aws-amplify/ui-react';
 import DashboardReceiverComponent from '../components/dashboardreceiver';
 import DashboardComponent from '../components/dashboard';
 import TransactionsComponent from '../components/transactions';

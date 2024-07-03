@@ -59,12 +59,10 @@ function removeDuplicates (array, key) {
  */
 function getStudentsFromTables (tables, students) {
     console.log('Getting Remaining Students who are not seated in tables');
-    console.log(tables);
-    console.log(students);
     let nonSeatedStudents = [];
     let seatedStudents = new Set();
     for (let table of tables) {
-        let tTable = table.students;
+        let tTable = JSON.parse(table.students);
         for (let student of tTable) {
             seatedStudents.add(student.id);
         }
@@ -76,13 +74,11 @@ function getStudentsFromTables (tables, students) {
             nonSeatedStudents.push({...student, 'tableId': 'remaining'});
         }
     }
-    console.log(nonSeatedStudents);
     return nonSeatedStudents;
 }
 
 function handleDragAndDrop(remainingStudents, tables, result) {
     let source = [];
-    let dest = [];
     let sourceId = result.source.droppableId;
     let destId = result.destination.droppableId;
 

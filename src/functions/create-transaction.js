@@ -6,9 +6,6 @@ const client = generateClient();
 
 async function createTransaction(sender, receiver, amount, message) {
   try{
-      console.log("Creating Transaction");
-      console.log(sender);
-      console.log(receiver);
       const newTransaction = await client.graphql({
           query: createTransactions,
           variables: {
@@ -23,8 +20,6 @@ async function createTransaction(sender, receiver, amount, message) {
             }
           }
         });
-        console.log(newTransaction);
-      console.log('success creating transaction: ');
     } catch(error) {
       console.log('failed to create transaction');
 

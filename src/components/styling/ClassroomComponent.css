@@ -1,10 +1,16 @@
+.classroom_container {
+    background-color: #efefef;
+    border-radius: 30px;
+    box-shadow: 0 0 10px #00000043;
+    padding: 3%;
+}
+
 .classroom_body {
     display: flex;
     flex-direction: row;
 }
 
 .classroom_tables {
-    border: 1px solid black;
     width: 65%;
     display: flex;
     flex-wrap: wrap;
@@ -28,6 +34,13 @@
 }
 
 .classroom_update_settings {
-    border: 1px solid red;
     width: 35%;
+
+    border: 1px solid black;
+    width: fit-content;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0000001a;
+    padding: 2%;
+    margin: 1%;
 }

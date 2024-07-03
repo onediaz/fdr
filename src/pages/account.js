@@ -1,6 +1,6 @@
 // pages/account .js
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../App.css';
 import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
 import { Authenticator} from '@aws-amplify/ui-react';
@@ -50,20 +50,19 @@ const Account = ({studentUser, setStudentUser}) => {
             console.log('user not logged in');
             return;
         }
-        
-        
+
     };
 
-    useEffect(() => {
-        createAccount();
-    }, [studentUser]);
+    // useEffect(() => {
+    //     createAccount();
+    // }, [studentUser]);
 
     return (
     <div className={'mainContainer'}>
         <div className={'titleContainer'}>
             <div>Account</div>
         </div>
-        <Authenticator formFields={formFields}>
+        <Authenticator formFields={formFields} hideSignUp={true}>
             {({ signOut, user }) => {
                 return (
                     <div className='mainContainer'>

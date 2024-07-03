@@ -1,7 +1,7 @@
 // pages/about.js
 import './styling/about.css';
 import React from "react";
-import { Badge, Divider, Image } from '@aws-amplify/ui-react';
+import { Badge, Image } from '@aws-amplify/ui-react';
 import TransactionsComponent from '../components/transactions';
 
 const About = () => {
@@ -64,7 +64,7 @@ const About = () => {
                 <div className='about_title'>
                     Demo Video
                 </div>
-                <iframe className="about_content_video" src="https://www.youtube.com/embed/Umo5JbQk5PY" width={"100%"} height={400} allow="fullscreen;"></iframe>
+                <iframe title='about-fdr' className="about_content_video" src="https://www.youtube.com/embed/Umo5JbQk5PY" width={"100%"} height={400} allow="fullscreen;"></iframe>
             </div>
         </div>
     );

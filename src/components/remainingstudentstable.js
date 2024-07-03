@@ -1,26 +1,28 @@
 import './styling/RemainingStudentsTableComponent.css';
 import StudentComponent from "./student";
 import { CheckboxField } from "@aws-amplify/ui-react";
+import { useEffect, useState } from 'react';
 
 const RemainingStudentsTableComponent = ({remainingStudents, selectedStudents, setSelectedStudents}) => {
+    const [currentTableStudentsSelected, setCurrentTableStudentSelected] = useState(new Set());
 
-    // const handleSelectAll = (event) => {
-    //     if (event.target.checked) {
-    //         setSelectedStudents(remainingStudents);
-    //     } else {
-    //         setSelectedStudents([]);
-    //     }
-    // };
+    useEffect(() => {
+        if(selectedStudents && selectedStudents.length === 0) {
+            setCurrentTableStudentSelected(new Set());
+        }
+    }, [selectedStudents]);
 
     const handleSelectAll = (event) => {
         if (event.target.checked) {
-            // setSelectedStudents(prevSelected => {
-            //     return prevSelected.concat(remainingStudents);
-            // });
+            remainingStudents.map(student => {
+                currentTableStudentsSelected.add(student.id);
+                setCurrentTableStudentSelected(currentTableStudentsSelected);
+            });
             setSelectedStudents(prevSelected => {
                 return prevSelected.concat(remainingStudents.map(student => ({'id': student.id, 'tableId': 'remaining', 'name': student.name})));
             });
         } else {
+            setCurrentTableStudentSelected(new Set());
             setSelectedStudents(prevSelected => {
                 return prevSelected.filter(a => !remainingStudents.find(student => a.id === student.id));
             });
@@ -37,7 +39,7 @@ const RemainingStudentsTableComponent = ({remainingStudents, selectedStudents, s
                     <div>
                         <CheckboxField
                             onChange={handleSelectAll}
-                            // checked={remainingStudents.length !== 0}
+                            checked={remainingStudents.length !== 0 && currentTableStudentsSelected.size === remainingStudents.length}
                             label=""
                         />
                     </div>}
@@ -47,7 +49,10 @@ const RemainingStudentsTableComponent = ({remainingStudents, selectedStudents, s
                     <div className='remaining_students_list'>
                         {remainingStudents.map((student, index) => {
                             return (
-                                <StudentComponent student={student} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} table={{'id': 'remaining'}}/>
+                                <StudentComponent 
+                                    student={student} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} table={{'id': 'remaining'}}
+                                    setCurrentTableStudentSelected={setCurrentTableStudentSelected} currentTableStudentsSelected={currentTableStudentsSelected}
+                                />
                             );
                         })}
                     </div>

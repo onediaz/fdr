@@ -11,6 +11,7 @@ import { CheckboxField } from '@aws-amplify/ui-react';
  */
 const StudentTableComponent = ({table, selectedStudents, setSelectedStudents, tables, allStudents}) => {
     const [students, setStudents] = useState(null);
+    const [currentTableStudentsSelected, setCurrentTableStudentSelected] = useState(new Set());
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -32,12 +33,23 @@ const StudentTableComponent = ({table, selectedStudents, setSelectedStudents, ta
 
     }, [tables, allStudents]);
 
+    useEffect(() => {
+        if(selectedStudents && selectedStudents.length === 0) {
+            setCurrentTableStudentSelected(new Set());
+        }
+    }, [selectedStudents]);
+
     const handleSelectAll = (event) => {
         if (event.target.checked) {
+            students.map(student => {
+                currentTableStudentsSelected.add(student.id);
+                setCurrentTableStudentSelected(currentTableStudentsSelected);
+            });
             setSelectedStudents(prevSelected => {
                 return prevSelected.concat(students.map(student => ({'id': student.id, 'tableId': table.id, 'name': student.name})));
             });
         } else {
+            setCurrentTableStudentSelected(new Set());
             setSelectedStudents(prevSelected => {
                 return prevSelected.filter(a => !students.find(student => a.id === student.id));
             });
@@ -51,11 +63,11 @@ const StudentTableComponent = ({table, selectedStudents, setSelectedStudents, ta
                     {table.name}
                 </div>
                 {students && 
-                    <div>
+                    <div className='table_dnd_header_check'>
                         <CheckboxField
                             onChange={handleSelectAll}
                             isDisabled={students.length === 0}
-                            // checked={selectedStudents.length - students.length === 0}
+                            checked={students.length !== 0 && currentTableStudentsSelected.size === students.length}
                             label=""
                         />
                     </div>}
@@ -64,9 +76,12 @@ const StudentTableComponent = ({table, selectedStudents, setSelectedStudents, ta
                 {students &&
                     students.map((student, index) => {
                         return (
-                            <li key={student.id}>
-                                <StudentComponent student={student} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} table={table}/>
-                            </li>
+                            <div key={student.id} className='table_dnd_student'>
+                                <StudentComponent 
+                                    student={student} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} table={table}
+                                    setCurrentTableStudentSelected={setCurrentTableStudentSelected} currentTableStudentsSelected={currentTableStudentsSelected}
+                                />
+                            </div>
                         );
                 })}
             </div>

@@ -1,18 +1,6 @@
 import { generateClient } from "aws-amplify/api";
 import { listTransactions } from '../graphql/queries';
-import { getStudent } from "./get-student";
 const client = generateClient();
-
-/**
- * 
- * @param {String} key a string key that allows you to get specific transactions. 
- * 'recent' - gets all transactions
- * 'user' - gets specific user transactions
- * ''
- */
-async function getTransactionsByKey (key) {
-    return;
-}
 
 /**
  * 

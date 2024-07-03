@@ -6,8 +6,6 @@ import { createTransaction } from "./create-transaction";
 const client = generateClient();
 
 async function updateStudentBalance(id, amount) {
-    console.log('Updating Student Balance');
-    console.log(id);
     try {
         // const currentStudentResult = await client.graphql({
         //     query: updateStudent,

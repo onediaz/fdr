@@ -1,13 +1,9 @@
-import { Alert, CheckboxField } from "@aws-amplify/ui-react";
+import { CheckboxField } from "@aws-amplify/ui-react";
 import { useState } from "react";
-import { updateStudentTables } from "../functions/update-student-tables";
-import { InvokeCommand } from "@aws-sdk/client-lambda";
-import { lambdaClient } from "../../src/lambdaClient";
 import axios from 'axios';
 
 const UpdateStudentTablesComponent = ({selectedStudents, setSelectedStudents, tables, setTables, remainingStudents, setRemainingStudents, students}) => {
     const [selectedTable, setSelectedTable] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
 
 
     const handleSelectTable = (table) => {
@@ -47,15 +43,6 @@ const UpdateStudentTablesComponent = ({selectedStudents, setSelectedStudents, ta
             setRemainingStudents(res.data[1]);
             setSelectedStudents([]);
             setSelectedTable(null);
-        }
-    }
-
-    const onButtonClick2 = async () => {
-        try {
-            // const data = await API.get('getStudents', '/');
-            return;
-        } catch (error) {
-            console.log('Failed to GET students');
         }
     }
 

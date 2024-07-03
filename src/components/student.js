@@ -1,13 +1,17 @@
 import './styling/StudentComponent.css';
 import { CheckboxField } from "@aws-amplify/ui-react";
 
-const StudentComponent = ({student, selectedStudents, setSelectedStudents, table}) => {
+const StudentComponent = ({student, selectedStudents, setSelectedStudents, table, setCurrentTableStudentSelected, currentTableStudentsSelected}) => {
 
     const handleSelectStudent = (student) => {
         setSelectedStudents(prevSelected => {
             if (prevSelected.some(selectedStudent => selectedStudent.id === student.id)) {
+                currentTableStudentsSelected.delete(student.id);
+                setCurrentTableStudentSelected(currentTableStudentsSelected);
                 return prevSelected.filter(selectedStudent => selectedStudent.id !== student.id);
             } else {
+                currentTableStudentsSelected.add(student.id);
+                setCurrentTableStudentSelected(currentTableStudentsSelected);
                 return [...prevSelected, {'id': student.id, 'name': student.name, 'tableId': table.id}];
             }
         });
@@ -25,6 +29,7 @@ const StudentComponent = ({student, selectedStudents, setSelectedStudents, table
                         onChange={() => handleSelectStudent(student)}
                         checked={selectedStudents.some(selectedStudent => selectedStudent.id === student.id)}
                         label=""
+                        className='student_check'
                     />
                 </div>
             </div >

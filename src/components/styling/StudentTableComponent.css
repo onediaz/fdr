@@ -1,7 +1,31 @@
 .table_dnd_container {
     display: flex;
-    align-items: flex-start;
     flex-direction: column;
     border: 1px solid black;
     width: fit-content;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0000001a;
+    padding: 2%;
+    margin: 1%;
+    flex-basis: 45%;
+}
+
+.table_dnd_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.table_dnd_header_check {
+    align-content: center;
+}
+
+.table_dnd_body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.table_dnd_student {
+    flex-basis: 50%;
 }

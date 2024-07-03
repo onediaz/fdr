@@ -8,24 +8,13 @@ import { removeDuplicates } from "./functions-arrays";
  */
 function createAutoOptions (transactions) {
     let tempOptions = [];
-    transactions.map(transaction => {
+    for (let transaction of transactions) {
         tempOptions.push({id: transaction.id + '_message', label: transaction.message ? transaction.message : ''});
         tempOptions.push({id: transaction.id + '_sender', label: transaction.sender_name ? transaction.sender_name: ''});
         tempOptions.push({id: transaction.id + '_receiver', label: transaction.receiver_name ? transaction.receiver_name: ''});
-      });
+    }
       tempOptions.sort((a, b) => a.label.localeCompare(b.label));
       return removeDuplicates(tempOptions, 'label');
-}
-
-/**
- * 
- * @param {*} transactions array of Transaction DB object
- * @param {*} option is the message or name that is found in the transaction message. 
- * @returns array of all transactions with given option
- */
-function findTransactionsWithOption (transactions, option) {
-
-    return [];
 }
 
 export {createAutoOptions};

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createTransaction } from "../functions/create-transaction";
-import { getAllStudents, getStudentByEmail } from "../functions/get-student";
+import { getAllStudents } from "../functions/get-student";
 import { updateStudentBalance } from "../functions/update-students";
 
 const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents, allStudents, setStudents}) => {
@@ -15,9 +15,7 @@ const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents, allStud
         } else if (selectedStudents.length !== 0) {
             for (let student of selectedStudents) {
                 const updatedBalance = Number(balance);
-                console.log('Updating student balance: ', student.id);
                 let updatedStudent = await updateStudentBalance(student.id, updatedBalance);
-                console.log(updatedStudent);
                 createTransaction({'name': 'Mr. Diaz', 'id': '1'}, student, balance, message);
             }
             let studs = await getAllStudents();

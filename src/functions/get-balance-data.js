@@ -1,4 +1,4 @@
-import { getRecentTransactions, getStudentTransactions, getTransactionByID } from "./get-transactions";
+import { getRecentTransactions } from "./get-transactions";
 
 async function getWeeklyData (user) {
     let weeklyData = [];
