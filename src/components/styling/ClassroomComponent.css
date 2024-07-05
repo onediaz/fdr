@@ -20,27 +20,12 @@
     flex: 1 1 160px;
 }
 
-.table_create{
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    border: 1px solid black;
-    width: fit-content;
-    height: 100px;
-}
-
-.table_create>*:last-child {
-    align-self: stretch;
-}
-
 .classroom_update_settings {
     width: 35%;
-
     border: 1px solid black;
-    width: fit-content;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px #0000001a;
-    padding: 2%;
-    margin: 1%;
+    margin: 5px;
+    padding: 10px;
 }

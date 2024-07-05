@@ -33,18 +33,19 @@ const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents, allStud
     return (
         <div className="update_balances_container">
             <div className="update_balances_header">
-                Update Students
+                Send Money
             </div>
             <div className="update_balances_body">
                 <input 
-                    className='' type="text" 
-                    value={message} min="1" placeholder="Enter Message" onChange={(ev) => setMessage(ev.target.value)} 
+                    className='update_balances_text_input' type="text" 
+                    value={message} min="1" placeholder="Add Message" onChange={(ev) => setMessage(ev.target.value)} 
                 />
                 <input 
-                    className='' type="number"
+                    className='update_balances_text_input' type="number"
                     value={balance} min="1" placeholder="Enter Balance" onChange={(ev) => setBalance(ev.target.value)}
                 />
-            <input type="button" onClick={onButtonClick} value={'Update Balances'}/>
+            <div onClick={onButtonClick} value={'Move Students'} className="update_student_tables_button"> Update Balances</div>
+            {/* <input type="button" onClick={onButtonClick} value={'Update Balances'}/> */}
             </div>
         </div>
     );

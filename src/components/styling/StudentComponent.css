@@ -1,15 +1,41 @@
 .student_dnd_container {
-    border: 1px solid black;
-    padding: 3%;
-    margin: 1%;
+    padding: 7px;
+    margin: 3px;
+    height: 100%;
+    border: 1px solid #e2e2e2;
+    background-color: #e2e2e244;
+    border-radius: 5px;
+    box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .student_dnd_header {
     display: flex;
     justify-content: space-between;
+    font-weight: bold;
 }
 
 .student_dnd_check {
     vertical-align: middle;
     align-content: center;
+}
+
+.student_dnd_name {
+    margin-right: 5px;
+}
+
+.student_dnd_balance {
+    font-weight: bold;
+    color:  #047d95da;
+}
+
+@media (max-width: 480px) {
+    .student_dnd_container {
+        font-size: 8px;
+        padding: 4px;
+        margin: 1px;
+    }
 }

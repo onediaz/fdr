@@ -39,7 +39,7 @@ const StudentComponent = ({student, selectedStudents, setSelectedStudents, table
 
                 </div>
                 <div className="student_dnd_balance">
-                    {student.balance}
+                    ${student.balance}
                 </div>
             </div>
         </div>

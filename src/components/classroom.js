@@ -52,10 +52,6 @@ const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudent
                                 />
                             )
                     })}
-                    <div className="table_create" >
-                        <input type="text" value={tablename} placeholder="Enter Name" onChange={(ev) => setTablename(ev.target.value)} className={'table_create_name'}/>
-                        <div className="table_create_button" onClick={createNewTable}>New Table</div>
-                    </div>
                 </div>
                 <div className='classroom_update_settings'>
                     {selectedStudents &&
@@ -64,6 +60,7 @@ const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudent
                             tables={tables} setTables={setTables}
                             remainingStudents={remainingStudents} setRemainingStudents={setRemainingStudents}
                             students={students} setStudents={setStudents}
+                            classroomName={classroomName}
                         />
                     }
                 </div>

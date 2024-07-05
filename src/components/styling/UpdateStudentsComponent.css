@@ -1,10 +1,13 @@
-.update_students_container {
-    border: 1px solid black;
+
+.update_students_header {
+    font-weight: bold;
+    font-size: 20px;
 }
 
 /* UPDATE BALANCES COMPONENT */
 .update_balances_container{
-    border: 1px solid black;
+    margin: 5px;
+    margin-top: 10px;
 }
 
 .update_balances_body {
@@ -12,16 +15,35 @@
     flex-direction: column;
 }
 
+.update_balances_header {
+    font-weight: bold;
+    color: #047d95da;
+}
+
+.update_balances_text_input {
+    border: 2px solid #00000006;
+    background-color: #efefef;
+    margin: 5px;
+    border-radius: 5px;
+    font-style: italic;
+}
+
+.update_balances_text_input:focus {
+    outline: 2px solid #047d95da;
+}
+
 /* UPDATE STUDENT TABLE COMPONENT */
 .update_student_tables_container {
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
+    margin: 5px;
 }
 
 .update_student_tables_header {
     display: flex;
     flex-direction: column;
+    font-weight: bold;
+    color: #047d95da;
 }
 
 .update_student_tables_header_error {
@@ -33,6 +55,73 @@
     flex-direction: column;
 }
 
+
+.table_create{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.table_create_name {
+    border: 2px solid #00000006;
+    background-color: #efefef;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.table_create_name:focus {
+    outline: 2px solid #047d95da;
+}
+
+.create_table_button {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    background-color: #047D95;
+    /* text-wrap: wrap; */
+}
+
+.create_table_button:hover {
+    background-color: #047d958d;
+    cursor: pointer;
+}
+
 .update_student_table_select {
     display: flex;
+}
+
+.update_student_table_buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.update_student_tables_button {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    background-color: #047D95;
+    width: fit-content;
+    /* background-color: #047d958d; */
+    /* text-wrap: wrap; */
+}
+
+.update_student_tables_button:hover {
+    background-color: #047d958d;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .update_students_container {
+        font-size: 8px;
+    }
+
+    .table_create_name {
+        font-size: 6px;
+        width: 85%;
+    }
+
 }
