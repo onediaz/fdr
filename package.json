@@ -17,6 +17,8 @@
     "aws-sdk": "^2.1627.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
+    "buffer": "^6.0.3",
+    "dotenv": "^16.4.5",
     "react": "^18.3.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.3.0",

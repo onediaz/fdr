@@ -3,6 +3,7 @@ import './styling/about.css';
 import React from "react";
 import { Badge, Image } from '@aws-amplify/ui-react';
 import TransactionsComponent from '../components/transactions';
+import SpotifySearch from '../components/spotifysearch';
 
 const About = () => {
     return (
@@ -21,7 +22,7 @@ const About = () => {
                         <span className='mit'> BS in Computer Science </span> 
                         from 
                         <span className='mit'> MIT </span> 
-                        and over a year of experience at Google.
+                        and over a year of experience as a software engineer.
                     </p>
                     <p className='about_paragraph'>
                         I am passionate about building responsive web applications and enhancing user experiences. 
@@ -60,6 +61,17 @@ const About = () => {
                     <TransactionsComponent filterKey="all" className="about"/>
                 </div>
             </div>
+            <div className='about_content_container'>
+                <div className='about_title'>
+                    Recent Work
+                </div>
+                <div className="about_text_container_transactions">
+                  Using Spotify API you can look up a song and I made a custom webplayer 
+                  so you can see the progress loading on your favorite tracks.
+                  Not every track includes a preview URL so apologies if you can't find the one you are looking for.
+                </div>
+                <SpotifySearch />
+              </div>
             <div className='about_content_container'>
                 <div className='about_title'>
                     Demo Video

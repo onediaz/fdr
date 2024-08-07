@@ -1,6 +1,4 @@
-import { generateClient } from "aws-amplify/api";
-import { listStudentTables } from '../graphql/queries';
-const client = generateClient();
+import axios from 'axios';
 
 /**
  * 
@@ -8,17 +6,11 @@ const client = generateClient();
  */
 async function getTablesByClassroomName(name, students) {
     try {
-        const classroom = await client.graphql({
-            query: listStudentTables,
-            variables: {
-                filter: {
-                    name: {
-                        eq: name
-                    }
-                }
-            }
+        let res = await axios({
+          method: 'get',
+          url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/student-tables-db'
         });
-        return classroom.data.listStudentTables.items;
+        return res.data;
     } catch(error) {
         console.log(error);
         console.log('failed to get transaction by ID');

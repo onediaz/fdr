@@ -96,22 +96,24 @@ const TransactionsNavBarComponent = ({user, transactions, setDisplayCount, loade
                         <div className="transactions_date_button_text"> Likes </div> 
                         <div className={getClassName('likes')}></div>
                     </Button>
-                    <Button className="transactions_sort_button" disabled={true}>
+                    {/* <Button className="transactions_sort_button" disabled={true}>
                         <div className="transactions_date_button_text"> Test </div> 
                         <div className={getClassName('')}></div>
-                    </Button>
-                    <SelectField
-                        className="transactions_select_field"
-                        label=""
-                        labelHidden
-                        value={transactionType}
-                        disabled={filterKey==='all' ? true : false}
-                        onChange={(e) => changeTransactions(e.target.value, value)}
-                    >
-                        <option value="all">All</option>
-                        <option value="sent">Sent</option>
-                        <option value="received">Received</option>
-                    </SelectField>
+                    </Button> */}
+                    {user && 
+                      <SelectField
+                          className="transactions_select_field"
+                          label=""
+                          labelHidden
+                          value={transactionType}
+                          disabled={filterKey==='all' ? true : false}
+                          onChange={(e) => changeTransactions(e.target.value, value)}
+                      >
+                          <option value="all">All</option>
+                          <option value="sent">Sent</option>
+                          <option value="received">Received</option>
+                      </SelectField>
+                    }
                 </div>
             </div>
         </div>

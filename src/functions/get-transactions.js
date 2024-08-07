@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { generateClient } from "aws-amplify/api";
 import { listTransactions } from '../graphql/queries';
 const client = generateClient();
@@ -41,11 +42,14 @@ async function getStudentTransactions(student) {
  */
 async function getAllTransactions () {
     try {
-        const transactions = await client.graphql({query: listTransactions });
-        console.log(transactions);
-        const transactionsArray = transactions.data.listTransactions.items
-        transactionsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        return transactionsArray;
+      let res = await axios({
+        method: 'get',
+        url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/transactions-db',
+        params: {
+            TableName: "Student-tejldcxcpnc35hmzlzzrw2blmy-fdr",
+        }
+      });
+      return res.data;
     } catch (error) {
         return [];
     }

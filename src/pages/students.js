@@ -38,10 +38,10 @@ const Students = ({isAdmin, profilePictures}) => {
         <div className="admin_nav_container">
             <div className="admin_nav_item_container">
                 If you are logged in, you can click on a student name to view their balance.
-                {/* {students && <ClassroomComponent name={'first'} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} 
+                {students && <ClassroomComponent name={'first'} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} 
                     students={students} setStudents={setStudents}
-                />} */}
-                {students && <ListStudents students={students} setStudents={setStudents} isAdmin={isAdmin} profilePictures={profilePictures} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}/>}
+                />}
+                {/* {students && <ListStudents students={students} setStudents={setStudents} isAdmin={isAdmin} profilePictures={profilePictures} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}/>} */}
             </div>
             {isAdmin && 
             <div className="mainDashboardContainer">

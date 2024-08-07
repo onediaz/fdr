@@ -4,9 +4,7 @@ function sortArrayByAttribute (key, direction, array) {
         const sortedArray = [...array].sort((a,b) => {
             if (direction === 'ascending') {
                 if (key === 'likes') {
-                    const aLikes = JSON.parse(a[key]);
-                    const bLikes = JSON.parse(b[key]);
-                    return aLikes.total - bLikes.total;
+                    return a.likes.total - b.likes.total;
                 } else if (typeof a[key] === 'number') {
                     return a[key] - b[key];
                 } else {
@@ -14,9 +12,7 @@ function sortArrayByAttribute (key, direction, array) {
                 }
             } else {
                 if (key === 'likes') {
-                    const aLikes = JSON.parse(a[key]);
-                    const bLikes = JSON.parse(b[key]);
-                    return bLikes.total - aLikes.total;
+                    return b.likes.total - a.likes.total;
                 } else if (typeof a[key] === 'number') {
                     return b[key] - a[key];
                 } else {

@@ -1,7 +1,6 @@
 import './styling/StudentTableComponent.css';
 import { useEffect, useState } from "react";
 import StudentComponent from "./student";
-import { Droppable, Draggable, DragDropContext } from 'react-beautiful-dnd';
 import { CheckboxField } from '@aws-amplify/ui-react';
 
 /**

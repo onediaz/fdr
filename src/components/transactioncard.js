@@ -35,9 +35,8 @@ const TransactionCardComponent = ({transaction, user, transactions}) => {
                     const userLiked = await getUserLikedTransaction(transaction, user);
                     setLiked(userLiked);
                 }
-                const tempLikes = JSON.parse(transaction.likes);
-                if (tempLikes) {
-                    setLikes(tempLikes.total);
+                if (transaction.likes?.total) {
+                  setLikes(transaction.likes.total)
                 }
             } catch(error) {
                 console.log('failed on load');

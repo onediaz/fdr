@@ -123,7 +123,7 @@
 .transactions_lower_navbar_buttons {
     display: flex;
     margin-top: 10px;
-    justify-content: space-between;
+    gap: 4px;
 }
 
 .transactions_container {

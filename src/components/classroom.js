@@ -1,16 +1,13 @@
 import './styling/ClassroomComponent.css';
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import StudentTableComponent from "./studenttable";
 import { getTablesByClassroomName } from "../functions/get-tables";
-import StudentComponent from "./student";
-import { createTableForStudents } from '../functions/create-studenttable';
-import { getStudentsFromTables, handleDragAndDrop } from '../functions/functions-arrays';
+import { getStudentsFromTables } from '../functions/functions-arrays';
 import RemainingStudentsTableComponent from './remainingstudentstable';
 import UpdateStudentsComponent from './updatestudents';
 
 const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudents, students, setStudents}) => {
     const [tables, setTables] = useState(null);
-    const [tablename, setTablename] = useState('');
     const [remainingStudents, setRemainingStudents] = useState(null);
 
     useEffect(() => {
@@ -22,22 +19,6 @@ const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudent
         }
         fetchTables();
     }, [students]);
-
-    const createNewTable = async () => {
-        if(tablename === '') {
-            window.alert('Add table name');
-        }
-        else if(tables.filter(a => a.name === tablename).length !== 0) {
-            window.alert('Table Name already exists');
-            setTablename('');
-        } else if (window.confirm(`Are you sure you want to create a table ${tablename}`)) {
-            let newTable = await createTableForStudents(tablename, classroomName);
-            tables.push(newTable);
-            setTables(tables);
-            setTablename('');
-        }
-        console.log('Creating Table');
-    }
 
     return (
         <div className="classroom_container">
