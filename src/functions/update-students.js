@@ -7,17 +7,6 @@ const client = generateClient();
 
 async function updateStudentBalance(id, amount) {
     try {
-        // const currentStudentResult = await client.graphql({
-        //     query: updateStudent,
-        //     variables: {
-        //         input: {
-        //             id: id,
-        //             balance: amount
-        //         }
-        //     }
-        // });
-        // console.log(currentStudentResult);
-        // return currentStudentResult.data.updateStudent;
         let res = await axios({
             method: 'put',
             url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/students-db',
@@ -36,8 +25,6 @@ async function updateStudentBalance(id, amount) {
   
   async function updateStudentProfilePicture (studentId, profilePicture) {
     try {
-        //   const input = { id: studentId, profilePicture };
-        //   const updatedStudent = await API.graphql(graphqlOperation(updateStudent, { input }));
         const updatedStudent = await client.graphql({
         query: updateStudent,
         variables: {
@@ -62,7 +49,6 @@ async function updateBothStudentBalances(sender, receiver, amount, message) {
         }
         else if (sender.balance > amount && window.confirm(`Do you want to send ${receiver.name} $${amount}?`)) {
             // Update sender student's balance
-            console.log('Updating Balance');
             const updatedSenderBalance = Number(sender.balance) - Number(amount);
             const senderResult = await updateStudentBalance(sender.id, updatedSenderBalance);
 
@@ -71,7 +57,6 @@ async function updateBothStudentBalances(sender, receiver, amount, message) {
             const receiverResult = await updateStudentBalance(receiver.id, updatedReceiverBalance);
 
             // Update local state
-            console.log('Within update both balances, right before creating transactions');
             await createTransaction(sender, receiver, amount, message);
 
             return [senderResult, receiverResult]

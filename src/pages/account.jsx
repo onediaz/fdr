@@ -31,8 +31,6 @@ const Account = ({studentUser, setStudentUser}) => {
                 console.log('student user exists: ', fetchUser.email );
             }
             else {
-                console.log('student user does not exist');
-                console.log(`creating new student ${tempUser.email} with name ${tempUser.name}`);
                 const newStudent = await client.graphql({
                     query: createStudent,
                     variables: {

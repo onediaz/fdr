@@ -30,7 +30,6 @@ const TransactionsComponent = ({user, filterKey, className='', days=2}) => {
             updateCountAndAutoOptions(newViewTransactions);
         } catch (error) {
             console.log(error);
-            console.log('Failed to list sent transactions');
         }
     }, []);
 
@@ -39,7 +38,6 @@ const TransactionsComponent = ({user, filterKey, className='', days=2}) => {
     }
 
     const loadMoreTransactions = async () => {
-        console.log('loading more transactions');
         if (displayCount + 10 >= loadedTransactions.length) {
             setErrorLabel('Maximum transactions');
             setTimeout(() => {

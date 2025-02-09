@@ -26,7 +26,6 @@ const SpotifySearch = () => {
     const fetchOptions = async () => {
       if (!searchOption) return; // Add a check to avoid unnecessary calls
       let tracks = await spotifyPrediction(searchOption);
-      console.log("Fetched tracks:", tracks);
 
       // Properly map tracks to the format expected by Autocomplete
       const mappedTracks = tracks.map(track => ({
@@ -38,7 +37,6 @@ const SpotifySearch = () => {
         previewUrl: track?.preview_url
       }));
 
-      console.log("Mapped tracks:", mappedTracks);
       setMusicOptions(mappedTracks);
     };
 

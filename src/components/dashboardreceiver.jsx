@@ -16,8 +16,7 @@ const DashboardReceiverComponent = ({receiverUser, setReceiverUser, studentUser,
             setBalance('');
             setMessage('');
         } catch (error) {
-            console.log('failed to update balances');
-            console.log(error);
+            console.log('failed to update balances', error);
         }
     };
 

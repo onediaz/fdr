@@ -28,20 +28,16 @@ const TransactionsNavBarComponent = ({user, transactions, setDisplayCount, loade
       };
     
     const onClear = () => {
-        console.log('Cleared: ', transactionType);
         setValue('');
         changeTransactions(transactionType, '');
     };
 
     const changeTransactions = (val, updatedValue = '') => {
         setTransactionType(val);
-        console.log('Setting transaction type: ', val);
         let newTransactions = [];
         if (val === 'sent' && user){
-            console.log('Filtering by sent');
             newTransactions = transactions.filter(transaction => transaction.sender_id === user.id);
         } else if (val === 'received' && user) {
-            console.log('Filtering by received');
             newTransactions = transactions.filter(transaction => transaction.receiver_id === user.id);
         } else {
             newTransactions = transactions;

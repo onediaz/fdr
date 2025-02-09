@@ -9,7 +9,6 @@ const SelectFieldStudents = ({user}) => {
 
     useEffect(() => {
         const fetchStudents = async () => {
-            console.log('fetching all students');
             const studentList = (await getAllStudents()).filter(stud => stud.name !== user.name);
             studentList.sort((a, b) => a.name.localeCompare(b.name));
             setStudents(studentList);

@@ -8,13 +8,11 @@ const ListStudents = ({students, setStudents, isAdmin, profilePictures, selected
     const [sortConfig, setSortConfig] = useState(null);
 
     const sortStudents = async (key) => {
-        console.log('changing direction');
         let direction = 'ascending';
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
             direction = 'descending';
         }
         const sortedStudents = sortArrayByAttribute(key, direction, students);
-        console.log(sortedStudents);
         setStudents(sortedStudents);
         setSortConfig({ key: key, direction: direction });
     };

@@ -59,7 +59,6 @@ function App() {
       // setAdmin();
     }
     else {
-      console.log('resetting email + studentUser');
       setEmail('');
       setStudentUser(null);
     }

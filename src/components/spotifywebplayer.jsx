@@ -60,7 +60,6 @@ const SpotifyWebPlayer = ({ track, setTrack }) => {
   }
   
   const handleTrackEnded = () => {
-    console.log('Track ended')
     setPaused(true)
     setProgress(0)
   }

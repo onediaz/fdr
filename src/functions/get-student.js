@@ -16,7 +16,6 @@ async function getStudent(studentID) {
                 }
             }
         });
-        console.log('success getting student: ', student.data.listStudents.items[0]);
         return student.data.listStudents.items[0];
     } catch (error) {
         console.log('failure getting student by id');
@@ -36,7 +35,6 @@ async function getStudent(studentID) {
                 }
             }
         });
-        console.log('success getting student by email: ', student.data.listStudents.items[0]);
         return student.data.listStudents.items[0];
     } catch (error) {
         console.log('failure getting student by email');
@@ -45,7 +43,6 @@ async function getStudent(studentID) {
   }
 
   async function getAllStudents () {
-    console.log('fetching students');
     try {
         // const allStudents = await client.graphql({
         //     query: listStudents

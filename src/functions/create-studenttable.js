@@ -5,7 +5,6 @@ const client = generateClient();
 
 async function createTableForStudents(name, classroom="default") {
     try {
-        console.log("Creating Student Table");
         const newStudentTable = await client.graphql({
             query: createStudentTable,
             variables: {
@@ -16,8 +15,6 @@ async function createTableForStudents(name, classroom="default") {
               }
             }
           });
-        console.log(newStudentTable.data.createStudentTable);
-        console.log('success creating student table');
         let table = {
             'name': newStudentTable.data.createStudentTable.name,
             'classroom': newStudentTable.data.createStudentTable.classroom,

@@ -16,8 +16,6 @@ const UpdateStudentTablesComponent = ({selectedStudents, setSelectedStudents, ta
                 return null;
             }
         });
-        // setSelectedTable(table);
-        // console.log('Selected: ', table);
     };
     
     const createNewTable = async () => {
@@ -33,7 +31,6 @@ const UpdateStudentTablesComponent = ({selectedStudents, setSelectedStudents, ta
             setTables(tables);
             setTablename('');
         }
-        console.log('Creating Table');
     }
 
     const onButtonClick = async () => {

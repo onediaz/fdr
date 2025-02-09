@@ -15,7 +15,6 @@ const StudentComponent = ({student, selectedStudents, setSelectedStudents, table
                 return [...prevSelected, {'id': student.id, 'name': student.name, 'tableId': table.id}];
             }
         });
-        console.log(selectedStudents);
     };
 
     return (
