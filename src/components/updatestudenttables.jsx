@@ -76,25 +76,25 @@ const UpdateStudentTablesComponent = ({selectedStudents, setSelectedStudents, ta
             <div className="update_student_tables_header">
                 Move Students
             </div>
-                <div className="update_student_tables_list">
-                    {tables &&
-                        tables.map(table => (
-                            <div key={table.id} className="update_student_table_select">
-                                <CheckboxField
-                                    onChange={() => handleSelectTable(table)}
-                                    isDisabled={selectedTable && selectedTable.name !== table.name}
-                                    checked={selectedTable && selectedTable.id === table.id}
-                                    label=""
-                                />
-                                {table.name}
-                            </div>
-                    ))}
-                    {/* <input type="button" onClick={onButtonClick} value={'Move Students'} /> */}
-                    <div className="update_student_table_buttons">
-                        <div onClick={onButtonClick} value={'Move Students'} className="update_student_tables_button"> Move Students</div>
-                        <div type="button" onClick={onButtonClick2} value={'Move Students'} className="update_student_tables_button"> Delete Table</div>
-                    </div>
+            <div className="update_student_tables_list">
+                {tables &&
+                    tables.map(table => (
+                        <div key={table.id} className="update_student_table_select">
+                            <CheckboxField
+                                onChange={() => handleSelectTable(table)}
+                                isDisabled={selectedTable && selectedTable.name !== table.name}
+                                checked={selectedTable && selectedTable.id === table.id}
+                                label=""
+                            />
+                            {table.name}
+                        </div>
+                ))}
+                {/* <input type="button" onClick={onButtonClick} value={'Move Students'} /> */}
+                <div className="update_student_table_buttons">
+                    <div onClick={onButtonClick} value={'Move Students'} className="update_student_tables_button"> Move Students</div>
+                    <div type="button" onClick={onButtonClick2} value={'Move Students'} className="update_student_tables_button"> Delete Table</div>
                 </div>
+            </div>
         </div>
     );
 };

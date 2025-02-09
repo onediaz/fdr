@@ -46,11 +46,11 @@ const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudent
                     }
                 </div>
             </div>
-            {selectedStudents &&
+            {/* {selectedStudents &&
                 <RemainingStudentsTableComponent 
                     selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} remainingStudents={remainingStudents}
                 />
-            }
+            } */}
         </div>
     );
 };

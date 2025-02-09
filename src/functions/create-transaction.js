@@ -1,30 +1,24 @@
-
-import { generateClient } from "aws-amplify/api";
-// import { createStudent } from './graphql/mutations.js';
-import { createTransactions } from '../graphql/mutations';
-const client = generateClient();
+import axios from 'axios';
 
 async function createTransaction(sender, receiver, amount, message) {
-  try{
-      const newTransaction = await client.graphql({
-          query: createTransactions,
-          variables: {
-            input: {
-              sender_id: sender.id,
-              receiver_id: receiver.id,
-              amount: amount,
-              sender_name: sender.name,
-              receiver_name: receiver.name,
-              message: message,
-              likes: "{\"total\": 0, \"users\": []}"
-            }
-          }
-        });
-    } catch(error) {
-      console.log('failed to create transaction');
-
-    }
-    
+  try {
+    let res = await axios({
+      method: 'post',
+      url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/transactions-db',
+      params: {
+          TableName: "Student-tejldcxcpnc35hmzlzzrw2blmy-fdr",
+          SenderId: sender.id,
+          ReceiverId: receiver.id,
+          Amount: amount,
+          Sender: sender.name,
+          Receiver: receiver.name,
+          Message: message
+      }
+    });
+    return res.data;
+  } catch (error) {
+      return [];
+  }
   }
   
   // Export the function

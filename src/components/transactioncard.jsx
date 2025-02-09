@@ -49,7 +49,7 @@ const TransactionCardComponent = ({transaction, user, transactions}) => {
         <div className='transaction_item'>
             <div className='transaction_upper_details'>
                 <span className='transaction_date'>
-                    {new Date(transaction.createdAt).toLocaleDateString('en-US', { month: 'numeric', day: '2-digit' })}
+                    {new Date(transaction.createdAt).toLocaleDateString('en-US', { month: 'numeric', day: '2-digit' , year: 'numeric' })}
                 </span>
                 <span className='transaction_sender'>
                     {transaction.sender_name}

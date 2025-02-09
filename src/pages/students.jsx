@@ -36,7 +36,9 @@ const Students = ({isAdmin, profilePictures}) => {
     return (
         <div className="admin_nav_container">
             <div className="admin_nav_item_container">
-                If you are logged in, you can click on a student name to view their balance.
+                Once you send money to students, they will be updated in the database and you can view latest transactions in the Home page and filtering by date.
+                <br/>
+                <br/>
                 {students && <ClassroomComponent name={'first'} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} 
                     students={students} setStudents={setStudents}
                 />}

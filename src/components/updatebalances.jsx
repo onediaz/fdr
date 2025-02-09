@@ -6,17 +6,18 @@ import { updateStudentBalance } from "../functions/update-students";
 const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents, allStudents, setStudents}) => {
     const [balance, setBalance] = useState('');
     const [message, setMessage] = useState('');
+    const [name, setName] = useState('');
 
     const onButtonClick = async () => {
         if (selectedStudents.length === 0) {
             window.alert('No students were selected');
-        } else if(message === '' || balance === '') {
-            window.alert('Transaction message or balance empty');
+        } else if(message === '' || balance === '' || name === '') {
+            window.alert('Fill in all fields');
         } else if (selectedStudents.length !== 0) {
             for (let student of selectedStudents) {
                 const updatedBalance = Number(balance);
                 let updatedStudent = await updateStudentBalance(student.id, updatedBalance);
-                createTransaction({'name': 'Mr. Diaz', 'id': '1'}, student, balance, message);
+                createTransaction({'name': name, 'id': '1'}, student, balance, message);
             }
             let studs = await getAllStudents();
             setStudents(studs);
@@ -37,8 +38,12 @@ const UpdateBalancesComponent = ({selectedStudents, setSelectedStudents, allStud
             </div>
             <div className="update_balances_body">
                 <input 
+                        className='update_balances_text_input' type="text" 
+                        value={name} placeholder="Add Name" onChange={(ev) => setName(ev.target.value)} 
+                />
+                <input 
                     className='update_balances_text_input' type="text" 
-                    value={message} min="1" placeholder="Add Message" onChange={(ev) => setMessage(ev.target.value)} 
+                    value={message} placeholder="Add Message" onChange={(ev) => setMessage(ev.target.value)} 
                 />
                 <input 
                     className='update_balances_text_input' type="number"
