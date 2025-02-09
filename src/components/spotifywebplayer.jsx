@@ -1,9 +1,9 @@
 import { Image } from '@aws-amplify/ui-react';
 import './styling/SpotifyWebPlayerComponent.css';
 import React, { useState, useEffect, useRef } from 'react'
-import CrossIcon from '../icons/cross';
-import MusicPlayIcon from '../icons/musicPlay';
-import MusicPauseIcon from '../icons/musicPause';
+import CrossIcon from '../icons/cross.jsx';
+import MusicPlayIcon from '../icons/musicPlay.jsx';
+import MusicPauseIcon from '../icons/musicPause.jsx';
 
 const SpotifyWebPlayer = ({ track, setTrack }) => {
   const [isPaused, setPaused] = useState(true)

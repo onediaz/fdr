@@ -1,10 +1,10 @@
 import './styling/ClassroomComponent.css';
 import { useEffect, useState } from "react";
-import StudentTableComponent from "./studenttable";
-import { getTablesByClassroomName } from "../functions/get-tables";
-import { getStudentsFromTables } from '../functions/functions-arrays';
-import RemainingStudentsTableComponent from './remainingstudentstable';
-import UpdateStudentsComponent from './updatestudents';
+import StudentTableComponent from "./studenttable.jsx";
+import { getTablesByClassroomName } from "../functions/get-tables.js";
+import { getStudentsFromTables } from '../functions/functions-arrays.js';
+import RemainingStudentsTableComponent from './remainingstudentstable.jsx';
+import UpdateStudentsComponent from './updatestudents.jsx';
 
 const ClassroomComponent = ({classroomName, selectedStudents, setSelectedStudents, students, setStudents}) => {
     const [tables, setTables] = useState(null);

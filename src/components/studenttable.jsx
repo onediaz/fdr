@@ -1,6 +1,6 @@
 import './styling/StudentTableComponent.css';
 import { useEffect, useState } from "react";
-import StudentComponent from "./student";
+import StudentComponent from "./student.jsx";
 import { CheckboxField } from '@aws-amplify/ui-react';
 
 /**

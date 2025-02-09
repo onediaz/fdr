@@ -1,7 +1,7 @@
 import { Autocomplete, Flex, HighlightMatch, Image } from "@aws-amplify/ui-react";
 import { useEffect, useState, useRef } from "react";
-import { spotifyPrediction } from "../functions/spotify";
-import SpotifyWebPlayer from "./spotifywebplayer";
+import { spotifyPrediction } from "../functions/spotify.js";
+import SpotifyWebPlayer from "./spotifywebplayer.jsx";
 
 const SpotifySearch = () => {
   const [searchOption, setSearchOption] = useState('');

@@ -3,8 +3,8 @@ import "./styling/students.css";
 import { updateStudentBalance } from '../functions/update-students';
 import { createTransaction } from "../functions/create-transaction";
 import { getStudentByEmail, getAllStudents } from "../functions/get-student";
-import ClassroomComponent from "../components/classroom";
-import ListStudents from "../components/studentlist";
+import ClassroomComponent from "../components/classroom.jsx";
+import ListStudents from "../components/studentlist.jsx";
 
 const Students = ({isAdmin, profilePictures}) => {
     const [students, setStudents] = useState(null);

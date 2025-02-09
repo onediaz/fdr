@@ -1,6 +1,6 @@
 import './styling/UpdateStudentsComponent.css';
-import UpdateBalancesComponent from './updatebalances';
-import UpdateStudentTablesComponent from './updatestudenttables';
+import UpdateBalancesComponent from './updatebalances.jsx';
+import UpdateStudentTablesComponent from './updatestudenttables.jsx';
 
 const UpdateStudentsComponent = ({selectedStudents, setSelectedStudents, tables, setTables, remainingStudents, setRemainingStudents, students, setStudents, classroomName}) => {
 
