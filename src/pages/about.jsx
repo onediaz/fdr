@@ -5,9 +5,10 @@ import { Badge, Image } from '@aws-amplify/ui-react';
 import TransactionsComponent from '../components/transactions';
 import SpotifySearch from '../components/spotifysearch';
 
-const About = () => {
+const About = ({pageViewCount}) => {
     return (
         <div className="about_container">
+            <span className='mit'>Welcome to FDR... You are the {pageViewCount} visitor.</span>
             <div className="about_content_container">
                 <div className='about_text_container'>
                     <div className="about_title">

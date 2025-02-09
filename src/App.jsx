@@ -7,15 +7,15 @@ import {
 } from "react-router-dom";
 import Home from "./pages";
 import About from "./pages/about";
-import Account from './pages/account';
 import { useEffect, useState } from 'react'
-import Dashboard from './pages/dashboard';
 import '@aws-amplify/ui-react/styles.css';
 import { fetchUserAttributes } from '@aws-amplify/auth'; // Import for user data access
 import { useAuthenticator} from '@aws-amplify/ui-react';
 import Students from './pages/students';
 import { getAllStudents, getStudentByEmail } from './functions/get-student';
 import { getRole } from './functions/get-role';
+import { updateStudentBalance } from "./functions/update-students";
+import { getOrdinalSuffix } from './functions/get-ordinal-suffix';
 
 export const REACT_APP_API_URL = 'https://main.d6kv4iz3qclfx.amplifyapp.com';
 // export const REACT_APP_API_URL = 'http://localhost:3080';
@@ -26,6 +26,7 @@ function App() {
   const [isAdmin, setAdmin] = useState(false);
   const [profilePictures, setProfilePictures] = useState({});
   const [studentUser, setStudentUser] = useState(null);
+  const [pageViewCount, setPageViewCount] = useState(0);
 
   const resetEmail = async () => {
     try {    
@@ -53,6 +54,13 @@ function App() {
     setProfilePictures(images);
   };
 
+  async function updatePageCount() {
+    const studentsList = await getAllStudents();
+    const count = studentsList.find(student => student.id === "1");
+    setPageViewCount(getOrdinalSuffix(count.balance));
+    updateStudentBalance("1", 1);
+  }
+
   useEffect(() => {
     if (authStatus === 'authenticated') {
       resetEmail();
@@ -62,8 +70,9 @@ function App() {
       setEmail('');
       setStudentUser(null);
     }
-    preloadProfilePictures();
-  }, [authStatus]);
+    // preloadProfilePictures();
+    updatePageCount();
+  }, []);
   
   return (
     <div className="App">
@@ -74,12 +83,12 @@ function App() {
         </div>
         <div className='app-main-body'>
           <Routes>
-            <Route path="/" element={<Home isAdmin={isAdmin} studentUser={studentUser}/>} />
-            <Route path="/dashboard/" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} />
-            <Route path="/dashboard/:email" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} />
+            <Route path="/" element={<Home isAdmin={isAdmin} studentUser={studentUser} pageViewCount={pageViewCount}/>} />
+            {/* <Route path="/dashboard/" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} />
+            <Route path="/dashboard/:email" element={<Dashboard profilePictures={profilePictures} studentUser={studentUser} setStudentUser={setStudentUser}/>} /> */}
             <Route path="/students" element={<Students isAdmin={isAdmin} profilePictures={profilePictures}/>} />
-            <Route path="/account" element={<Account studentUser={studentUser} setStudentUser={setStudentUser}/>} />
-            <Route path="/about" element={<About />} />
+            {/* <Route path="/account" element={<Account studentUser={studentUser} setStudentUser={setStudentUser}/>} /> */}
+            <Route path="/about" element={<About pageViewCount={pageViewCount}/>} />
             </Routes>
         </div>
           

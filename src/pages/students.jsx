@@ -14,7 +14,6 @@ const Students = ({isAdmin, profilePictures}) => {
     useEffect(() => {
         const getStudents = async () => {
             const studentList = await getAllStudents();
-            console.log('logging student list',studentList);
             setStudents(studentList);
         };
         getStudents();

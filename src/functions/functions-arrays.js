@@ -54,7 +54,6 @@ function removeDuplicates (array, key) {
  * @returns Array 
  */
 function getStudentsFromTables (tables, students) {
-    console.log('Getting Remaining Students who are not seated in tables');
     let nonSeatedStudents = [];
     let seatedStudents = new Set();
     for (let table of tables) {

@@ -1,0 +1,8 @@
+.welcome-message {
+    font-weight: bold;
+    color: #047d95da;;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
