@@ -16,10 +16,9 @@ async function updateStudentBalance(id, amount) {
                 amount: amount,
             }
         });
-        console.log(res.data);
         return res.data;
     } catch (error) {
-        console.log(error);
+
         return [];
     }
   }
@@ -63,7 +62,6 @@ async function updateBothStudentBalances(sender, receiver, amount, message) {
             return [senderResult, receiverResult]
         }
     } catch (error) {
-        console.log('Catching Balance Error:');
         console.log(error);
     }
 }

@@ -27,10 +27,7 @@ const Account = ({studentUser, setStudentUser}) => {
             const tempUser = await fetchUserAttributes();
             // second check if studentUser was passed correctly from App.js or if it exists
             const fetchUser = await getStudentByEmail(tempUser.email);
-            if (fetchUser) {
-                console.log('student user exists: ', fetchUser.email );
-            }
-            else {
+            if (!fetchUser) {
                 const newStudent = await client.graphql({
                     query: createStudent,
                     variables: {
@@ -45,7 +42,6 @@ const Account = ({studentUser, setStudentUser}) => {
                 setStudentUser(newStudent);
             }
         } catch(error) {
-            console.log('user not logged in');
             return;
         }
 

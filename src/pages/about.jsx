@@ -23,10 +23,12 @@ const About = ({pageViewCount}) => {
                         <span className='mit'> BS in Computer Science </span> 
                         from 
                         <span className='mit'> MIT </span> 
-                        and over a year of experience as a software engineer.
+                        and over two years of experience as a software engineer.
                     </p>
                     <p className='about_paragraph'>
-                        I am passionate about building responsive web applications and enhancing user experiences. 
+                        I enjoy the learning process, just as much as the final product. 
+                        Feel free to contact me if you have any questions 
+                        <span className='mit'> juand4535@gmail.com </span>
                     </p>
                     <p className='about_paragraph'> 
                     </p>

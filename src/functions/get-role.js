@@ -5,7 +5,6 @@ async function getRole () {
     let role = '';
     try {
         const adminExists = adminUser.tokens.accessToken.payload['cognito:groups'];
-        console.log(adminUser.tokens);
         if (adminExists.includes('student')){
             role = 'student';
         }

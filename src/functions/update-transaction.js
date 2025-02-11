@@ -19,14 +19,12 @@ async function updateTransactionLikes(transaction, user) {
         let likes = JSON.parse(transaction.likes || '{"total":0,"users":[]}');
         // if user liked transaction will be removing user from transaction likes
         if(liked) {
-            console.log('Removing users from likes');
             likes.users = likes.users.filter(id => id !== user.id);
             likes.total -= 1;
             newLikes = likes.total;
             likes = JSON.stringify(likes);
         }
         else {
-            console.log('Adding user to likes');
             likes.users.push(user.id);
             likes.total += 1;
             newLikes = likes.total;
