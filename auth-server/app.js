@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { getSpotifyPreviewUrl } from './functions/spotify.js';
 
 // Initialize Express app
 const app = express();
@@ -14,26 +15,15 @@ app.get('/', (_req, res) => {
     res.send('Auth API.\nPlease use POST /auth & POST /verify for authentication')
 });
 
-app.get('/get-spotify-preview', async function(_req, res) {
-  const {trackId} = _req.query;
+app.post('/get-spotify-preview', async function(_req, res) {
   try {
-    const embedUrl = `https://open.spotify.com/embed/track/${trackId}`;
-    let previewUrl = "";
+    const tracks = JSON.parse(_req.body['body']);
+    const newTracks = await Promise.all(tracks.map(async (trackId) => {
+      const previewUrl = await getSpotifyPreviewUrl(trackId);
+      return previewUrl;
+    }));
 
-    const htmlPage = await fetch(embedUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }).then(response => response.text());
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlPage, 'text/html');
-    const script = doc.querySelector('script[type="application/ld+json"]');
-    if (script) {
-      console.log(JSON.parse(script.innerHTML));
-      // previewUrl = script.src;
-    }
-    return previewUrl;
+    return res.send(newTracks);
 
   } catch (error) {
     throw Error(error);

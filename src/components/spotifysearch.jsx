@@ -34,7 +34,7 @@ const SpotifySearch = () => {
         name: track.name,
         artist: track.artists[0]?.name,
         imgUrl: track.album?.images[2]?.url,
-        previewUrl: track?.preview_url
+        previewUrl: track?.previewUrl
       }));
 
       setMusicOptions(mappedTracks);

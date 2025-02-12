@@ -13,7 +13,6 @@ const SpotifyWebPlayer = ({ track, setTrack }) => {
   useEffect(() => {
     if (track?.previewUrl) {
       resetAudioPlayer()
-
       const newAudio = new Audio(track.previewUrl)
       newAudio.addEventListener('timeupdate', handleTimeUpdate)
       newAudio.addEventListener('ended', handleTrackEnded)

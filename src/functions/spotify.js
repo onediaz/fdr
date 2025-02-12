@@ -1,13 +1,12 @@
 import axios from 'axios'
 import { Buffer } from 'buffer';
 
-export const spotifyPrediction = async (input, type = 'track', limit = 1, offset = 0) => {
+export const spotifyPrediction = async (input, type = 'track', limit = 10, offset = 0) => {
   try {
     if (!input) throw Error('No input provided.')
     
     const accessToken = await getSpotifyAccessToken();
-    console.log('Access token: ', accessToken);
-    const url = 'https://api.spotify.com/v1/search'
+    const url = 'https://api.spotify.com/v1/search';
     const { data } = await axios.get(
       url,
       {
@@ -17,58 +16,43 @@ export const spotifyPrediction = async (input, type = 'track', limit = 1, offset
           'Authorization': `Bearer ${accessToken}`
         }
       }
-    )
+    );
     if (type === 'track') {
       // return data?.tracks?.items?.filter(song => song?.preview_url != null) ?? [];
-      return data?.tracks?.items?.map(song => {
-        const previewUrl = findPreviewUrl(song?.id, accessToken);
-        return { ...song, preview_url: previewUrl }
-      }) ?? [];
+      return await findPreviewUrls(data?.tracks?.items);
       // const trackId = data?.tracks?.items[0]?.id ?? '';
       // return findPreviewUrl(trackId);
     } else if (type === 'album') {
-      return data?.albums?.items ?? []
+      return data?.albums?.items ?? [];
     }
   } catch (error) {
-    console.log('Error fetching Spotify Api', error)
-    throw Error(error)
+    throw Error(error);
   }
 }
 
-const findPreviewUrl = async (trackId, accessToken) => {
+const findPreviewUrls = async (tracks) => {
   try {
-    const embedUrl = `https://open.spotify.com/embed/track/${trackId}`;
-    let previewUrl = "";
+    const url = process.env.EXPRESS_APP_URL + '/get-spotify-preview';
+    const trackIds = tracks.map(track => track.id);
 
-    const htmlPage = await fetch(embedUrl, {
-      method: 'GET',
+    const response = await axios.post(url, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    }).then(response => response.text());
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlPage, 'text/html');
-    const script = doc.querySelector('script[type="application/ld+json"]');
-    if (script) {
-      console.log(JSON.parse(script.innerHTML));
-      // previewUrl = script.src;
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(trackIds)
+    });
+    for (let i = 0; i < response.data.length; i++) {
+      tracks[i].previewUrl = response.data[i];
     }
-    return previewUrl;
-
+    return tracks;
   } catch (error) {
     throw Error(error);
   }
 }
 
 export const getSpotifyAccessToken = async () => {
-  // if (localStorage.getItem('spotifyAccessToken')) {
-  //   return localStorage.getItem('spotifyAccessToken');
-  // }
-  // const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-  const clientId = 'e42e96d133a348ad8794b951042bbe35';
-  // const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
-  const clientSecret = '75689b32bd4c4d63bd115119edf7d225';
+  const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+  const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
     throw new Error('Spotify client ID or secret is missing in environment variables')
   }
@@ -85,11 +69,9 @@ export const getSpotifyAccessToken = async () => {
           'Authorization': `Basic ${authBase64}`
         }
       } 
-    )
-    // localStorage.setItem('spotifyAccessToken', response.data.access_token).expiresIn(response.data.expires_in);
-    return response.data.access_token
+    );
+    return response.data.access_token;
   } catch (error) {
-    console.error('Error obtaining Spotify access token:', error)
-    throw error
+    throw Error(error);
   }
 };

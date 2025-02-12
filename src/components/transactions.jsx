@@ -24,6 +24,7 @@ const TransactionsComponent = ({user, filterKey, className='', days=2}) => {
             }
             if(filterKey === 'all') {
                 newViewTransactions = await getAllTransactions();
+                newViewTransactions.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
             }
             setTransactions(newViewTransactions);
             setLoadedTransactions(newViewTransactions);

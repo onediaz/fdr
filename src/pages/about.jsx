@@ -71,7 +71,10 @@ const About = ({pageViewCount}) => {
                 <div className="about_text_container_transactions">
                   Using Spotify API you can look up a song and I made a custom webplayer 
                   so you can see the progress loading on your favorite tracks.
-                  Not every track includes a preview URL so apologies if you can't find the one you are looking for.
+                </div>
+                <div className='about_paragraph'>
+                    <Badge variation="info">Express</Badge> 
+                    <Badge variation="error">React</Badge>
                 </div>
                 <SpotifySearch />
               </div>
