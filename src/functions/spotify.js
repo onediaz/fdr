@@ -18,10 +18,7 @@ export const spotifyPrediction = async (input, type = 'track', limit = 10, offse
       }
     );
     if (type === 'track') {
-      // return data?.tracks?.items?.filter(song => song?.preview_url != null) ?? [];
       return await findPreviewUrls(data?.tracks?.items);
-      // const trackId = data?.tracks?.items[0]?.id ?? '';
-      // return findPreviewUrl(trackId);
     } else if (type === 'album') {
       return data?.albums?.items ?? [];
     }
@@ -32,7 +29,7 @@ export const spotifyPrediction = async (input, type = 'track', limit = 10, offse
 
 const findPreviewUrls = async (tracks) => {
   try {
-    const url = process.env.EXPRESS_APP_URL + '/get-spotify-preview';
+    const url = "https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/spotify";
     const trackIds = tracks.map(track => track.id);
 
     const response = await axios.post(url, {
@@ -59,7 +56,7 @@ export const getSpotifyAccessToken = async () => {
   const authString = `${clientId}:${clientSecret}`;
   const authBase64 = Buffer.from(authString).toString('base64');
 
-  try {
+  try { 
     const response = await axios.post(
       'https://accounts.spotify.com/api/token',
       'grant_type=client_credentials',
