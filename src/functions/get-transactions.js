@@ -44,10 +44,7 @@ async function getAllTransactions () {
     try {
       let res = await axios({
         method: 'get',
-        url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/transactions-db',
-        params: {
-            TableName: "Student-tejldcxcpnc35hmzlzzrw2blmy-fdr",
-        }
+        url: 'https://xd68fappf0.execute-api.us-east-2.amazonaws.com/fdr-db/transactions-db'
       });
       return res.data;
     } catch (error) {
