@@ -10,7 +10,7 @@ import { Authenticator } from '@aws-amplify/ui-react';
 // import amplifyconfig from './amplifyconfiguration.json';
 // Amplify.configure(amplifyconfig);
 
-const amplifyConfig = process.env.REACT_APP_FDR_AMPLIFY_CONFIG;
+const amplifyConfig = import.meta.env.VITE_APP_FDR_AMPLIFY_CONFIG;
 if (!amplifyConfig) {
   console.error('FDR_AMPLIFY_CONFIG is not set.');
 } else {
