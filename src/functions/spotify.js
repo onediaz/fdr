@@ -48,8 +48,8 @@ const findPreviewUrls = async (tracks) => {
 }
 
 export const getSpotifyAccessToken = async () => {
-  const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+  const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+  const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
     throw new Error('Spotify client ID or secret is missing in environment variables')
   }
